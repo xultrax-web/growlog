@@ -2137,7 +2137,7 @@ function cures() {
       ${g.jarDate && jarAlert ? `<div class="cure-alert">🫙 ${daysSinceJar === null ? 'No jar entries yet' : 'Last jar check '+daysSinceJar+'d ago'} — burp check due</div>` : ''}
 
       <div class="cure-actions">
-        ${g.jarDate && g.jarCount ? `<button class="btn btn-warn btn-sm" onclick="openJarLog(${idx})">+ Jar Log</button>` : ''}
+        ${g.jarDate ? `<button class="btn btn-warn btn-sm" onclick="openJarLog(${idx})">+ Jar Log</button>` : ''}
         <button class="btn btn-ghost btn-sm" onclick="openEdit('cures',${idx})">Edit</button>
         <button class="btn btn-primary btn-sm" onclick="completeCure(${idx})">Complete Cure →</button>
         <button class="btn btn-danger btn-sm" onclick="del('cures',${idx})" style="margin-left:auto">Delete</button>
@@ -4812,42 +4812,10 @@ document.addEventListener('keydown', e => {
 });
 
 // ── SERVICE WORKER — offline support & installability ──────────────────────
-// Inlined as a Blob so the app remains a single file with zero external deps.
+// Unregister any previously installed service workers so stale caches don't block updates.
 if ('serviceWorker' in navigator) {
-  const swCode = `
-    const CACHE = 'growlog-v3.1.1';
-    self.addEventListener('install', e => {
-      self.skipWaiting();
-    });
-    self.addEventListener('activate', e => {
-      e.waitUntil(
-        caches.keys().then(keys =>
-          Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-        )
-      );
-      self.clients.claim();
-    });
-    // Cache-first for the app shell (the HTML file itself)
-    self.addEventListener('fetch', e => {
-      e.respondWith(
-        caches.open(CACHE).then(cache =>
-          cache.match(e.request).then(cached => {
-            const fresh = fetch(e.request).then(resp => {
-              if (resp && resp.status === 200 && resp.type === 'basic') {
-                cache.put(e.request, resp.clone());
-              }
-              return resp;
-            }).catch(() => cached);
-            return cached || fresh;
-          })
-        )
-      );
-    });
-  `;
-  const swBlob = new Blob([swCode], { type: 'application/javascript' });
-  const swUrl  = URL.createObjectURL(swBlob);
-  navigator.serviceWorker.register(swUrl).catch(() => {
-    // SW registration failed silently — app still works fine without it
+  navigator.serviceWorker.getRegistrations().then(regs => {
+    regs.forEach(r => r.unregister());
   });
 }
 </script>
