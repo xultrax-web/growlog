@@ -3784,6 +3784,8 @@ function openView(section, i) {
       ${item.smokeReport?`<div class="modal-section"><div class="modal-section-title">Smoke Report</div><div class="detail-notes">${esc(item.smokeReport)}</div></div>`:''}
       ${item.notes?`<div class="modal-section"><div class="modal-section-title">Notes</div><div class="detail-notes">${esc(item.notes)}</div></div>`:''}
       <div class="btn-row"><button class="btn btn-danger" onclick="del('history',${i})">Delete</button><button class="btn btn-ghost" onclick="openEdit('history',${i})">Edit</button></div>`;
+
+  } else if (section === 'containers') {
     const packs = containerPackList(item.id);
     const totalSeeds = packs.reduce((s,p) => s+(parseFloat(p.qty)||0), 0);
     const lowStock = packs.filter(p => { const q=parseFloat(p.qty); return !isNaN(q)&&q<=3; });
