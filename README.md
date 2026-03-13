@@ -1,8 +1,12 @@
 # 🌿 GrowLog
 
+> ⚠️ **Early development — not production ready. Features and data formats may change between versions. Back up your data before updating.**
+
 **A personal grow tracker built for privacy-first growers.**
 
 No account. No cloud. No telemetry. No ads. Your data never leaves your device.
+
+**[Try it live →](https://xultrax-web.github.io/growlog)** *(or download the file and open it locally)*
 
 ---
 
@@ -101,7 +105,7 @@ Works in any browser with Web Crypto API support (all modern browsers since ~201
 
 ## Contributing
 
-Issues and PRs welcome. Keep it single-file. Keep it zero-dependency. Keep it auditable.
+Issues and PRs welcome at [github.com/xultrax-web/growlog](https://github.com/xultrax-web/growlog). Keep it single-file. Keep it zero-dependency. Keep it auditable.
 
 The golden rule: **a paranoid grower should be able to verify what this software does in under 10 minutes.**
 
