@@ -2137,7 +2137,7 @@ function cures() {
       ${g.jarDate && jarAlert ? `<div class="cure-alert">🫙 ${daysSinceJar === null ? 'No jar entries yet' : 'Last jar check '+daysSinceJar+'d ago'} — burp check due</div>` : ''}
 
       <div class="cure-actions">
-        ${g.jarDate && g.jarCount ? `<button class="btn btn-warn btn-sm" onclick="openJarLog(${idx})">+ Jar Log</button>` : ''}
+        ${g.jarDate ? `<button class="btn btn-warn btn-sm" onclick="openJarLog(${idx})">+ Jar Log</button>` : ''}
         <button class="btn btn-ghost btn-sm" onclick="openEdit('cures',${idx})">Edit</button>
         <button class="btn btn-primary btn-sm" onclick="completeCure(${idx})">Complete Cure →</button>
         <button class="btn btn-danger btn-sm" onclick="del('cures',${idx})" style="margin-left:auto">Delete</button>
