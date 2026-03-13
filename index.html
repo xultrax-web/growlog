@@ -1224,6 +1224,7 @@ function nav(p) {
 }
 
 function render() {
+  autoTransitionSeedlings();
   const el = document.getElementById('main');
   const pages = { dashboard, plants, history, cures, seeds, breeding, reference, stats, containers };
   el.innerHTML = (pages[page] || dashboard)();
@@ -1724,7 +1725,7 @@ function boardDrawer(g, i, _jIdx) {
       if (st === 'flower')         return `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation();advanceStage(${i})">Log Harvest → Drying</button>`;
       if (st === 'drying')         return `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation();advanceStage(${i})">Move to Jars → Curing</button>`;
       if (st === 'veg')            return `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation();advanceStage(${i})">Flip to Flower →</button>`;
-      if (st === 'seedling')       return `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation();advanceStage(${i})">Into Veg →</button>`;
+      if (st === 'seedling')       return '';  // auto-transitions to veg after 14 days
       if (st === 'breeding_hold')  return `<button class="btn btn-danger btn-sm" onclick="event.stopPropagation();cullBreedingMale(${i})">Retire Breeder →</button>`;
       return '';
     };
@@ -3761,7 +3762,7 @@ function openView(section, i) {
         <button class="btn btn-danger" onclick="del('plants',${i})">Delete</button>
         <button class="btn btn-ghost" onclick="openEdit('plants',${i})">Edit</button>
         <button class="btn btn-warn" onclick="closeModal();nav('journal');openAdd('journal')">+ Log Entry</button>
-        <button class="btn btn-primary" onclick="closeModal();advanceStage(${i})">${item.stage==='flower'?'Log Harvest →':item.stage==='drying'?'Move to Jars →':item.stage==='veg'?'Flip to Flower →':'Advance Stage →'}</button>
+        ${item.stage!=='seedling'?`<button class="btn btn-primary" onclick="closeModal();advanceStage(${i})">${item.stage==='flower'?'Log Harvest →':item.stage==='drying'?'Move to Jars →':'Flip to Flower →'}</button>`:''}
       </div>`;
 
   } else if (section === 'history') {
@@ -4269,6 +4270,26 @@ function autoCalcHarvest() {
     d.setDate(d.getDate() + tgt);
     harvestEl.value = d.toISOString().slice(0, 10);
   }
+}
+
+// ── AUTO TRANSITIONS ──────────────────────────────────────────────────────
+// Seedling → Veg happens automatically after 14 days (first true leaves).
+// Veg → Flower is always manual because timing is grower-controlled.
+const SEEDLING_TO_VEG_DAYS = 14;
+
+function autoTransitionSeedlings() {
+  let changed = false;
+  DB.grows.forEach(g => {
+    if (g.stage !== 'seedling') return;
+    const start = g.seedlingDate || g.germStart || g.cloneIn;
+    if (!start) return;
+    if (daysBetween(start, today()) >= SEEDLING_TO_VEG_DAYS) {
+      g.stage = 'veg';
+      g.vegDate = g.vegDate || today();
+      changed = true;
+    }
+  });
+  if (changed) save();
 }
 
 // ── STAGE TRANSITIONS ─────────────────────────────────────────────────────
