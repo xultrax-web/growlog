@@ -1027,22 +1027,21 @@ function migrate(d) {
 
 // Undo stack — keep last 20 states
 const _undoStack = [];
-function save() {
+async function save() {
   _cache = null;
   _undoStack.push(JSON.stringify(DB));
   if (_undoStack.length > 20) _undoStack.shift();
   try {
     const data = JSON.stringify(DB);
     if (_cryptoKey) {
-      saveEncrypted(data).catch(e => {
-        console.error('Save error:', e);
-        toast('⚠ Save failed — check console.', 'error');
-      });
+      await saveEncrypted(data);
     } else {
       localStorage.setItem(STORAGE_KEY, data);
     }
   } catch(e) {
-    toast('⚠ Storage full — export a backup now!', 'error');
+    console.error('Save error:', e);
+    toast('⚠ Save failed — export a backup now!', 'error');
+    return;
   }
   refreshBadges();
 }
@@ -1688,13 +1687,13 @@ function boardDrawer(g, i, _jIdx) {
         </div>
         <div class="ilf-section-label">Environment (optional)</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-          <div class="ilf-field"><div class="ilf-label">VPD kPa</div><input class="form-input ilf-input" type="number" step="0.01" placeholder="1.2" id="ilog-vpd-${i}" /></div>
-          <div class="ilf-field"><div class="ilf-label">Temp °F</div><input class="form-input ilf-input" type="number" placeholder="74" id="ilog-temp-${i}" /></div>
-          <div class="ilf-field"><div class="ilf-label">RH %</div><input class="form-input ilf-input" type="number" placeholder="48" id="ilog-humidity-${i}" /></div>
-          <div class="ilf-field"><div class="ilf-label">PPFD</div><input class="form-input ilf-input" type="number" placeholder="920" id="ilog-ppfd-${i}" /></div>
-          <div class="ilf-field"><div class="ilf-label">pH</div><input class="form-input ilf-input" type="number" step="0.1" placeholder="6.2" id="ilog-ph-${i}" /></div>
-          <div class="ilf-field"><div class="ilf-label">EC</div><input class="form-input ilf-input" type="number" step="0.1" placeholder="1.8" id="ilog-ec-${i}" /></div>
-          <div class="ilf-field"><div class="ilf-label">Light Ht."</div><input class="form-input ilf-input" type="number" placeholder="18" id="ilog-lh-${i}" /></div>
+          <div class="ilf-field"><div class="ilf-label">VPD kPa</div><input class="form-input ilf-input" type="number" step="0.01" min="0" placeholder="1.2" id="ilog-vpd-${i}" /></div>
+          <div class="ilf-field"><div class="ilf-label">Temp °F</div><input class="form-input ilf-input" type="number" min="0" placeholder="74" id="ilog-temp-${i}" /></div>
+          <div class="ilf-field"><div class="ilf-label">RH %</div><input class="form-input ilf-input" type="number" min="0" max="100" placeholder="48" id="ilog-humidity-${i}" /></div>
+          <div class="ilf-field"><div class="ilf-label">PPFD</div><input class="form-input ilf-input" type="number" min="0" placeholder="920" id="ilog-ppfd-${i}" /></div>
+          <div class="ilf-field"><div class="ilf-label">pH</div><input class="form-input ilf-input" type="number" step="0.1" min="0" max="14" placeholder="6.2" id="ilog-ph-${i}" /></div>
+          <div class="ilf-field"><div class="ilf-label">EC</div><input class="form-input ilf-input" type="number" step="0.1" min="0" placeholder="1.8" id="ilog-ec-${i}" /></div>
+          <div class="ilf-field"><div class="ilf-label">Light Ht."</div><input class="form-input ilf-input" type="number" min="0" placeholder="18" id="ilog-lh-${i}" /></div>
         </div>
         <div class="ilf-section-label">Issues (optional)</div>
         <div id="ilog-issues-${i}" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">
@@ -2012,8 +2011,8 @@ function openJarLog(growIdx) {
       <div style="font-size:11px;color:var(--text-dim);margin-bottom:12px">Log a burp check — moisture, smell, any issues.</div>
       <div class="form-grid">
         <div class="form-field"><div class="form-label">Date</div><input class="form-input" id="jl-date" type="date" value="${today()}" /></div>
-        <div class="form-field"><div class="form-label">RH % in jar</div><input class="form-input" id="jl-rh" type="number" step="0.1" placeholder="62" /></div>
-        <div class="form-field"><div class="form-label">Burp duration (min)</div><input class="form-input" id="jl-burp" type="number" placeholder="15" /></div>
+        <div class="form-field"><div class="form-label">RH % in jar</div><input class="form-input" id="jl-rh" type="number" step="0.1" min="0" max="100" placeholder="62" /></div>
+        <div class="form-field"><div class="form-label">Burp duration (min)</div><input class="form-input" id="jl-burp" type="number" min="0" placeholder="15" /></div>
         <div class="form-field full"><div class="form-label">Notes</div><textarea class="form-textarea" style="min-height:60px" id="jl-notes" placeholder="Smell, texture, any issues…"></textarea></div>
       </div>
     </div>
@@ -2237,7 +2236,7 @@ function containers() {
             <div class="container-pack-row">
               <span class="container-pack-strain">${esc(p.strain)}</span>
               <span class="container-pack-qty" style="color:${seedQtyColor(p.qty)}">${esc(p.qty||'?')}</span>
-            </div>`).join('') + (packs.length > 5 ? `<div style="font-size:10px;color:var(--text-dim);padding-top:6px">+${packs.length-5} more packs</div>` : '')
+            </div>`).join('') + (packs.length - 5 > 0 ? `<div style="font-size:10px;color:var(--text-dim);padding-top:6px">+${packs.length-5} more packs</div>` : '')
           : `<div class="container-empty">Empty — no packs assigned</div>`}
         </div>
         ${c.notes?`<div style="font-size:11px;color:var(--text-dim);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);line-height:1.5">${esc(c.notes)}</div>`:''}
@@ -3723,6 +3722,7 @@ function reference() {
 function openView(section, i) {
   const item = (section === 'plants' || section === 'history' || section === 'cures')
     ? DB.grows[i] : DB[section][i];
+  if (!item) { toast('Record not found.', 'error'); return; }
   let html = '';
 
   if (section === 'plants') {
@@ -3981,13 +3981,13 @@ function buildForm(section, item) {
       <div class="form-field full"><div class="form-label">Notes / Observations<span class="req">*</span></div><textarea class="form-textarea" style="min-height:100px" id="f-notes" placeholder="What did you observe? What did you do? How does she look?">${v(item,'notes')}</textarea></div>
       <hr class="form-divider">
       <div class="form-label full" style="grid-column:1/-1;font-size:10px;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase;padding-top:4px">Environmental Metrics (optional)</div>
-      <div class="form-field"><div class="form-label">VPD (kPa)</div><input class="form-input" id="f-vpd" type="number" step="0.01" placeholder="1.2" value="${v(item,'vpd')}" /></div>
-      <div class="form-field"><div class="form-label">Temp (°F)</div><input class="form-input" id="f-temp" type="number" placeholder="76" value="${v(item,'temp')}" /></div>
-      <div class="form-field"><div class="form-label">Humidity (%)</div><input class="form-input" id="f-humidity" type="number" placeholder="55" value="${v(item,'humidity')}" /></div>
-      <div class="form-field"><div class="form-label">PPFD (μmol/m²/s)</div><input class="form-input" id="f-ppfd" type="number" placeholder="800" value="${v(item,'ppfd')}" /></div>
-      <div class="form-field"><div class="form-label">pH</div><input class="form-input" id="f-ph" type="number" step="0.1" placeholder="6.3" value="${v(item,'ph')}" /></div>
-      <div class="form-field"><div class="form-label">EC (mS/cm)</div><input class="form-input" id="f-ec" type="number" step="0.1" placeholder="1.8" value="${v(item,'ec')}" /></div>
-      <div class="form-field"><div class="form-label">Light Height (inches)</div><input class="form-input" id="f-lightHeight" type="number" placeholder="18" value="${v(item,'lightHeight')}" /></div>
+      <div class="form-field"><div class="form-label">VPD (kPa)</div><input class="form-input" id="f-vpd" type="number" step="0.01" min="0" placeholder="1.2" value="${v(item,'vpd')}" /></div>
+      <div class="form-field"><div class="form-label">Temp (°F)</div><input class="form-input" id="f-temp" type="number" min="0" placeholder="76" value="${v(item,'temp')}" /></div>
+      <div class="form-field"><div class="form-label">Humidity (%)</div><input class="form-input" id="f-humidity" type="number" min="0" max="100" placeholder="55" value="${v(item,'humidity')}" /></div>
+      <div class="form-field"><div class="form-label">PPFD (μmol/m²/s)</div><input class="form-input" id="f-ppfd" type="number" min="0" placeholder="800" value="${v(item,'ppfd')}" /></div>
+      <div class="form-field"><div class="form-label">pH</div><input class="form-input" id="f-ph" type="number" step="0.1" min="0" max="14" placeholder="6.3" value="${v(item,'ph')}" /></div>
+      <div class="form-field"><div class="form-label">EC (mS/cm)</div><input class="form-input" id="f-ec" type="number" step="0.1" min="0" placeholder="1.8" value="${v(item,'ec')}" /></div>
+      <div class="form-field"><div class="form-label">Light Height (inches)</div><input class="form-input" id="f-lightHeight" type="number" min="0" placeholder="18" value="${v(item,'lightHeight')}" /></div>
       <hr class="form-divider">
       <div class="form-field full"><div class="form-label">Issues Observed</div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px" id="issue-checks">
@@ -4012,9 +4012,9 @@ function buildForm(section, item) {
       <div class="form-field"><div class="form-label">Harvest Date</div><input class="form-input" id="f-harvestDate" type="date" value="${v(item,'harvestDate')}" /></div>
       <hr class="form-divider">
       <div class="form-label full" class="form-col-label">Yield (optional)</div>
-      <div class="form-field"><div class="form-label">Wet Weight (g)</div><input class="form-input" id="f-wetWeight" type="number" step="0.1" placeholder="420" value="${v(item,'wetWeight')}" /></div>
-      <div class="form-field"><div class="form-label">Dry Weight (g)</div><input class="form-input" id="f-dryWeight" type="number" step="0.1" placeholder="84" value="${v(item,'dryWeight')}" /></div>
-      <div class="form-field"><div class="form-label">Trim / Popcorn (g)</div><input class="form-input" id="f-trimWeight" type="number" step="0.1" placeholder="12" value="${v(item,'trimWeight')}" /></div>
+      <div class="form-field"><div class="form-label">Wet Weight (g)</div><input class="form-input" id="f-wetWeight" type="number" step="0.1" min="0" placeholder="420" value="${v(item,'wetWeight')}" /></div>
+      <div class="form-field"><div class="form-label">Dry Weight (g)</div><input class="form-input" id="f-dryWeight" type="number" step="0.1" min="0" placeholder="84" value="${v(item,'dryWeight')}" /></div>
+      <div class="form-field"><div class="form-label">Trim / Popcorn (g)</div><input class="form-input" id="f-trimWeight" type="number" step="0.1" min="0" placeholder="12" value="${v(item,'trimWeight')}" /></div>
       <div class="form-field"><div class="form-label">Overall Rating</div>
         <select class="form-select" id="f-rating">${['','⭐ 1 — Meh','⭐⭐ 2 — OK','⭐⭐⭐ 3 — Good','⭐⭐⭐⭐ 4 — Great','⭐⭐⭐⭐⭐ 5 — Elite'].map(o=>`<option ${v(item,'rating')===o?'selected':''}>${o}</option>`).join('')}</select>
       </div>
@@ -4046,10 +4046,10 @@ function buildForm(section, item) {
       <div class="form-field"><div class="form-label">Jar Date</div><input class="form-input" id="f-jarDate" type="date" value="${v(item,'jarDate')}" /></div>
       <hr class="form-divider">
       <div class="form-label full" class="form-col-label">Yield</div>
-      <div class="form-field"><div class="form-label">Wet Weight (g)</div><input class="form-input" id="f-wetWeight" type="number" step="0.1" placeholder="420" value="${v(item,'wetWeight')}" /></div>
-      <div class="form-field"><div class="form-label">Dry Weight (g)</div><input class="form-input" id="f-dryWeight" type="number" step="0.1" placeholder="84" value="${v(item,'dryWeight')}" /></div>
-      <div class="form-field"><div class="form-label">Trim / Popcorn (g)</div><input class="form-input" id="f-trimWeight" type="number" step="0.1" placeholder="12" value="${v(item,'trimWeight')}" /></div>
-      <div class="form-field"><div class="form-label">Jars</div><input class="form-input" id="f-jarCount" type="number" placeholder="3" value="${v(item,'jarCount')}" /></div>
+      <div class="form-field"><div class="form-label">Wet Weight (g)</div><input class="form-input" id="f-wetWeight" type="number" step="0.1" min="0" placeholder="420" value="${v(item,'wetWeight')}" /></div>
+      <div class="form-field"><div class="form-label">Dry Weight (g)</div><input class="form-input" id="f-dryWeight" type="number" step="0.1" min="0" placeholder="84" value="${v(item,'dryWeight')}" /></div>
+      <div class="form-field"><div class="form-label">Trim / Popcorn (g)</div><input class="form-input" id="f-trimWeight" type="number" step="0.1" min="0" placeholder="12" value="${v(item,'trimWeight')}" /></div>
+      <div class="form-field"><div class="form-label">Jars</div><input class="form-input" id="f-jarCount" type="number" min="0" placeholder="3" value="${v(item,'jarCount')}" /></div>
       <hr class="form-divider">
       <div class="form-field"><div class="form-label">Overall Rating</div>
         <select class="form-select" id="f-rating">${['','⭐ 1 — Meh','⭐⭐ 2 — OK','⭐⭐⭐ 3 — Good','⭐⭐⭐⭐ 4 — Great','⭐⭐⭐⭐⭐ 5 — Elite'].map(o=>`<option ${v(item,'rating')===o?'selected':''}>${o}</option>`).join('')}</select>
@@ -4239,6 +4239,16 @@ function del(section, i) {
   if (!confirm('Delete this entry? This cannot be undone.')) return;
   const arr = (section === 'plants' || section === 'history' || section === 'cures')
     ? DB.grows : DB[section];
+  // Clear container references from seeds before deleting the container
+  if (section === 'containers') {
+    const containerId = DB.containers[i] && DB.containers[i].id;
+    if (containerId) DB.seeds.forEach(s => { if (s.containerId === containerId) s.containerId = ''; });
+  }
+  // Clear journal entries linked to a grow being deleted
+  if (section === 'plants' || section === 'history' || section === 'cures') {
+    const uid = DB.grows[i] && DB.grows[i].uid;
+    if (uid) DB.journal = DB.journal.filter(j => j.plantId !== uid);
+  }
   arr.splice(i, 1);
   save(); closeModal(); render();
   toast('Deleted.');
@@ -4268,7 +4278,7 @@ function advanceStage(i) {
     g.stage = 'veg';
     g.vegDate = g.vegDate || today();
     save(); render();
-    toast(`${g.strain} moved to Veg.`);
+    toast(`${esc(g.strain)} moved to Veg.`);
     return;
   }
 
@@ -4292,7 +4302,7 @@ function advanceStage(i) {
       <p class="modal-hint-dim">Record the harvest. The plant will move to Drying.</p>
       <div class="form-grid">
         <div class="form-field"><div class="form-label">Harvest Date</div><input class="form-input" id="adv-harvestDate" type="date" value="${today()}" /></div>
-        <div class="form-field"><div class="form-label">Wet Weight (g)</div><input class="form-input" id="adv-wetWeight" type="number" step="0.1" placeholder="420" value="${g.wetWeight||''}" /></div>
+        <div class="form-field"><div class="form-label">Wet Weight (g)</div><input class="form-input" id="adv-wetWeight" type="number" step="0.1" min="0" placeholder="420" value="${g.wetWeight||''}" /></div>
       </div>
       <div class="btn-row">
         <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
@@ -4307,9 +4317,9 @@ function advanceStage(i) {
       <p class="modal-hint-dim">Stems snapping? Buds feel right? Move to jars and start the cure.</p>
       <div class="form-grid">
         <div class="form-field"><div class="form-label">Jar Date</div><input class="form-input" id="adv-jarDate" type="date" value="${today()}" /></div>
-        <div class="form-field"><div class="form-label">Dry Weight (g)</div><input class="form-input" id="adv-dryWeight" type="number" step="0.1" placeholder="84" value="${g.dryWeight||''}" /></div>
-        <div class="form-field"><div class="form-label">Trim Weight (g)</div><input class="form-input" id="adv-trimWeight" type="number" step="0.1" placeholder="12" value="${g.trimWeight||''}" /></div>
-        <div class="form-field"><div class="form-label">Number of Jars</div><input class="form-input" id="adv-jarCount" type="number" placeholder="3" value="${g.jarCount||''}" /></div>
+        <div class="form-field"><div class="form-label">Dry Weight (g)</div><input class="form-input" id="adv-dryWeight" type="number" step="0.1" min="0" placeholder="84" value="${g.dryWeight||''}" /></div>
+        <div class="form-field"><div class="form-label">Trim Weight (g)</div><input class="form-input" id="adv-trimWeight" type="number" step="0.1" min="0" placeholder="12" value="${g.trimWeight||''}" /></div>
+        <div class="form-field"><div class="form-label">Number of Jars</div><input class="form-input" id="adv-jarCount" type="number" min="0" placeholder="3" value="${g.jarCount||''}" /></div>
       </div>
       <div class="btn-row">
         <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
@@ -4344,7 +4354,7 @@ function confirmAdvance(i, toStage) {
   }
 
   save(); closeModal(); render();
-  toast(`${g.strain} moved to ${STAGE_LABELS[toStage]}.`);
+  toast(`${esc(g.strain)} moved to ${STAGE_LABELS[toStage]}.`);
 }
 
 function completeCure(i) {
@@ -4378,7 +4388,7 @@ function confirmCompleteCure(i) {
   if (fv('cc-smoke'))   g.smokeReport = fv('cc-smoke');
   g.stage = 'complete';
   save(); closeModal(); render();
-  toast(`${g.strain} cure complete — moved to History.`);
+  toast(`${esc(g.strain)} cure complete — moved to History.`);
 }
 
 // ── CULL / FATE FUNCTIONS ────────────────────────────────────────────────────
@@ -4489,7 +4499,7 @@ function confirmKeepMutantRunt(i, fate) {
   if (notes) g.cullNotes = notes;
   save(); closeModal(); render();
   const label = fate === 'kept_mutant' ? 'mutant' : 'runt';
-  toast(`${g.strain} flagged as ${label}. Still running — badge shown on plant card.`);
+  toast(`${esc(g.strain)} flagged as ${esc(label)}. Still running — badge shown on plant card.`);
 }
 
 // Cull a mutant or runt — moves to History
@@ -4546,7 +4556,7 @@ function confirmKeepMale(i) {
   g.fate = 'culled_male_keeper';
   g.stage = 'breeding_hold';
   save(); closeModal(); render();
-  toast(`${g.strain} moved to Breeding Hold. Shown on Plants page.`);
+  toast(`${esc(g.strain)} moved to Breeding Hold. Shown on Plants page.`);
 }
 
 // Cull a breeding_hold male (after pollen collected / no longer needed)
@@ -4570,7 +4580,7 @@ function confirmRetireBreeder(i) {
   const n = fv('cbm-notes'); if (n) g.cullNotes = (g.cullNotes ? g.cullNotes + ' · ' : '') + n;
   g.stage = 'complete';
   save(); closeModal(); render();
-  toast(`${g.strain} breeding male archived to History.`);
+  toast(`${esc(g.strain)} breeding male archived to History.`);
 }
 
 function plantFromSeed(i) {
@@ -4617,7 +4627,7 @@ function confirmLogDud(i) {
   const current = parseFloat(s.qty);
   if (!isNaN(current)) s.qty = String(Math.max(0, current - count));
   save(); closeModal(); render();
-  toast(`${count} failed germ${count>1?'s':''} logged for ${s.strain}. Qty updated.`);
+  toast(`${count} failed germ${count>1?'s':''} logged for ${esc(s.strain)}. Qty updated.`);
 }
 
 function addSeedFromBreed(i) {
@@ -4677,12 +4687,12 @@ function triggerImport() {
   input.onchange = e => {
     const f = e.target.files[0]; if (!f) return;
     const reader = new FileReader();
-    reader.onload = ev => {
+    reader.onload = async ev => {
       try {
         const parsed = JSON.parse(ev.target.result);
         if (parsed.grows !== undefined || parsed.plants !== undefined || parsed.seeds !== undefined) {
           Object.assign(DB, { ...blankData(), ...parsed });
-          save(); render(); toast('Backup imported successfully.');
+          await save(); render(); toast('Backup imported successfully.');
         } else { toast('Invalid backup file.', 'error'); }
       } catch(e) { toast('Could not read file.','error'); }
     };
