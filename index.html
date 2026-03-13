@@ -4827,19 +4827,16 @@ if ('serviceWorker' in navigator) {
       );
       self.clients.claim();
     });
-    // Cache-first for the app shell (the HTML file itself)
+    // Network-first for the app shell: always try fresh, fall back to cache offline
     self.addEventListener('fetch', e => {
       e.respondWith(
         caches.open(CACHE).then(cache =>
-          cache.match(e.request).then(cached => {
-            const fresh = fetch(e.request).then(resp => {
-              if (resp && resp.status === 200 && resp.type === 'basic') {
-                cache.put(e.request, resp.clone());
-              }
-              return resp;
-            }).catch(() => cached);
-            return cached || fresh;
-          })
+          fetch(e.request).then(resp => {
+            if (resp && resp.status === 200 && resp.type === 'basic') {
+              cache.put(e.request, resp.clone());
+            }
+            return resp;
+          }).catch(() => cache.match(e.request))
         )
       );
     });
