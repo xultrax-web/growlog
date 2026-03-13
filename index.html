@@ -1656,7 +1656,8 @@ function boardDrawer(g, i, _jIdx) {
     const preview = allEntries.slice(0, 8);
     const entries = preview.map(j => {
       const hasMetrics = j.vpd||j.temp||j.humidity||j.ppfd||j.ph||j.ec||j.lightHeight;
-      return `<div class="journal-entry" style="cursor:default">
+      const jIdx = DB.journal.indexOf(j);
+      return `<div class="journal-entry" style="cursor:pointer" onclick="event.stopPropagation();openView('journal',${jIdx})" title="Click to edit">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
           <div class="journal-date">${fmtDate(j.date)}</div>
           <div style="display:flex;gap:4px">${j.issues&&j.issues.length?j.issues.map(iss=>`<span class="badge badge-${iss.toLowerCase().replace(/\s+/g,'-')}">${esc(iss)}</span>`).join(''):''}</div>
