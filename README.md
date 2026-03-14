@@ -29,7 +29,7 @@ Open the file in your browser. Open DevTools (F12) → Network tab. Reload. Noth
 Everything is stored in your browser's `localStorage`. Open DevTools → Application → Local Storage and read it yourself. It goes nowhere.
 
 **3. You can read every line of code.**
-It's one HTML file. ~4,800 lines. No minification, no obfuscation, no build step. Open it in a text editor and read exactly what it does.
+It's one HTML file. ~4,400 lines. No minification, no obfuscation, no build step. Open it in a text editor and read exactly what it does.
 
 **4. Optional encryption is built in.**
 If you want your localStorage data encrypted, enable it in the sidebar. It uses **AES-256-GCM** via the browser's built-in Web Crypto API — the same standard used by Signal and your bank. Your passphrase is never stored. Only a salt is saved. If someone pulls your localStorage without your passphrase, they get noise.
@@ -39,12 +39,26 @@ Once opened, it installs a service worker (also readable in the file) that cache
 
 ---
 
+## Changelog
+
+### v4.0
+- **Containers** — new page to organize your grow space. Assign seed packs to containers and track what's where.
+- **Clone Batch tracking** — log batches of clones with target root days, then graduate them directly into active plants.
+- **Plant Tiles view** — plants now display as a responsive card grid with at-a-glance status signals (green/yellow/red), stage, age, and recent VPD.
+- **Drying & Curing redesign** — cure tracker rebuilt with the same tile/drawer layout as plants for consistency.
+- **Dashboard stats** — full grow stats (flower times, strain history, issue tracking, VPD compliance) now embedded directly on the dashboard.
+- **Renamed sections** — "Seed Vault" → "Seed Library", "Cure Tracker" → "Drying & Curing" for clarity.
+- **Nav polish** — improved section label visibility, primary nav items more prominent.
+
+---
+
 ## Features
 
 - 🪴 **Plants** — full lifecycle tracking: seedling → veg → flower → drying → cure → done
-- 🌱 **Seed Vault** — catalog your collection, breeders, bins, quantities, lineage, wish list
+- 🌱 **Seed Library** — catalog your collection, breeders, bins, quantities, lineage, wish list
+- 📦 **Containers** — organize your grow space, assign seed packs to containers
 - 🧬 **Breeding Lab** — crosses, pollen donors, seed runs, reversals, generation tracking
-- 🫙 **Cure Tracker** — jar RH, burp schedule, phase tracking, smoke reports
+- 🫙 **Drying & Curing** — clone batch tracking, jar RH, burp schedule, phase tracking, smoke reports
 - 📜 **History** — complete fate records: culls, males, mutants, runts, losses
 - 🩺 **Symptom Checker** — guided decision tree for deficiencies, pests, environmental issues
 - 📖 **Reference** — VPD charts, stage guides, feeding schedules
