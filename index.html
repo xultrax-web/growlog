@@ -78,7 +78,8 @@ body.light-mode {
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { height: 100%; }
+html, .icon { stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; display: block; }
+body { height: 100%; }
 body { background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 13px; min-height: 100vh; overflow-x: hidden; }
 
 /* ── LAYOUT ── */
@@ -218,10 +219,6 @@ tbody td { padding: 10px 14px; font-size: 12px; color: var(--text-mid); vertical
 
 /* ── PROGRESS ── */
 .prog-track { width:100%;height:4px;background:var(--border);border-radius:2px;overflow:hidden; margin-bottom:2px; }
-.progress-fill { height: 100%; border-radius: 2px; background: var(--accent); transition: width 0.3s; }
-.progress-fill.mid { background: var(--warn); }
-.progress-fill.late { background: var(--danger); }
-.days-pill { display: inline-block; padding: 2px 7px; background: var(--surface2); border-radius: 4px; font-size: 10px; color: var(--text-dim); }
 
 /* ── ALERT ROW — dashboard alerts ── */
 .alert-row { display: flex; align-items: center; gap: 12px; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
@@ -236,7 +233,6 @@ tbody td { padding: 10px 14px; font-size: 12px; color: var(--text-mid); vertical
 .alert-item-sub { font-size: 10px; opacity: 0.7; }
 
 /* ── CARDS ── */
-.cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; cursor: pointer; transition: all 0.15s; }
 .card:hover { border-color: var(--border2); transform: translateY(-1px); box-shadow: var(--shadow); }
 .card-notes { font-size: 11px; color: var(--text-dim); line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top:8px; }
@@ -335,12 +331,6 @@ tbody td { padding: 10px 14px; font-size: 12px; color: var(--text-mid); vertical
 .sx-sev-low  { background: var(--accent-glow); color: var(--accent); border: 1px solid var(--accent-dim); }
 .sx-sev-med  { background: var(--warn-dim); color: var(--warn); border: 1px solid rgba(251,191,36,0.3); }
 .sx-sev-high { background: var(--danger-dim); color: var(--danger); border: 1px solid rgba(248,113,113,0.3); }
-.sx-start-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-top: 4px; }
-.sx-start-card { padding: 14px 16px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s; text-align: left; font-family: var(--mono); width: 100%; }
-.sx-start-card:hover { border-color: var(--accent); background: var(--accent-glow); }
-.sx-start-icon { font-size: 22px; margin-bottom: 6px; }
-.sx-start-label { font-size: 12px; color: var(--text); font-weight: 700; }
-.sx-start-desc { font-size: 10px; color: var(--text-dim); margin-top: 2px; line-height: 1.4; }
 @media (max-width: 768px) { .ref-grid { grid-template-columns: 1fr; } .sx-start-grid { grid-template-columns: 1fr 1fr; } }
 
 
@@ -355,9 +345,6 @@ tbody td { padding: 10px 14px; font-size: 12px; color: var(--text-mid); vertical
 .calc-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
 .calc-label { font-size: 11px; color: var(--text-mid); min-width: 140px; }
 .calc-val { font-size: 14px; color: var(--accent); font-family: var(--serif); font-style: italic; min-width: 80px; }
-.ref-note { font-size: 12px; color: var(--text-mid); line-height: 1.7; }
-.ref-note a { color: var(--accent); text-decoration: none; }
-.ref-note a:hover { text-decoration: underline; }
 
 /* ── BREEDING ── */
 .breed-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; cursor: pointer; transition: all 0.15s; margin-bottom: 10px; }
@@ -373,10 +360,6 @@ tbody td { padding: 10px 14px; font-size: 12px; color: var(--text-mid); vertical
 .empty-hint { font-size: 11px; color: var(--text-dim); margin-bottom: 20px; line-height: 1.6; }
 
 /* ── BIG BOARD ── */
-.sig-dot { display: block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.sig-green  { background: var(--accent); box-shadow: 0 0 5px rgba(74,222,128,0.5); }
-.sig-yellow { background: var(--warn);   box-shadow: 0 0 5px rgba(251,191,36,0.5); }
-.sig-red    { background: var(--danger); box-shadow: 0 0 5px rgba(248,113,113,0.5); }
 .board-drawer { display: none; border-bottom: 1px solid var(--border); background: var(--surface); }
 .tile-drawer .board-drawer { display: block; }
 .dtab-bar { display: flex; gap: 0; border-bottom: 1px solid var(--border); padding: 0 20px 0 36px; }
@@ -397,15 +380,118 @@ tbody td { padding: 10px 14px; font-size: 12px; color: var(--text-mid); vertical
 .board-alert { font-size: 10px; padding: 4px 10px; border-radius: 4px; }
 .board-alert-harvest { background: var(--warn-dim); color: var(--warn); border: 1px solid rgba(251,191,36,0.2); }
 .board-alert-issue   { background: var(--danger-dim); color: var(--danger); border: 1px solid rgba(248,113,113,0.2); }
-.board-alert-stale   { background: var(--surface2); color: var(--text-dim); border: 1px solid var(--border); }
 
-/* ── STAGE GROUP HEADER ── */
+/* ── PLANT TABLE ── */
+
+.plant-group-row td { padding: 0; border: none !important; }
+
+
+
+
+
+
+
+.plant-drawer-row td { background: var(--surface); border-bottom: 2px solid var(--accent); padding: 0; }
+.plant-drawer-row.drawer-warn td { border-bottom-color: var(--warn); }
+.plant-drawer-row.drawer-danger td { border-bottom-color: var(--danger); }
+
+  50% { opacity: 1; box-shadow: 0 0 8px var(--danger); }
+}
+
 .stage-group-header { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid currentColor; border-left: 3px solid currentColor; padding-left: 10px; opacity: 0.9; display: flex; align-items: baseline; gap: 8px; }
 .stage-group-header .stage-group-count { font-size: 11px; font-weight: 400; opacity: 0.6; }
 
+/* ── SEED ROW (matches plant page design language) ── */
+.seed-section { margin-bottom: 16px; }
+.seed-col-header { display: grid; grid-template-columns: 4px 90px 1fr 1fr 70px; gap: 0; padding: 4px 0; border-bottom: 1px solid #1a2220; margin-bottom: 4px; }
+.seed-col-header > div { font-size: 8px; color: var(--border2); letter-spacing: .14em; text-transform: uppercase; padding: 0 24px 0 10px; position: relative; cursor: pointer; user-select: none; }
+.seed-col-header > div:first-child { padding: 0; cursor: default; }
+.seed-col-header > div:hover { color: var(--text-dim); }
+
+.seed-row-h { display: grid; grid-template-columns: 4px 90px 1fr 1fr 70px; gap: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 4px; cursor: pointer; transition: border-color 0.12s, background 0.12s; overflow: hidden; min-height: 44px; align-items: stretch; user-select: none; }
+.seed-row-h:hover { background: var(--surface2); border-color: var(--border2); }
+.seed-row-h.seed-row-open { border-color: var(--accent); background: rgba(74,222,128,0.03); border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: none; }
+.seed-row-h.seed-dimmed { opacity: 0.45; }
+.seed-accent { border-radius: 6px 0 0 6px; opacity: 0.7; transition: opacity 0.15s; }
+.seed-row-h:hover .seed-accent { opacity: 1; }
+.seed-tape-cell { display: flex; align-items: center; justify-content: center; padding: 0 8px; border-right: 1px solid #181f1c; }
+.seed-tape { display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 900; color: #1a1208; background: #d4bc8a; padding: 2px 9px; letter-spacing: 0.08em; text-transform: uppercase; flex-shrink: 0; transform: rotate(0.6deg); box-shadow: 1px 2px 3px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.2); clip-path: polygon(0% 0%, 95% 0%, 97% 15%, 100% 30%, 98% 50%, 100% 70%, 97% 85%, 95% 100%, 5% 100%, 3% 85%, 0% 70%, 2% 50%, 0% 30%, 3% 15%); }
+.seed-strain-cell { display: flex; align-items: center; gap: 7px; padding: 0 10px; border-right: 1px solid #181f1c; min-width: 0; }
+.seed-sig { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.seed-strain-name { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.seed-strain-sub { font-family: var(--mono); font-size: 10px; color: var(--text-dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
+.seed-qty-cell { display: flex; flex-direction: column; justify-content: center; padding: 8px 10px; border-right: 1px solid #181f1c; }
+.seed-qty-val { font-family: var(--mono); font-size: 14px; font-weight: 700; line-height: 1; }
+.seed-qty-lbl { font-family: var(--mono); font-size: 8px; color: var(--text-dim); letter-spacing: .06em; margin-top: 2px; }
+.seed-breeder-cell { display: flex; align-items: center; padding: 0 10px; border-right: 1px solid #181f1c; min-width: 0; }
+.seed-breeder-val { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--text-mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.seed-drawer { background: var(--surface); border: 1px solid var(--accent); border-top: none; border-radius: 0 0 6px 6px; margin-bottom: 4px; overflow: hidden; }
+
+/* ── PLANT ROW (horizontal tile) ── */
+.plant-section { margin-bottom: 20px; }
+.plant-col-header { display: grid; grid-template-columns: 4px 22px 1fr 100px 72px 64px 80px 60px; gap: 0; padding: 4px 0; border-bottom: 1px solid #1a2220; margin-bottom: 5px; }
+.plant-col-header > div { font-size: 8px; color: var(--border2); letter-spacing: .14em; text-transform: uppercase; padding: 0 10px; position: relative; cursor: pointer; user-select: none; }
+.plant-col-header > div:first-child, .plant-col-header > div:nth-child(2) { padding: 0; cursor: default; }
+.plant-col-header > div:hover { color: var(--text-dim); }
+.plant-col-resize { position: absolute; right: -10px; top: 0; bottom: 0; width: 20px; cursor: col-resize; z-index: 2; display: flex; align-items: center; justify-content: center; }
+.plant-col-resize::after { content: ''; display: block; width: 2px; height: 70%; background: var(--border2); border-radius: 1px; transition: background 0.15s, width 0.15s; }
+.plant-col-resize:hover::after, .plant-col-resize.resizing::after { background: var(--accent); width: 3px; }
+.plant-col-header > div { padding-right: 20px; }
+.plant-col-header > div:first-child, .plant-col-header > div:nth-child(2) { padding: 0; }
+.tape-tag-wrap { position: relative; flex-shrink: 0; display: inline-block; width: 90px; text-align: center; }
+.tape-tag { display: inline-block; font-family: var(--mono); font-size: 11px; font-weight: 900; color: #000; background: #78bcd8; padding: 3px 12px; letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0; transform: rotate(0.6deg); box-shadow: 1px 2px 4px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.18); clip-path: polygon(0% 0%, 95% 0%, 97% 15%, 100% 30%, 98% 50%, 100% 70%, 97% 85%, 95% 100%, 5% 100%, 3% 85%, 0% 70%, 2% 50%, 0% 30%, 3% 15%); }
+.tape-peel { position: absolute; z-index: 3; }
+.tape-peel-shadow { position: absolute; z-index: 1; }
+.plant-row-h {
+  display: grid;
+  grid-template-columns: 4px 22px 1fr 100px 72px 64px 80px 60px;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 4px;
+  cursor: pointer;
+  transition: border-color 0.12s, background 0.12s;
+  overflow: hidden;
+  min-height: 46px;
+  align-items: stretch;
+  user-select: none;
+}
+.plant-row-h:hover { background: var(--surface2); border-color: var(--border2); }
+.plant-row-h.row-h-open { border-color: var(--accent); background: rgba(74,222,128,0.03); border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: none; }
+.plant-row-h.row-h-warn { border-color: rgba(217,119,6,0.4); }
+.plant-row-h.row-h-danger { border-color: rgba(248,113,113,0.35); }
+.plant-row-h.tile-dragging { opacity: 0.4; border-style: dashed; }
+.plant-row-h.tile-drag-over { box-shadow: 0 -3px 0 var(--accent); }
+.plant-row-h.tile-drag-over-below { box-shadow: 0 3px 0 var(--accent); }
+@keyframes row-h-pulse {
+  0%,100% { border-color: rgba(248,113,113,0.35); box-shadow: none; }
+  50%      { border-color: rgba(248,113,113,0.8); box-shadow: 0 0 12px rgba(248,113,113,0.15); }
+}
+.plant-row-h.row-h-pulse { animation: row-h-pulse 2.4s ease-in-out infinite; }
+.row-h-accent { border-radius: 6px 0 0 6px; opacity: 0.7; transition: opacity 0.15s; }
+.plant-row-h:hover .row-h-accent { opacity: 1; }
+.row-h-drag { display: flex; align-items: center; justify-content: center; color: var(--text-dim); font-size: 12px; opacity: 0.3; cursor: grab; }
+.row-h-drag:hover { opacity: 0.8; }
+.row-h-strain { display: flex; align-items: center; gap: 7px; padding: 10px; border-right: 1px solid #181f1c; min-width: 0; }
+.row-h-name { font-size: 12px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+.row-h-sig { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.row-h-cell { display: flex; flex-direction: column; justify-content: center; padding: 8px 10px; border-right: 1px solid #181f1c; min-width: 0; }
+.row-h-cell:last-child { border-right: none; }
+.row-h-val { font-size: 11px; color: var(--text-mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row-h-val.accent { color: var(--accent); }
+.row-h-val.purple { color: var(--purple); }
+.row-h-val.warn   { color: var(--warn); }
+.row-h-val.danger { color: var(--danger); font-weight: 700; }
+.row-h-val.blue   { color: var(--blue); }
+.row-h-val.dim    { color: var(--text-dim); }
+.row-h-prog { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; margin-top: 4px; }
+.row-h-prog-fill { height: 100%; border-radius: 2px; }
+.row-h-drawer { background: var(--surface); border: 1px solid var(--accent); border-top: none; border-radius: 0 0 6px 6px; margin-bottom: 4px; overflow: hidden; }
+.row-h-drawer.drawer-warn   { border-color: var(--warn); }
+.row-h-drawer.drawer-danger { border-color: var(--danger); }
+
 /* ── DRAG AND DROP ── */
-.tile-drag-handle { cursor: grab; color: var(--text-dim); font-size: 12px; padding: 0 4px 0 0; opacity: 0.4; user-select: none; flex-shrink: 0; }
-.tile-drag-handle:hover { opacity: 0.8; }
 .plant-tile.tile-dragging { opacity: 0.4; border-style: dashed; }
 .plant-tile.tile-drag-over { border-color: var(--accent); box-shadow: 0 -3px 0 var(--accent); }
 .plant-tile.tile-drag-over-below { border-color: var(--accent); box-shadow: 0 3px 0 var(--accent); }
@@ -418,7 +504,6 @@ tbody td { padding: 10px 14px; font-size: 12px; color: var(--text-mid); vertical
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 12px 14px;
   cursor: pointer;
   transition: border-color 0.15s, background 0.15s;
   user-select: none;
@@ -426,11 +511,17 @@ tbody td { padding: 10px 14px; font-size: 12px; color: var(--text-mid); vertical
   min-height: 140px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 .plant-tile:hover { border-color: var(--border2); background: var(--surface2); }
 .plant-tile.tile-open { border-color: var(--accent); background: rgba(74,222,128,0.04); }
-.plant-tile.tile-warn { border-color: rgba(251,191,36,0.4); }
+.plant-tile.tile-warn { border-color: rgba(217,119,6,0.4); }
 .plant-tile.tile-danger { border-color: rgba(248,113,113,0.35); }
+
+/* Left accent bar — stage color */
+.tile-accent-bar { width: 4px; position: absolute; left: 0; top: 0; bottom: 0; border-radius: 8px 0 0 8px; opacity: 0.7; transition: opacity 0.15s; }
+.plant-tile:hover .tile-accent-bar { opacity: 1; }
+.tile-inner { padding: 11px 12px 11px 16px; display: flex; flex-direction: column; flex: 1; }
 
 /* Tile header row */
 .tile-head { display: flex; align-items: center; gap: 7px; margin-bottom: 8px; }
@@ -457,7 +548,6 @@ tbody td { padding: 10px 14px; font-size: 12px; color: var(--text-mid); vertical
 /* Tile progress bar */
 
 /* Tile issue flags */
-.tile-flags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
 
 /* Full-width drawer that spans the grid */
 .tile-drawer-wrap { grid-column: 1 / -1; margin-top: 2px; }
@@ -466,10 +556,6 @@ tbody td { padding: 10px 14px; font-size: 12px; color: var(--text-mid); vertical
   50%  { box-shadow: 0 0 18px 4px rgba(248,113,113,0.18); border-color: rgba(248,113,113,0.7); }
   100% { box-shadow: 0 0 0 0 rgba(248,113,113,0); border-color: rgba(248,113,113,0.35); }
 }
-.tile-harvest-pulse {
-  animation: harvest-pulse 2.4s ease-in-out infinite;
-  border-color: rgba(248,113,113,0.35) !important;
-}
 .tile-drawer { background: var(--surface); border: 1px solid var(--accent); border-radius: 8px; overflow: hidden; }
 
 
@@ -477,29 +563,17 @@ tbody td { padding: 10px 14px; font-size: 12px; color: var(--text-mid); vertical
   .drawer-grid { grid-template-columns: 1fr; gap: 16px; }
 }
 
-/* ── VAULT BOARD ── */
-.vault-summary { display: flex; align-items: center; gap: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 20px; margin-bottom: 14px; flex-wrap: wrap; gap: 8px; }
-.vault-stat { display: flex; flex-direction: column; align-items: center; min-width: 70px; }
-.vault-stat-num { font-family: var(--serif); font-style: italic; font-size: 26px; color: var(--purple); line-height: 1; }
-.vault-stat-lbl { font-size: 9px; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 3px; }
-.vault-stat-divider { width: 1px; height: 36px; background: var(--border); margin: 0 8px; }
-.vault-type-pill { display: flex; align-items: center; gap: 2px; }
-.vault-head { display: grid; grid-template-columns: 110px 1fr 70px 70px 80px 100px 1fr 28px; gap: 0; padding: 8px 16px; background: var(--surface2); border-bottom: 1px solid var(--border); align-items: center; }
-.vault-head > div { font-size: 9px; color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 400; white-space: nowrap; }
-.vault-row { display: grid; grid-template-columns: 110px 1fr 70px 70px 80px 100px 1fr 28px; gap: 0; padding: 10px 16px; border-bottom: 1px solid var(--border); align-items: center; cursor: pointer; transition: background 0.1s; user-select: none; }
-.vault-row:hover { background: rgba(74,222,128,0.03); }
-.vault-row.vault-row-open { background: rgba(74,222,128,0.04); }
-.vault-strain-name { font-size: 12px; color: var(--text); font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.vault-strain-sub { font-size: 10px; color: var(--text-dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.vault-qty-num { font-family: var(--serif); font-style: italic; font-size: 20px; line-height: 1; }
-.vault-drawer { display: none; border-bottom: 1px solid var(--border); background: var(--surface); }
-.vault-group-header { padding: 8px 16px; background: var(--surface2); border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 6px; }
-@media (max-width: 900px) {
-  .vault-head { display: none; }
-  .vault-row { grid-template-columns: 1fr 60px 24px; }
-  .vh-type, .vh-bin, .vh-popped, .vh-flags, .vh-notes { display: none; }
-  .vault-summary { gap: 12px; }
+/* ── VAULT BOARD (legacy drawer CSS kept for seed detail drawer) ── */
+
+.col-resize-handle {
+  position: absolute; right: -10px; top: 0; bottom: 0; width: 20px;
+  cursor: col-resize; z-index: 2; display: flex; align-items: center; justify-content: center;
 }
+.col-resize-handle::after { content: ''; display: block; width: 2px; height: 60%; background: var(--border2); border-radius: 1px; transition: background 0.15s, width 0.15s; }
+.col-resize-handle:hover::after, .col-resize-handle.resizing::after { background: var(--accent); width: 3px; }
+
+.vault-drawer { display: none; border-bottom: 1px solid var(--border); background: var(--surface); }
+.seed-drawer .vault-drawer { display: block; }
 
 /* ── WELCOME ── */
 .welcome { max-width: 580px; margin: 32px auto; text-align: center; padding: 0 16px; }
@@ -674,17 +748,130 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; 
 <script>
 const STORAGE_KEY = 'growlog_v2';
 const CRYPTO_META_KEY = 'growlog_crypto_meta';
+const SEED_TYPE_ACCENT = {
+  'Landrace, Heirloom & IBL': 'var(--warn)',
+  'Regular Hybrid':           'var(--accent)',
+  'Feminized':                'var(--pink)',
+  'Autoflower':               'var(--orange)',
+  'My Seeds':                 'var(--teal)',
+  'Wish List':                'var(--blue)',
+};
 const SCHEMA_VERSION = 4;
+
+// ── SEED FILTER HELPER ───────────────────────────────────────────────────────
+function _setSeedFilter(key, val) {
+  const sf = window._seedFilters || { type: 'All', breeder: 'All', container: 'All' };
+  sf[key] = sf[key] === val ? 'All' : val;
+  window._seedFilters = sf;
+  render();
+}
+function _clearSeedFilters() {
+  window._seedFilters = { type: 'All', breeder: 'All', container: 'All' };
+  search = '';
+  render();
+}
+
+
+function makeTapeTag(text) {
+  if (!text) return '';
+  return `<span class="tape-tag">${esc(text)}</span>`;
+}
+
+const PLANT_COL_KEY = 'growlog_plant_cols';
+// [accent, drag, strain, countdown, elapsed/target, vpd, temp-rh, medium]
+let _plantCols = JSON.parse(localStorage.getItem(PLANT_COL_KEY) || 'null') || [4, 22, null, 100, 72, 64, 80, 60];
+
+function _plantColTemplate() {
+  return _plantCols.map(w => w === null ? '1fr' : w+'px').join(' ');
+}
+function _applyPlantCols() {
+  const t = _plantColTemplate();
+  document.querySelectorAll('.plant-col-header, .plant-row-h').forEach(el => el.style.gridTemplateColumns = t);
+}
+function startPlantColResize(e, colIdx) {
+  e.preventDefault(); e.stopPropagation();
+  const handle = e.target;
+  handle.classList.add('resizing');
+  const startX = e.clientX;
+  const header = document.querySelector('.plant-col-header');
+  if (!header) return;
+  const cols = window.getComputedStyle(header).gridTemplateColumns.split(' ');
+  const startW = parseFloat(cols[colIdx]) || 80;
+  const onMove = ev => {
+    const newW = Math.max(40, Math.round(startW + ev.clientX - startX));
+    _plantCols[colIdx] = newW;
+    _applyPlantCols();
+  };
+  const onUp = () => {
+    handle.classList.remove('resizing');
+    localStorage.setItem(PLANT_COL_KEY, JSON.stringify(_plantCols));
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+  };
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+}
+function resetPlantCols() {
+  _plantCols = [4, 22, null, 100, 72, 64, 80, 60];
+  localStorage.removeItem(PLANT_COL_KEY);
+  _applyPlantCols();
+}
+
+// ── VAULT COLUMN RESIZE ──────────────────────────────────────────────────────
+const VAULT_COL_KEY = 'growlog_vault_cols';
+// cols: [accent, type, strain, qty, container, breeder, notes, chev]
+// indices 1-6 are resizable (0=accent, 7=chev are fixed)
+let _vaultCols = JSON.parse(localStorage.getItem(VAULT_COL_KEY) || 'null') || [4, 90, null, null, 70];
+// null = 1fr (flex)
+
+function _vaultColTemplate() {
+  return _vaultCols.map(w => w === null ? '1fr' : w+'px').join(' ');
+}
+function _applyVaultCols() {
+  const t = _vaultColTemplate();
+  document.querySelectorAll('.seed-col-header, .seed-row-h').forEach(el => el.style.gridTemplateColumns = t);
+}
+
+function startColResize(e, colIdx) {
+  e.preventDefault();
+  e.stopPropagation();
+  const handle = e.target;
+  handle.classList.add('resizing');
+  const startX = e.clientX;
+  // Find the first seed-col-header
+  const head = document.querySelector('.seed-col-header');
+  if (!head) return;
+  const cols = window.getComputedStyle(head).gridTemplateColumns.split(' ');
+  const startW = parseFloat(cols[colIdx]) || 100;
+
+  const onMove = ev => {
+    const delta = ev.clientX - startX;
+    const newW = Math.max(40, Math.round(startW + delta));
+    _vaultCols[colIdx] = newW;
+    _applyVaultCols();
+  };
+  const onUp = () => {
+    handle.classList.remove('resizing');
+    localStorage.setItem(VAULT_COL_KEY, JSON.stringify(_vaultCols));
+    document.removeEventListener('mousemove', onMove);
+    document.removeEventListener('mouseup', onUp);
+  };
+  document.addEventListener('mousemove', onMove);
+  document.addEventListener('mouseup', onUp);
+}
+
+// Double-click any handle to reset all columns
+function resetVaultCols() {
+  _vaultCols = [4, 90, null, null, 70];
+  localStorage.removeItem(VAULT_COL_KEY);
+  _applyVaultCols();
+}
 
 // ── ENCRYPTION ENGINE (Web Crypto API — no external dependencies) ──────────
 // AES-GCM 256-bit, key derived via PBKDF2 (100k iterations, SHA-256)
 // Encryption is optional. Plaintext users are unaffected.
 
 let _cryptoKey = null; // in-memory only, never persisted
-
-function _hasCrypto() {
-  return !!(window.crypto && window.crypto.subtle);
-}
 
 function _getCryptoMeta() {
   try {
@@ -774,7 +961,7 @@ async function enableEncryption(passphrase) {
   await saveEncrypted(JSON.stringify(DB));
   document.getElementById('lock-btn').style.display = '';
   const encBtn = document.getElementById('enc-btn');
-  if (encBtn) encBtn.textContent = '🔒 Disable Encryption';
+  if (encBtn) encBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Disable Encryption';
   toast('🔒 Encryption enabled. Your data is now locked.');
 }
 
@@ -812,7 +999,7 @@ function disableEncryption() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(DB));
   document.getElementById('lock-btn').style.display = 'none';
   const encBtn = document.getElementById('enc-btn');
-  if (encBtn) encBtn.textContent = '🔓 Enable Encryption';
+  if (encBtn) encBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg> Enable Encryption';
   toast('🔓 Encryption disabled. Data stored as plaintext.');
 }
 
@@ -926,10 +1113,10 @@ const FATE_LABELS = {
   culled_male_keeper: '♂ Kept for Breeding',
   culled_other:       'Culled',
   died:               'Died',
-  culled_mutant:      '🧬 Mutant — Culled',
-  culled_runt:        '📉 Runt — Culled',
-  kept_mutant:        '🧬 Mutant — Kept',
-  kept_runt:          '📉 Runt — Kept',
+  culled_mutant:      'Mutant — Culled',
+  culled_runt:        '<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg> Runt — Culled',
+  kept_mutant:        'Mutant — Kept',
+  kept_runt:          '<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg> Runt — Kept',
 };
 
 // Fates that remove the plant (goes to complete, excluded from yield stats)
@@ -1210,7 +1397,7 @@ let DB = blankData();
 async function _startup() {
   // Update sidebar encryption button label
   const encBtn = document.getElementById('enc-btn');
-  if (encBtn) encBtn.textContent = _isEncryptionEnabled() ? '🔒 Disable Encryption' : '🔓 Enable Encryption';
+  if (encBtn) encBtn.innerHTML = _isEncryptionEnabled() ? '<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Disable Encryption' : '<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg> Enable Encryption';
 
   if (_isEncryptionEnabled()) {
     // Show lock screen — user must enter passphrase to decrypt
@@ -1292,8 +1479,9 @@ function fmtDate(d) {
 }
 
 function typeBadge(type) {
-  const map = {'Heirloom/IBL':'heirloom','Regular Hybrid':'hybrid','Feminized':'fem','Autoflower':'auto','My Seeds':'my','Wish List':'wish'};
-  return `<span class="badge badge-${map[type]||'hybrid'}">${esc(type)}</span>`;
+  const shortMap = {'Landrace, Heirloom & IBL':'heirloom','Regular Hybrid':'hybrid','Feminized':'fem','Autoflower':'auto','My Seeds':'my','Wish List':'wish'};
+  const color = SEED_TYPE_ACCENT[type] || 'var(--text-dim)';
+  return `<span class="badge badge-${shortMap[type]||'hybrid'}" style="background:${color}20;color:${color};border:1px solid ${color}40">${esc(type)}</span>`;
 }
 
 function issueTags(notes='') {
@@ -1352,6 +1540,8 @@ function render() {
   const el = document.getElementById('main');
   const pages = { dashboard, plants, history, cures, seeds, breeding, reference, containers };
   el.innerHTML = (pages[page] || dashboard)();
+  if (page === 'seeds') setTimeout(_applyVaultCols, 0);
+  if (page === 'plants') setTimeout(_applyPlantCols, 0);
 }
 
 function dashboard() {
@@ -1383,7 +1573,7 @@ function dashboard() {
     <div class="stat-card" onclick="nav('seeds')" style="cursor:pointer" title="View Seed Library"><div class="stat-label">Seed Library</div><div class="stat-value">${DB.seeds.length}</div><div class="stat-sub">~${Math.round(totalSeeds)} seeds</div></div>
   </div>
   ${upcoming.length ? `<div class="alert alert-harvest">
-    <svg width="16" height="16" viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0"><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 6v6l4 2"/><path d="M2 12a10 10 0 0 0 10 10"/></svg>
+    <svg width="16" height="16" viewBox="0 0 24 24" class="icon" style="flex-shrink:0"><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 6v6l4 2"/><path d="M2 12a10 10 0 0 0 10 10"/></svg>
     <div class="alert-items">${upcoming.map(g=>{
       const dl = daysUntil(g.harvestDate);
       const pidx = DB.grows.indexOf(g);
@@ -1404,7 +1594,7 @@ function dashboard() {
       activePlants.filter(g=>g.stage==='flower').forEach(g => {
         const d = daysUntil(g.harvestDate);
         if (d !== null && d >= 0 && d <= 14) {
-          alerts.push({ icon:'<svg width="14" height="14" viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle"><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 6v6l4 2"/><path d="M2 12a10 10 0 0 0 10 10"/></svg>', urgency: d <= 3 ? 'high' : 'med',
+          alerts.push({ icon:'<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle"><path d="M12 2a10 10 0 0 1 10 10"/><path d="M12 6v6l4 2"/><path d="M2 12a10 10 0 0 0 10 10"/></svg>', urgency: d <= 3 ? 'high' : 'med',
             text: `<strong>${esc(g.id||g.strain)}</strong> — harvest ${d===0?'<span style="color:var(--warn)">TODAY</span>':d===1?'tomorrow':'in '+d+'d'}`,
             action: `onclick="nav('plants')"`, actionLabel:'View' });
         }
@@ -1415,7 +1605,7 @@ function dashboard() {
         const dd = dryDays(g) || 0;
         const target = g.targetDryDays || 12;
         if (dd >= target) {
-          alerts.push({ icon:'<svg width="14" height="14" viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>', urgency:'med',
+          alerts.push({ icon:'<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>', urgency:'med',
             text: `<strong>${esc(g.id||g.strain)}</strong> — drying day ${dd}, target was ${target}d. Check stems for snap.`,
             action: `onclick="nav('cures')"`, actionLabel:'Check' });
         }
@@ -1425,7 +1615,7 @@ function dashboard() {
       (DB.clone_batches||[]).forEach(b => {
         const days = daysBetween(b.cutDate, today());
         if (days >= (b.targetDays||10)) {
-          alerts.push({ icon:'<svg width="14" height="14" viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 1 1.1 4.8c-1.6.1-3-.4-4-1.2a5 5 0 0 1-1.2-3.9C12 5 13.4 5.4 14.1 6z"/></svg>', urgency:'low',
+          alerts.push({ icon:'<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 1 1.1 4.8c-1.6.1-3-.4-4-1.2a5 5 0 0 1-1.2-3.9C12 5 13.4 5.4 14.1 6z"/></svg>', urgency:'low',
             text: `<strong>${esc(b.strain)}</strong> clone batch — day ${days}, check for roots.`,
             action: `onclick="nav('plants')"`, actionLabel:'Check' });
         }
@@ -1435,7 +1625,7 @@ function dashboard() {
       const lastExport = localStorage.getItem('growlog_last_export');
       const daysSinceBackup = lastExport ? daysBetween(lastExport.split('T')[0], today()) : 999;
       if (daysSinceBackup >= 7) {
-        alerts.push({ icon:'<svg width="14" height="14" viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:middle"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>', urgency: daysSinceBackup >= 14 ? 'high' : 'low',
+        alerts.push({ icon:'<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>', urgency: daysSinceBackup >= 14 ? 'high' : 'low',
           text: `Backup ${daysSinceBackup >= 999 ? 'never done' : 'last done '+daysSinceBackup+'d ago'} — export your data`,
           action: `onclick="exportData()"`, actionLabel:'Export Now' });
       }
@@ -1553,11 +1743,6 @@ const ISSUE_STYLE = {
   Deficiency: ['var(--warn)',   'var(--warn-dim)'],
   Root:       ['#60a5fa',       'var(--blue-dim)']
 };
-function boardIssueTag(tag) {
-  const [c, bg] = ISSUE_STYLE[tag] || ['var(--text-mid)', 'var(--surface3)'];
-  return `<span style="font-size:9px;padding:2px 6px;border-radius:3px;background:${bg};color:${c};letter-spacing:0.04em">${tag}</span>`;
-}
-
 function boardVpdColor(vpd, stage, flipDate) {
   if (!vpd) return 'var(--text-dim)';
   const v = parseFloat(vpd);
@@ -1576,82 +1761,6 @@ function getStageTargets() {
 // STAGE_TARGETS is a live object — always call getStageTargets() where you need current values
 const STAGE_TARGETS = STAGE_TARGETS_DEFAULTS;
 
-function boardProgressBar(g) {
-  const st = g.stage;
-  const age = daysOld(g) || 0;
-  const fd  = flowerDays(g) || 0;
-
-  if (st === 'flower') {
-    const tgt = g.targetFlower || getStageTargets().flower;
-    const pct = Math.min(100, Math.round(fd / tgt * 100));
-    const daysLeft = g.harvestDate
-      ? Math.max(0, daysUntil(g.harvestDate))
-      : Math.max(0, tgt - fd);
-    const fillColor = pct > 85 ? 'var(--danger)' : pct > 60 ? 'var(--warn)' : 'var(--purple)';
-    const countdownStyle = daysLeft <= 7 ? 'color:var(--danger);font-weight:700'
-      : daysLeft <= 21 ? 'color:var(--warn);font-weight:700'
-      : 'color:var(--text-dim)';
-    return `
-      <div class="prog-track">
-        <div style="width:${pct}%;height:100%;background:${fillColor};border-radius:2px;transition:width 0.3s"></div>
-      </div>
-      <div style="font-size:10px;margin-top:3px;${countdownStyle}">
-        ${pct}% · ~${daysLeft}d left
-      </div>`;
-  }
-
-  if (st === 'drying') {
-    const dd = dryDays(g) || 0;
-    const pct = Math.min(100, Math.round(dd / getStageTargets().drying * 100));
-    const daysLeft = Math.max(0, getStageTargets().drying - dd);
-    return `
-      <div class="prog-track">
-        <div style="width:${pct}%;height:100%;background:var(--orange);border-radius:2px"></div>
-      </div>
-      <div class="prog-label">Dry d.${dd}${daysLeft > 0 ? ' · ~'+daysLeft+'d left' : ' · check for snap'}</div>`;
-  }
-
-  const seedTarget = getStageTargets().seedling;
-  const vegTarget  = getStageTargets().veg;
-  const totalPreFlower = seedTarget + vegTarget;
-
-  if (st === 'seedling') {
-    const pct = Math.min(100, Math.round(age / totalPreFlower * 100));
-    const daysToVeg = Math.max(0, seedTarget - age);
-    return `
-      <div class="prog-track">
-        <div style="width:${pct}%;height:100%;background:var(--teal);border-radius:2px"></div>
-      </div>
-      <div class="prog-label">
-        d.${age} · ${daysToVeg > 0 ? daysToVeg+'d to veg' : 'ready for veg'}
-      </div>`;
-  }
-
-  if (st === 'veg') {
-    const isClone = g.source === 'clone';
-    let pct, label;
-    if (isClone) {
-      pct = Math.min(100, Math.round(age / vegTarget * 100));
-      const daysToFlip = Math.max(0, vegTarget - age);
-      label = `Clone d.${age} · ${daysToFlip > 0 ? '~'+daysToFlip+'d to flip' : 'ready to flip'}`;
-    } else {
-      pct = Math.min(100, Math.round(age / totalPreFlower * 100));
-      const vegDays  = Math.max(0, age - seedTarget);
-      const daysToFlip = Math.max(0, vegTarget - vegDays);
-      label = `Veg wk ${Math.ceil(Math.max(1, vegDays) / 7)} · ${daysToFlip > 0 ? '~'+daysToFlip+'d to flip' : 'ready to flip'}`;
-    }
-    const seedPct = isClone ? 0 : Math.round(seedTarget / totalPreFlower * 100);
-    const vegFill = Math.max(0, pct - seedPct);
-    return `
-      <div class="prog-track" style="display:flex">
-        ${!isClone && seedPct > 0 ? `<div style="width:${seedPct}%;height:100%;background:var(--teal);flex-shrink:0"></div>` : ''}
-        <div style="width:${vegFill}%;height:100%;background:var(--accent);flex-shrink:0"></div>
-      </div>
-      <div class="prog-label">${label}</div>`;
-  }
-
-  return '<div class="txt-dim-xs">—</div>';
-}
 
 function boardDrawer(g, i, _jIdx) {
   const st = g.stage;
@@ -1814,7 +1923,7 @@ function boardDrawer(g, i, _jIdx) {
           <button class="btn btn-primary btn-sm" onclick="saveInlineLog(event,${i})">Save Entry</button>
           <button class="btn btn-ghost btn-sm" onclick="toggleInlineLogForm(event,${i})">Cancel</button>
           <label class="btn btn-ghost btn-sm" style="cursor:pointer" title="Attach a photo (stored locally)">
-            <svg width="12" height="12" viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" class="icon"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             Photo
             <input type="file" id="ilog-photo-${i}" accept="image/*" style="display:none" onchange="previewPhoto(${i})" onclick="event.stopPropagation()"/>
           </label>
@@ -1881,8 +1990,8 @@ function plants() {
 
   const alertBar = (upcoming.length || flagged.length) ? `
     <div class="board-alerts">
-      ${upcoming.map(g=>`<span class="board-alert board-alert-harvest">🌾 ${esc(g.id||g.strain)} — ${daysUntil(g.harvestDate)===0?'harvest today':'~'+daysUntil(g.harvestDate)+'d'}</span>`).join('')}
-      ${flagged.map(g=>`<span class="board-alert board-alert-issue">⚑ ${esc(g.id||g.strain)} — ${plantIssueList(g).join(', ')}</span>`).join('')}
+      ${upcoming.map(g=>`<span class="board-alert board-alert-harvest"><svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M2 22 16 8"/><path d="M3.47 12.53 5 11l1.53 1.53a3.5 3.5 0 0 1 0 4.94L5 19l-1.53-1.53a3.5 3.5 0 0 1 0-4.94z"/><path d="M7.47 8.53 9 7l1.53 1.53a3.5 3.5 0 0 1 0 4.94L9 15l-1.53-1.53a3.5 3.5 0 0 1 0-4.94z"/><path d="M11.47 4.53 13 3l1.53 1.53a3.5 3.5 0 0 1 0 4.94L13 11l-1.53-1.53a3.5 3.5 0 0 1 0-4.94z"/><path d="M20 2h2v2a4 4 0 0 1-4 4h-2V6a4 4 0 0 1 4-4z"/><path d="M11.47 17.47 13 19l-1.53 1.53a3.5 3.5 0 0 1-4.94 0L5 19l1.53-1.53a3.5 3.5 0 0 1 4.94 0z"/></svg> ${esc(g.id||g.strain)} — ${daysUntil(g.harvestDate)===0?'harvest today':'~'+daysUntil(g.harvestDate)+'d'}</span>`).join('')}
+      ${flagged.map(g=>`<span class="board-alert board-alert-issue">⚐ ${esc(g.id||g.strain)} — ${plantIssueList(g).join(', ')}</span>`).join('')}
       
     </div>` : '';
 
@@ -1999,7 +2108,7 @@ function plants() {
     const stageLabels = { seedling:'Seedling', veg:'Veg', flower:'Flower', drying:'Drying', curing:'Curing' };
     const stageColors = { seedling:'var(--teal)', veg:'var(--accent)', flower:'var(--purple)', drying:'var(--orange)', curing:'var(--accent)' };
 
-    const renderTile = (g) => {
+    const renderRow = (g) => {
       const i = DB.grows.indexOf(g);
       const sig = plantSignal(g, _jIdx);
       const issues = plantIssueList(g, _jIdx);
@@ -2011,74 +2120,98 @@ function plants() {
       const age = daysOld(g);
       const daysLeft = g.harvestDate ? Math.max(0, daysUntil(g.harvestDate)) : null;
 
-      const stageColor = { flower:'purple', veg:'accent', seedling:'teal', drying:'orange', curing:'teal' }[g.stage] || 'dim';
-      const primaryVal = g.stage==='flower'
-        ? (daysLeft !== null ? (daysLeft===0?'Harvest!':daysLeft+'d left') : (fd||0)+'d flower')
-        : g.stage==='drying'  ? (dd||0)+'d drying'
-        : g.stage==='veg'     ? (age||0)+'d veg'
-        : g.stage==='seedling'? (age||0)+'d old'
-        : (age||0)+'d';
-      const primaryColor = g.stage==='flower'
-        ? (daysLeft!==null&&daysLeft<=7?'danger':daysLeft!==null&&daysLeft<=21?'warn':'purple')
-        : stageColor;
-      const secondaryVal = g.stage==='flower'
-        ? (fd||0)+'d flower'
-        : daysLeft !== null
-          ? (daysLeft<=3?'⚠ ':'')+daysLeft+'d left'
-          : g.flipDate ? fmtDate(g.flipDate) : '';
-      const secondaryLabel = g.stage==='flower' ? 'Elapsed' : daysLeft!==null ? 'Finish' : 'Flipped';
-      const secondaryColor = g.stage==='flower' ? 'dim' : daysLeft!==null&&daysLeft<=7?'danger':daysLeft!==null&&daysLeft<=21?'warn':'dim';
-      const vpdColor = lastVpd ? boardVpdColor(lastVpd, g.stage) : '';
-      const vpdDisplay = lastVpd ? lastVpd.toFixed(2)+' kPa' : '—';
+      const stageAccent = {
+        flower:'var(--purple)', veg:'var(--accent)', seedling:'var(--teal)',
+        drying:'var(--orange)', curing:'var(--teal)', breeding_hold:'var(--warn)'
+      }[g.stage] || 'var(--border2)';
 
-      const tileClass = ['plant-tile',
-        isOpen ? 'tile-open' : '',
-        sig==='red' ? 'tile-danger' : sig==='yellow' ? 'tile-warn' : '',
-        g.stage==='flower' && daysLeft !== null && daysLeft <= 7 ? 'tile-harvest-pulse' : ''
+      const sigColor = sig==='red'?'var(--danger)':sig==='yellow'?'var(--warn)':'var(--accent)';
+
+      const isPulse = g.stage==='flower' && daysLeft !== null && daysLeft <= 7;
+
+      // Countdown
+      const countdown = g.stage==='flower'
+        ? (daysLeft===0?'Harvest!':daysLeft!==null?daysLeft+'d left':(fd||0)+'d')
+        : g.stage==='veg' ? (age||0)+'d veg'
+        : g.stage==='seedling' ? (age||0)+'d old'
+        : g.stage==='drying' ? (dd||0)+'d drying'
+        : (age||0)+'d';
+      const countdownClass = g.stage==='flower'
+        ? (daysLeft!==null&&daysLeft<=7?'danger':daysLeft!==null&&daysLeft<=21?'warn':'purple')
+        : g.stage==='veg'?'accent':g.stage==='seedling'?'accent':'dim';
+
+      // Progress
+      const progPct = (() => {
+        if (g.stage==='flower' && g.flipDate) return Math.min(100,Math.round((fd||0)/(g.targetFlower||63)*100));
+        if (g.stage==='veg') return Math.min(100,Math.round((age||0)/42*100));
+        if (g.stage==='seedling') return Math.min(100,Math.round((age||0)/21*100));
+        if (g.stage==='drying') return Math.min(100,Math.round((dd||0)/(g.targetDryDays||12)*100));
+        return null;
+      })();
+      const progColor = g.stage==='flower'
+        ? (daysLeft!==null&&daysLeft<=7?'var(--danger)':daysLeft!==null&&daysLeft<=21?'var(--warn)':'var(--purple)')
+        : stageAccent;
+
+      // Secondary cell — "Elapsed" for flower, "Target" for veg/seedling
+      const sec2 = g.stage==='flower' ? `<span class="row-h-val blue">${(fd||0)}d</span>`
+        : g.stage==='veg' ? `<span class="row-h-val dim">42d</span>`
+        : g.stage==='seedling' ? `<span class="row-h-val dim">21d</span>`
+        : `<span class="row-h-val dim">—</span>`;
+
+      const vpdStr = lastVpd ? lastVpd.toFixed(2) : '—';
+      const vpdClass = lastVpd ? (boardVpdColor(lastVpd,g.stage)==='var(--accent)'?'accent':boardVpdColor(lastVpd,g.stage)==='var(--warn)'?'warn':'danger') : 'dim';
+      const tempRh = (lastEntry&&lastEntry.temp?lastEntry.temp+'°F':'—')+' / '+(lastEntry&&lastEntry.humidity?lastEntry.humidity+'%':'—');
+
+      const rowClass = ['plant-row-h',
+        isOpen?'row-h-open':'',
+        isPulse?'row-h-pulse':sig==='red'?'row-h-danger':sig==='yellow'?'row-h-warn':'',
       ].filter(Boolean).join(' ');
 
-      return `<div class="${tileClass}" id="tile-${g.uid}" data-uid="${g.uid}" data-stage="${g.stage}"
+      return `<div class="${rowClass}" id="tile-${g.uid}" data-uid="${g.uid}" data-stage="${g.stage}"
           draggable="true"
           ondragstart="tileDragStart(event,'${g.uid}','${g.stage}')"
           ondragend="tileDragEnd('${g.uid}')"
           ondragover="tileDragOver(event,'${g.uid}','${g.stage}')"
           ondrop="tileDrop(event,'${g.uid}','${g.stage}')"
           id="brow-${i}" onclick="toggleBoardRow(${i})">
-          <div class="tile-head">
-            <span class="tile-drag-handle" onclick="event.stopPropagation()" title="Drag to reorder">⠿</span>
-            <span class="tile-sig sig-${sig}"></span>
-            <span class="tile-name">${esc(g.strain)}</span>
-            ${g.id ? `<span class="tile-id" style="font-size:11px;color:#fff;font-weight:700;background:#0a0a0a;padding:1px 6px;border-radius:3px;border:1px solid #333">${esc(g.id)}</span>` : ''}
-            ${stageBadge(g.stage)}
-          </div>
-          <div class="tile-cells">
-            <div class="tile-cell"><div class="tile-cell-label">${g.stage==='flower'?'Countdown':'Days'}</div><div class="tile-cell-value ${primaryColor}">${primaryVal}</div></div>
-            <div class="tile-cell"><div class="tile-cell-label">${secondaryLabel}</div><div class="tile-cell-value ${g.stage==='flower'?'':secondaryColor}" style="${g.stage==='flower'?'color:var(--blue)':''}">${secondaryVal||'—'}</div></div>
-            <div class="tile-cell"><div class="tile-cell-label">VPD</div><div class="tile-cell-value" style="${vpdColor?'color:'+vpdColor:''}">${vpdDisplay}</div></div>
-            <div class="tile-cell"><div class="tile-cell-label">Medium</div><div class="tile-cell-value dim">${esc(g.medium||'—')}</div></div>
-            <div class="tile-cell"><div class="tile-cell-label">Temp</div><div class="tile-cell-value dim">${lastEntry&&lastEntry.temp?lastEntry.temp+'°F':'—'}</div></div>
-            <div class="tile-cell"><div class="tile-cell-label">RH</div><div class="tile-cell-value dim">${lastEntry&&lastEntry.humidity?lastEntry.humidity+'%':'—'}</div></div>
-          </div>
-          <div style="margin-top:8px">${boardProgressBar(g)}</div>
-          ${issues.length ? `<div class="tile-flags">${issues.map(boardIssueTag).join('')}</div>` : ''}
-        </div>${isOpen ? `
-        <div class="tile-drawer-wrap" id="drawer-wrap-${i}" style="grid-column:1/-1">
-          <div class="tile-drawer" id="drawer-${i}">
-            ${boardDrawer(g, i, _jIdx)}
-          </div>
-        </div>` : ''}`;
+        <div class="row-h-accent" style="background:${stageAccent}"></div>
+        <div class="row-h-drag" onclick="event.stopPropagation()">⠿</div>
+        <div class="row-h-strain">
+          <span class="row-h-sig" style="background:${sigColor};box-shadow:0 0 4px ${sigColor}66"></span>
+          ${g.id ? `<div class="tape-tag-wrap">${makeTapeTag(g.id)}</div>` : '<div style="width:90px;flex-shrink:0"></div>'}
+          <span class="row-h-name">${esc(g.strain)}</span>
+        </div>
+        <div class="row-h-cell">
+          <span class="row-h-val ${countdownClass}">${countdown}</span>
+          ${progPct!==null?`<div class="row-h-prog"><div class="row-h-prog-fill" style="width:${progPct}%;background:${progColor}"></div></div>`:''}
+        </div>
+        <div class="row-h-cell">${sec2}</div>
+        <div class="row-h-cell"><span class="row-h-val ${vpdClass}">${vpdStr}</span></div>
+        <div class="row-h-cell"><span class="row-h-val">${tempRh}</span></div>
+        <div class="row-h-cell"><span class="row-h-val">${esc(g.medium||'—')}</span></div>
+      </div>
+      ${isOpen?`<div class="row-h-drawer${sig==='red'?' drawer-danger':sig==='yellow'?' drawer-warn':''}">
+        <div class="tile-drawer" id="drawer-${i}">${boardDrawer(g,i,_jIdx)}</div>
+      </div>`:''}`;
     };
 
-    if (!plantGrouped) {
-      return `<div class="tile-grid" id="tile-grid">${list.map(renderTile).join('')}</div>`;
-    }
+    const colLabel = (s) => {
+      const sec = s==='flower' ? 'Elapsed' : 'Target';
+      const labels = ['','',`Strain <span style="font-size:7px;opacity:0.4;letter-spacing:0" title="Double-click to reset column widths" ondblclick="resetPlantCols()">⟺</span>`,`Countdown`,sec,'VPD','Temp / RH','Medium'];
+      return labels.map((l,idx) => idx < 2
+        ? `<div>${l}</div>`
+        : `<div>${l}<span class="plant-col-resize" onmousedown="startPlantColResize(event,${idx})" onclick="event.stopPropagation()"></span></div>`
+      ).join('');
+    };
 
-    // Grouped mode — always active
+    // Grouped by stage
     return stageOrder.filter(s => list.some(g => g.stage === s)).map(s => {
       const group = sortByOrder(list.filter(g => g.stage === s), s);
-      return `<div style="margin-bottom:28px">
+      const labels = colLabel(s);
+      return `<div class="plant-section">
         <div class="stage-group-header" style="color:${stageColors[s]}">${stageLabels[s]} <span class="stage-group-count">${group.length} plant${group.length!==1?'s':''}</span></div>
-        <div class="tile-grid">${group.map(renderTile).join('')}</div>
+        <div class="plant-col-header">${colLabel(s)}</div>
+        ${group.map(renderRow).join('')}
       </div>`;
     }).join('');
   })()}
@@ -2104,41 +2237,31 @@ function tileDragEnd(uid) {
   _dragUid = null; _dragStage = null;
 }
 function tileDragOver(e, uid, stage) {
-  if (_dragStage !== stage) return; // different stage — reject
+  if (_dragStage !== stage) return;
   e.preventDefault(); e.dataTransfer.dropEffect = 'move';
   document.querySelectorAll('.tile-drag-over,.tile-drag-over-below').forEach(t => { t.classList.remove('tile-drag-over','tile-drag-over-below'); });
   const el = document.getElementById('tile-' + uid);
   if (!el || uid === _dragUid) return;
   const rect = el.getBoundingClientRect();
-  const mid = rect.top + rect.height / 2;
-  el.classList.add(e.clientY < mid ? 'tile-drag-over' : 'tile-drag-over-below');
+  el.classList.add(e.clientY < rect.top + rect.height / 2 ? 'tile-drag-over' : 'tile-drag-over-below');
 }
 function tileDrop(e, uid, stage) {
   e.preventDefault();
   if (!_dragUid || _dragStage !== stage || _dragUid === uid) return;
   document.querySelectorAll('.tile-drag-over,.tile-drag-over-below').forEach(t => { t.classList.remove('tile-drag-over','tile-drag-over-below'); });
-
-  // Build current ordered list for this stage
   const stagePlants = DB.grows.filter(g => g.stage === stage);
   const order = getPlantOrder();
   const stageOrder = order[stage] || stagePlants.map(g => g.uid);
-
-  // Ensure all uids present
   stagePlants.forEach(g => { if (!stageOrder.includes(g.uid)) stageOrder.push(g.uid); });
-
-  // Move _dragUid to before/after uid based on drop position
   const el = document.getElementById('tile-' + uid);
   const rect = el ? el.getBoundingClientRect() : null;
   const insertBefore = rect && e.clientY < rect.top + rect.height / 2;
-
   const fromIdx = stageOrder.indexOf(_dragUid);
   const toIdx   = stageOrder.indexOf(uid);
   if (fromIdx === -1 || toIdx === -1) return;
-
   stageOrder.splice(fromIdx, 1);
   const newTo = stageOrder.indexOf(uid);
   stageOrder.splice(insertBefore ? newTo : newTo + 1, 0, _dragUid);
-
   order[stage] = stageOrder;
   savePlantOrder(order);
   render();
@@ -2338,7 +2461,7 @@ function history() {
             ${fate ? fateBadge(fate) : ''}
             ${isPM ?'<span class="badge badge-pm">PM</span>':''}
             ${isHerm?'<span class="badge badge-herm">Herm</span>':''}
-            ${g.smokeReport && !fate ?`<span class="txt-dim-xs">📝 smoke report</span>`:''}
+            ${g.smokeReport && !fate ?`<span class="txt-dim-xs"><svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> smoke report</span>`:''}
             ${g.cullNotes ? `<span class="txt-dim-xs">${esc(g.cullNotes.substring(0,60))}${g.cullNotes.length>60?'…':''}</span>` : ''}
           </div>
         </div>
@@ -2486,21 +2609,24 @@ function cures() {
     </div>`;
 
     return `<div class="${tileClass}" id="brow-${idx}" onclick="toggleBoardRow(${idx})">
-      <div class="tile-head">
-        <span class="tile-sig" style="width:7px;height:7px;border-radius:50%;background:${primaryColor};flex-shrink:0;display:block"></span>
-        <span class="tile-name">${esc(g.strain)}</span>
-        ${g.id ? `<span class="tile-id" style="font-size:11px;color:#fff;font-weight:700;background:#0a0a0a;padding:1px 6px;border-radius:3px;border:1px solid #333">${esc(g.id)}</span>` : ''}
-        ${stageBadge(g.stage)}
+      <div class="tile-accent-bar" style="background:${primaryColor}"></div>
+      <div class="tile-inner">
+        <div class="tile-head">
+          <span class="tile-sig" style="width:7px;height:7px;border-radius:50%;background:${primaryColor};flex-shrink:0;display:block"></span>
+          <span class="tile-name">${esc(g.strain)}</span>
+          ${g.id ? `<span class="tile-id" style="font-size:10px;color:var(--text-dim);font-weight:700;background:var(--surface2);padding:1px 5px;border-radius:3px;border:1px solid var(--border)">${esc(g.id)}</span>` : ''}
+          ${stageBadge(g.stage)}
+        </div>
+        <div class="tile-cells">
+          <div class="tile-cell"><div class="tile-cell-label">Days</div><div class="tile-cell-value" style="color:${primaryColor}">${isDrying ? dd+'d drying' : cd+'d curing'}</div></div>
+          <div class="tile-cell"><div class="tile-cell-label">${isDrying ? 'Target' : 'Phase'}</div><div class="tile-cell-value dim">${isDrying ? (g.targetDryDays||12)+'d' : curePhaseName(g)}</div></div>
+          <div class="tile-cell"><div class="tile-cell-label">Wet</div><div class="tile-cell-value dim">${g.wetWeight ? g.wetWeight+'g' : '—'}</div></div>
+          <div class="tile-cell"><div class="tile-cell-label">Dry</div><div class="tile-cell-value dim">${g.dryWeight ? g.dryWeight+'g' : '—'}</div></div>
+          <div class="tile-cell"><div class="tile-cell-label">Shrink</div><div class="tile-cell-value dim">${shrinkPct}</div></div>
+          <div class="tile-cell"><div class="tile-cell-label">Jars</div><div class="tile-cell-value dim">${g.jarCount||'—'}</div></div>
+        </div>
+        <div style="margin-top:8px">${progBar}</div>
       </div>
-      <div class="tile-cells">
-        <div class="tile-cell"><div class="tile-cell-label">Days</div><div class="tile-cell-value" style="color:${primaryColor}">${isDrying ? dd+'d drying' : cd+'d curing'}</div></div>
-        <div class="tile-cell"><div class="tile-cell-label">${isDrying ? 'Target' : 'Phase'}</div><div class="tile-cell-value dim">${isDrying ? (g.targetDryDays||12)+'d' : curePhaseName(g)}</div></div>
-        <div class="tile-cell"><div class="tile-cell-label">Wet</div><div class="tile-cell-value dim">${g.wetWeight ? g.wetWeight+'g' : '—'}</div></div>
-        <div class="tile-cell"><div class="tile-cell-label">Dry</div><div class="tile-cell-value dim">${g.dryWeight ? g.dryWeight+'g' : '—'}</div></div>
-        <div class="tile-cell"><div class="tile-cell-label">Shrink</div><div class="tile-cell-value dim">${shrinkPct}</div></div>
-        <div class="tile-cell"><div class="tile-cell-label">Jars</div><div class="tile-cell-value dim">${g.jarCount||'—'}</div></div>
-      </div>
-      <div style="margin-top:8px">${progBar}</div>
     </div>
     ${isOpen ? `<div class="tile-drawer-wrap" id="drawer-wrap-${idx}" style="grid-column:1/-1"><div class="tile-drawer">${drawerHtml}</div></div>` : ''}`;
   };
@@ -2533,14 +2659,14 @@ const CONTAINER_TYPES = ['Tupperware', 'Cookie Tin', 'Mason Jar', 'Mylar Bag', '
 const CONTAINER_LOCATIONS = ['Fridge', 'Freezer', 'Drawer', 'Shelf', 'Closet', 'Safe', 'Cabinet', 'Desk', 'Other'];
 
 const CONTAINER_ICONS = {
-  'Tupperware': '🥡', 'Cookie Tin': '🫙', 'Mason Jar': '🫙',
-  'Mylar Bag': '👜', 'Envelope': '✉️', 'Film Canister': '🎞️',
-  'Pill Bottle': '💊', 'Desiccant Box': '📦', 'Zip-Lock Bag': '🛍️',
-  'Binder Sleeve': '📂', 'Other': '📦'
+  'Tupperware': `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>`, 'Cookie Tin': `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M8 2h8"/><path d="M9 2v2.789a4 4 0 0 1-.672 2.219l-.656.984A4 4 0 0 0 7 10.212V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.789a4 4 0 0 0-.672-2.219l-.656-.984A4 4 0 0 1 15 4.788V2"/><path d="M7 15a6.472 6.472 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/></svg>`, 'Mason Jar': `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M8 2h8"/><path d="M9 2v2.789a4 4 0 0 1-.672 2.219l-.656.984A4 4 0 0 0 7 10.212V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.789a4 4 0 0 0-.672-2.219l-.656-.984A4 4 0 0 1 15 4.788V2"/><path d="M7 15a6.472 6.472 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/></svg>`,
+  'Mylar Bag': `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`, 'Envelope': '<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>️', 'Film Canister': '<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/></svg>️',
+  'Pill Bottle': `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7z"/><line x1="8.5" y1="8.5" x2="15.5" y2="15.5"/></svg>`, 'Desiccant Box': `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>`, 'Zip-Lock Bag': `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/></svg>`,
+  'Binder Sleeve': `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>`, 'Other': `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>`
 };
 
 function containerIcon(type) {
-  return CONTAINER_ICONS[type] || '📦';
+  return CONTAINER_ICONS[type] || `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>`;
 }
 
 function nextContainerId() {
@@ -2590,7 +2716,7 @@ function containers() {
     </div>
   </div>
   ${unassigned ? `<div class="alert alert-harvest" style="margin-bottom:16px">
-    <svg width="16" height="16" viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <svg width="16" height="16" viewBox="0 0 24 24" class="icon" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
     <div>${unassigned} seed pack${unassigned!==1?'s are':' is'} not assigned to a container yet. <span style="cursor:pointer;text-decoration:underline" onclick="nav('seeds')">Go to Seed Library →</span></div>
   </div>` : ''}
   <div class="container-grid">
@@ -2649,9 +2775,15 @@ const BREEDERS = [
   // ── HOME BRED / PERSONAL ──
   'Home Bred', 'Personal Collection',
 ]
-const SEED_TYPES = ['All','Heirloom/IBL','Regular Hybrid','Feminized','Autoflower','My Seeds','Wish List'];
+const SEED_TYPES_KEY = 'growlog_seed_types';
+const SEED_TYPES_DEFAULTS = ['Landrace, Heirloom & IBL','Regular Hybrid','Feminized','Autoflower','My Seeds','Wish List'];
+function getSeedTypes() {
+  try { const s = JSON.parse(localStorage.getItem(SEED_TYPES_KEY)); return s && s.length ? s : [...SEED_TYPES_DEFAULTS]; } catch(e) { return [...SEED_TYPES_DEFAULTS]; }
+}
+let SEED_TYPES = ['All', ...getSeedTypes()];
 let vaultExpanded = null;
 let vaultGrouped = false;
+let vaultSort = { col: 'strain', dir: 1 }; // col: strain|breeder|qty|type, dir: 1=asc -1=desc
 
 function seedQtyColor(qty) {
   const q = parseFloat(qty);
@@ -2660,15 +2792,6 @@ function seedQtyColor(qty) {
   if (q <= 5)  return 'var(--warn)';
   if (q >= 50) return 'var(--accent)';
   return 'var(--purple)';
-}
-
-function seedQtyGlyph(qty) {
-  const q = parseFloat(qty);
-  if (isNaN(q) || qty === '?' || qty === '') return '';
-  if (q <= 2)  return ' <span style="font-size:9px;color:var(--danger);letter-spacing:0.04em">LOW</span>';
-  if (q <= 5)  return ' <span style="font-size:9px;color:var(--warn);letter-spacing:0.04em">FEW</span>';
-  if (q >= 50) return ' <span style="font-size:9px;color:var(--accent);letter-spacing:0.04em">DEEP</span>';
-  return '';
 }
 
 function seedTimesPopped(s) {
@@ -2737,124 +2860,196 @@ function vaultDrawer(s, i) {
 
 function toggleVaultRow(i) {
   vaultExpanded = vaultExpanded === i ? null : i;
-  document.querySelectorAll('.vault-row').forEach(r => r.classList.remove('vault-row-open'));
-  document.querySelectorAll('.vault-chev').forEach(c => c.classList.remove('board-chev-open'));
-  document.querySelectorAll('.vault-drawer').forEach(d => d.style.display = 'none');
-  if (vaultExpanded !== null) {
-    const row = document.getElementById('vrow-' + i);
-    const drawer = document.getElementById('vdrawer-' + i);
-    if (row) { row.classList.add('vault-row-open'); const ch = row.querySelector('.vault-chev'); if (ch) ch.classList.add('board-chev-open'); }
-    if (drawer) drawer.style.display = 'block';
-  }
+  render();
 }
 
 function seeds() {
-  let list = DB.seeds;
+  // All filtering, sorting, and display handled via _seedFilters + vaultSort
+  const _sf = window._seedFilters || { type: 'All', breeder: 'All', container: 'All' };
+
+  const getContainerVal = (s) => {
+    if (s.containerId) return containerName(s.containerId);
+    if (s.bin) return s.bin;
+    const m = (s.notes||'').match(/\bBin[:\s]+([^\s|,]+)/i);
+    return m ? m[1] : null;
+  };
+
+  // Build filtered + sorted list
+  let list = DB.seeds.slice();
   if (search) { const _q = search.toLowerCase(); list = list.filter(s => (s.strain+' '+(s.breeder||'')+' '+(s.notes||'')+' '+(s.type||'')+' '+(s.year||'')).toLowerCase().includes(_q)); }
-  if (filter !== 'All') list = list.filter(s => s.type === filter);
-
-  const totalQty    = DB.seeds.reduce((s,x) => s + (parseFloat(x.qty)||0), 0);
-  const filteredQty = list.reduce((s,x) => s + (parseFloat(x.qty)||0), 0);
-  const strainCount = DB.seeds.length;
-  const lowStock    = DB.seeds.filter(s => { const q = parseFloat(s.qty); return !isNaN(q) && q <= 3; }).length;
-  const neverPopped = DB.seeds.filter(s => seedTimesPopped(s) === 0).length;
-
-  // Type breakdown for the summary bar
-  const typeGroups = {};
-  SEED_TYPES.slice(1).forEach(t => {
-    const n = DB.seeds.filter(s => s.type === t).length;
-    if (n) typeGroups[t] = n;
+  if (_sf.type !== 'All') list = list.filter(s => s.type === _sf.type);
+  if (_sf.breeder !== 'All') list = list.filter(s => (s.breeder||'') === _sf.breeder);
+  if (_sf.container !== 'All') {
+    if (_sf.container === '__none__') list = list.filter(s => !getContainerVal(s));
+    else list = list.filter(s => getContainerVal(s) === _sf.container);
+  }
+  list = list.sort((a, b) => {
+    if (vaultSort.col === 'qty') { const av = parseFloat(a.qty)||0, bv = parseFloat(b.qty)||0; return (av - bv) * vaultSort.dir; }
+    let av, bv;
+    if (vaultSort.col === 'breeder')       { av = (a.breeder||'').toLowerCase();      bv = (b.breeder||'').toLowerCase(); }
+    else if (vaultSort.col === 'type')     { av = (a.type||'').toLowerCase();          bv = (b.type||'').toLowerCase(); }
+    else if (vaultSort.col === 'container'){ av = (getContainerVal(a)||'').toLowerCase(); bv = (getContainerVal(b)||'').toLowerCase(); }
+    else                                   { av = (a.strain||'').toLowerCase();        bv = (b.strain||'').toLowerCase(); }
+    return av < bv ? -vaultSort.dir : av > bv ? vaultSort.dir : 0;
   });
 
-  const summaryBar = `
-    <div class="vault-summary">
-      <div class="vault-stat"><div class="vault-stat-num">${strainCount}</div><div class="vault-stat-lbl">Strains</div></div>
-      <div class="vault-stat-divider"></div>
-      <div class="vault-stat"><div class="vault-stat-num" style="color:var(--accent)">~${Math.round(totalQty)}</div><div class="vault-stat-lbl">Total Seeds</div></div>
-      <div class="vault-stat-divider"></div>
-      <div class="vault-stat"><div class="vault-stat-num" style="color:var(--text-mid)">${neverPopped}</div><div class="vault-stat-lbl">Never Popped</div></div>
-      ${lowStock ? `<div class="vault-stat-divider"></div><div class="vault-stat"><div class="vault-stat-num" style="color:var(--warn)">${lowStock}</div><div class="vault-stat-lbl">Low Stock</div></div>` : ''}
-      <div style="flex:1"></div>
-      ${Object.entries(typeGroups).map(([t,n])=>`<div class="vault-type-pill">${typeBadge(t)} <span style="font-size:10px;color:var(--text-dim);margin-left:4px">${n}</span></div>`).join('')}
-    </div>`;
+  const totalQty    = DB.seeds.reduce((s,x) => s + (parseFloat(x.qty)||0), 0);
+  const strainCount = DB.seeds.length;
+  const neverPopped = DB.seeds.filter(s => seedTimesPopped(s) === 0).length;
+  const breederCount = new Set(DB.seeds.map(s => s.breeder).filter(Boolean)).size;
 
-  if (!list.length) return `
+  if (!DB.seeds.length) return `
     <div class="page-header">
       <div class="page-title">Seed Library</div>
       <div class="header-actions"><button class="btn btn-primary" onclick="openAdd('seeds')">+ Add Strain</button></div>
     </div>
     <div class="table-wrap"><div class="empty"><div class="empty-icon"><svg width="44" height="44" viewBox="0 0 24 24" style="stroke:#4ade80;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="empty-title">Vault is empty</div><div class="empty-hint">Add your first strain to start the collection.</div><button class="btn btn-primary" onclick="openAdd('seeds')">+ Add Strain</button></div></div>`;
 
-  // Group by type if enabled
-  const buildRows = (rows) => rows.map(s => {
+
+  const sortArrow = (col) => vaultSort.col===col ? (vaultSort.dir===1?' ↑':' ↓') : '';
+
+  const colHeader = () => `<div class="seed-col-header">
+    <div></div>
+    <div class="${vaultSort.col==='container'?'seed-col-sorted':''}" onclick="vaultSort=vaultSort.col==='container'?{col:'container',dir:-vaultSort.dir}:{col:'container',dir:1};render()">Container${sortArrow('container')}<span class="col-resize-handle" onmousedown="startColResize(event,1)" onclick="event.stopPropagation()"></span></div>
+    <div class="${vaultSort.col==='strain'?'seed-col-sorted':''}" onclick="vaultSort=vaultSort.col==='strain'?{col:'strain',dir:-vaultSort.dir}:{col:'strain',dir:1};render()">Strain${sortArrow('strain')} <span style="font-size:7px;opacity:0.4;letter-spacing:0" title="Double-click to reset column widths" ondblclick="resetVaultCols()">⟺</span><span class="col-resize-handle" onmousedown="startColResize(event,2)" onclick="event.stopPropagation()"></span></div>
+    <div class="${vaultSort.col==='breeder'?'seed-col-sorted':''}" onclick="vaultSort=vaultSort.col==='breeder'?{col:'breeder',dir:-vaultSort.dir}:{col:'breeder',dir:1};render()">Breeder${sortArrow('breeder')}<span class="col-resize-handle" onmousedown="startColResize(event,3)" onclick="event.stopPropagation()"></span></div>
+    <div class="${vaultSort.col==='qty'?'seed-col-sorted':''}" onclick="vaultSort=vaultSort.col==='qty'?{col:'qty',dir:-vaultSort.dir}:{col:'qty',dir:1};render()">Qty${sortArrow('qty')}</div>
+  </div>`;
+
+  const buildSeedRow = (s) => {
     const i = DB.seeds.indexOf(s);
     const qty = s.qty || '?';
-    const popped = seedTimesPopped(s);
-    const risks = seedRiskFlags(s);
     const isOpen = vaultExpanded === i;
+    const isWish = s.type === 'Wish List';
+    const accent = SEED_TYPE_ACCENT[s.type] || 'var(--text-dim)';
     const qtyColor = seedQtyColor(qty);
+    const qtyNum = parseFloat(qty);
+    const qtyLbl = !isNaN(qtyNum) ? (qtyNum >= 100 ? 'deep stock' : qtyNum <= 3 ? 'low stock' : '') : '';
+    const containerVal = getContainerVal(s);
+    const notes = (s.notes||'').replace(/\n/g,' ').slice(0,60);
 
-    return `
-    <div class="vault-row ${isOpen?'vault-row-open':''}" id="vrow-${i}" onclick="toggleVaultRow(${i})">
-      <div class="vh-type">${typeBadge(s.type)}</div>
-      <div class="vh-name">
-        <div class="vault-strain-name">${esc(s.strain)}</div>
-        ${s.breeder ? `<div class="vault-strain-sub">${esc(s.breeder)}${s.year?' · '+esc(s.year):''}</div>` : ''}
+    return `<div class="seed-row-h ${isOpen?'seed-row-open':''} ${isWish?'seed-dimmed':''}" id="vrow-${i}" onclick="toggleVaultRow(${i})">
+      <div class="seed-accent" style="background:${accent}"></div>
+      <div class="seed-tape-cell">
+        ${containerVal ? `<span class="seed-tape">${esc(containerVal)}</span>` : `<span style="font-size:10px;color:var(--border2)">—</span>`}
       </div>
-      <div class="vh-qty">
-        <span class="vault-qty-num" style="color:${qtyColor}">${esc(qty)}</span>${seedQtyGlyph(qty)}
+      <div class="seed-strain-cell">
+        <span class="seed-sig" style="background:${accent};${!isWish?'box-shadow:0 0 4px '+accent:''}"></span>
+        <div style="min-width:0">
+          <div class="seed-strain-name">${esc(s.strain)}</div>
+          ${notes?`<div class="seed-strain-sub">${esc(notes)}</div>`:''}
+        </div>
       </div>
-      <div class="vh-bin" class="txt-dim-sm">${s.containerId ? containerName(s.containerId) : (s.bin ? esc(s.bin) : '—')}</div>
-      <div class="vh-popped">
-        ${popped > 0
-          ? `<span style="font-size:11px;color:var(--text-mid)">${popped}× run${popped!==1?'s':''}</span>`
-          : `<span class="txt-dim-xs">unpopped</span>`}
+      <div class="seed-breeder-cell"><span class="seed-breeder-val">${esc(s.breeder||'—')}</span></div>
+      <div class="seed-qty-cell">
+        <div class="seed-qty-val" style="color:${qtyColor}">${esc(qty)}</div>
+        ${qtyLbl?`<div class="seed-qty-lbl">${qtyLbl}</div>`:''}
       </div>
-      <div class="vh-flags" class="tag-wrap">
-        ${risks.length ? risks.map(([lbl,cls])=>`<span class="badge ${cls}" style="font-size:8px;padding:1px 5px">${lbl}</span>`).join('') : '<span class="txt-dim-xs">—</span>'}
-      </div>
-      <div class="vh-notes" style="font-size:11px;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc((s.notes||'').replace(/\n/g,' ').slice(0,100))}</div>
-      <div class="vh-chev"><span class="vault-chev board-chev ${isOpen?'board-chev-open':''}">›</span></div>
     </div>
-    ${vaultDrawer(s, i)}`;
+    ${isOpen?`<div class="seed-drawer">${vaultDrawer(s,i)}</div>`:''}`;
+  };
+
+  // Type breakdown tiles
+  const typeStats = SEED_TYPES.slice(1).map(t => {
+    const n = DB.seeds.filter(s => s.type === t).length;
+    if (!n) return '';
+    const accent = SEED_TYPE_ACCENT[t] || 'var(--text-dim)';
+    const active = _sf.type === t;
+    const short = t.split(',')[0].split(' ')[0];
+    const tEsc = t.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `<div data-type="${esc(t).replace(/"/g,'&quot;')}" onclick="_setSeedFilter('type',this.dataset.type)"
+      style="display:flex;flex-direction:column;justify-content:center;padding:8px 14px;border-right:1px solid var(--border);flex-shrink:0;cursor:pointer;user-select:none;transition:background 0.1s;${active?'background:rgba(74,222,128,0.08);outline:1px solid var(--accent)':''}">
+      <div style="font-size:16px;font-weight:700;color:${accent};line-height:1">
+        <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${accent};margin-right:5px;vertical-align:middle;position:relative;top:-1px"></span>${n}
+      </div>
+      <div style="font-size:8px;letter-spacing:.08em;text-transform:uppercase;margin-top:3px;color:${accent};opacity:0.7">${short}${active?' ↑':''}</div>
+    </div>`;
   }).join('');
 
-  const vaultBoard = vaultGrouped
-    ? SEED_TYPES.slice(1).filter(t => list.some(s => s.type === t)).map(t => {
-        const group = list.filter(s => s.type === t);
-        const gQty  = group.reduce((s,x)=>s+(parseFloat(x.qty)||0),0);
-        return `<div class="vault-group-header">${typeBadge(t)} <span style="font-size:10px;color:var(--text-dim);margin-left:6px">${group.length} strains · ~${Math.round(gQty)} seeds</span></div>
-          ${buildRows(group)}`;
-      }).join('')
-    : buildRows(list);
+  // Breeder chips
+  const allBreeders = [...new Set(DB.seeds.map(s => s.breeder).filter(Boolean))].sort();
+  const breederChips = ['All', ...allBreeders].map(b => {
+    const on = _sf.breeder === b;
+    const bEsc = esc(b).replace(/"/g,'&quot;');
+    return `<span class="chip ${on?'active':''}" data-breeder="${bEsc}" onclick="_setSeedFilter('breeder',this.dataset.breeder)">${esc(b)}</span>`;
+  }).join('');
+
+  // Container chips — only containers that have at least one seed
+  const allContainerVals = [...new Set(DB.seeds.map(s => {
+    if (s.containerId) return containerName(s.containerId);
+    if (s.bin) return s.bin;
+    const m = (s.notes||'').match(/\bBin[:\s]+([^\s|,]+)/i);
+    return m ? m[1] : null;
+  }).filter(Boolean))].sort();
+  const containerChips = ['All', ...allContainerVals, '__none__'].map(c => {
+    const on = _sf.container === c;
+    const label = c === '__none__' ? 'No container' : c;
+    const cEsc = esc(c).replace(/"/g,'&quot;');
+    return `<span class="chip ${on?'active':''}" data-container="${cEsc}" onclick="_setSeedFilter('container',this.dataset.container)">${esc(label)}</span>`;
+  }).join('');
+
+  const isFiltered = _sf.type!=='All' || _sf.breeder!=='All' || _sf.container!=='All' || search;
+  const filterSummary = isFiltered ? `
+    <div style="display:flex;align-items:center;gap:8px;padding:5px 14px;background:rgba(74,222,128,0.04);border-bottom:1px solid var(--border);margin-bottom:8px;border-radius:6px;font-size:10px;color:var(--text-dim)">
+      Showing <strong style="color:var(--accent)">${list.length} strain${list.length!==1?'s':''}</strong>
+      ${_sf.type!=='All'?`· ${esc(_sf.type)}`:''}
+      ${_sf.breeder!=='All'?`· ${esc(_sf.breeder)}`:''}
+      ${_sf.container!=='All'&&_sf.container!=='__none__'?`· ${esc(_sf.container)}`:''}
+      ${_sf.container==='__none__'?'· No container':''}
+      ${search?`· "${esc(search)}"` :''}
+      <button class="btn btn-ghost btn-sm" style="margin-left:auto;padding:2px 8px;font-size:10px" onclick="_clearSeedFilters()">✕ Clear</button>
+    </div>` : '';
+
+  const groupedFinal = SEED_TYPES.slice(1).filter(t => list.some(s => s.type === t)).map(t => {
+    const group = list.filter(s => s.type === t);
+    const accent = SEED_TYPE_ACCENT[t] || 'var(--text-dim)';
+    return `<div class="seed-section">
+      <div class="stage-group-header" style="color:${accent}">${t} <span class="stage-group-count">${group.length} strain${group.length!==1?'s':''}</span></div>
+      ${colHeader()}
+      ${group.map(buildSeedRow).join('')}
+    </div>`;
+  }).join('');
+
+  const flatFinal = `${colHeader()}${list.map(buildSeedRow).join('')}`;
+
+  const noResults = isFiltered && !list.length ? `<div class="empty" style="padding:32px 20px"><div class="empty-title">No seeds match these filters</div><div class="empty-hint" style="margin-top:6px">Try removing a filter or clearing all.</div></div>` : '';
 
   return `
   <div class="page-header">
     <div class="page-title">Seed Library</div>
-    <div class="page-subtitle">${list.length} strain${list.length!==1?'s':''} · ~${Math.round(filteredQty)} seeds${filter!=='All'?' (filtered)':''}</div>
+    <div class="page-subtitle">${strainCount} strains · ~${Math.round(totalQty)} seeds</div>
     <div class="header-actions">
-      <button class="btn btn-ghost btn-sm" onclick="vaultGrouped=!vaultGrouped;render()" title="Group by type">${vaultGrouped?'⊟ Ungroup':'⊞ Group'}</button>
+      <button class="btn btn-ghost btn-sm" onclick="vaultGrouped=!vaultGrouped;render()">${vaultGrouped?'⊟ Ungroup':'⊞ Group by Type'}</button>
       <button class="btn btn-primary" onclick="openAdd('seeds')">+ Add Strain</button>
     </div>
   </div>
-  <div class="toolbar">
-    <div class="search-wrap"><span class="search-icon">⌕</span><input type="text" placeholder="Search strain, breeder, notes…" value="${esc(search)}" oninput="search=this.value;render()" /></div>
-    <div class="filter-chips">${SEED_TYPES.map(t=>`<span class="chip ${filter===t?'active':''}" onclick="filter='${t}';render()">${t}</span>`).join('')}</div>
+
+  <div style="display:flex;align-items:stretch;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow-x:auto;overflow-y:visible">
+    <div style="display:flex;flex-direction:column;justify-content:center;padding:10px 16px;border-right:1px solid var(--border);flex-shrink:0"><div style="font-size:18px;font-weight:700;color:var(--purple);line-height:1">${strainCount}</div><div style="font-size:8px;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase;margin-top:3px">Strains</div></div>
+    <div style="display:flex;flex-direction:column;justify-content:center;padding:10px 16px;border-right:1px solid var(--border);flex-shrink:0"><div style="font-size:18px;font-weight:700;color:var(--accent);line-height:1">~${Math.round(totalQty)}</div><div style="font-size:8px;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase;margin-top:3px">Seeds</div></div>
+    <div style="display:flex;flex-direction:column;justify-content:center;padding:10px 16px;border-right:1px solid var(--border);flex-shrink:0"><div style="font-size:18px;font-weight:700;color:var(--text-mid);line-height:1">${breederCount}</div><div style="font-size:8px;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase;margin-top:3px">Breeders</div></div>
+    <div style="display:flex;flex-direction:column;justify-content:center;padding:10px 16px;border-right:1px solid var(--border);flex-shrink:0"><div style="font-size:18px;font-weight:700;color:var(--text-dim);line-height:1">${neverPopped}</div><div style="font-size:8px;color:var(--text-dim);letter-spacing:.12em;text-transform:uppercase;margin-top:3px">Unpopped</div></div>
+    ${typeStats}
   </div>
-  ${summaryBar}
-  <div class="big-board">
-    <div class="vault-head">
-      <div class="vh-type">Type</div>
-      <div class="vh-name">Strain</div>
-      <div class="vh-qty">Qty</div>
-      <div class="vh-bin">Bin</div>
-      <div class="vh-popped">Runs</div>
-      <div class="vh-flags">Flags</div>
-      <div class="vh-notes">Notes</div>
-      <div class="vh-chev"></div>
+
+  <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;margin-bottom:10px;overflow:hidden">
+    <div style="display:flex;align-items:center;border-bottom:1px solid var(--border)">
+      <div style="font-size:8px;color:var(--text-dim);letter-spacing:.14em;text-transform:uppercase;padding:8px 10px 8px 14px;border-right:1px solid var(--border);min-width:80px;flex-shrink:0">Container</div>
+      <div style="display:flex;align-items:center;gap:5px;padding:6px 12px;overflow-x:auto;flex:1">${containerChips}</div>
     </div>
-    ${vaultBoard}
-  </div>`;
+    <div style="display:flex;align-items:center;border-bottom:1px solid var(--border)">
+      <div style="font-size:8px;color:var(--text-dim);letter-spacing:.14em;text-transform:uppercase;padding:8px 10px 8px 14px;border-right:1px solid var(--border);min-width:80px;flex-shrink:0">Breeder</div>
+      <div style="display:flex;align-items:center;gap:5px;padding:6px 12px;overflow-x:auto;flex:1">${breederChips}</div>
+    </div>
+    <div style="display:flex;align-items:center;padding:7px 14px">
+      <span style="color:var(--text-dim);font-size:13px;margin-right:-22px;z-index:1">⌕</span>
+      <input type="text" class="form-input" style="padding-left:28px" placeholder="Search strain, notes…" value="${esc(search)}" oninput="search=this.value;render()" />
+    </div>
+  </div>
+
+  ${filterSummary}
+  ${noResults}
+  ${!noResults ? (vaultGrouped ? groupedFinal : flatFinal) : ''}`;
 }
 
 function breeding() {
@@ -2913,7 +3108,7 @@ function breeding() {
         ${isActive ? `<button class="btn btn-primary btn-sm" onclick="breedingHarvest(${i})">Seeds Harvested →</button>` : ''}
         ${b.status === 'harvested' ? `<button class="btn btn-primary btn-sm" onclick="breedingComplete(${i})">Complete →</button>` : ''}
         ${b.crossName && (b.seedsProduced || b.status === 'harvested') ? `<button class="btn btn-ghost btn-sm" onclick="breedingToSeeds(${i})">
-          <svg width="12" height="12" viewBox="0 0 24 24" style="stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <svg width="12" height="12" viewBox="0 0 24 24" class="icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           Add to Seed Library
         </button>` : ''}
         <button class="btn btn-ghost btn-sm" onclick="openEdit('breeding',${i})" style="margin-left:auto">Edit</button>
@@ -3121,16 +3316,16 @@ function stats() {
   })();
 
   const insights = [];
-  if (pmPct >= 50) insights.push({ icon:'🍄', text:'<strong>PM is a recurring problem.</strong> It showed up in '+pmPct+'% of your harvested runs. Consider dialing humidity down in late flower and keeping air moving.' });
-  else if (pmPct > 0) insights.push({ icon:'🍄', text:'PM appeared in '+pmPct+'% of your harvested runs ('+pmRuns+' of '+harvestRuns+'). Still worth watching late flower humidity.' });
-  if (avgFlower && avgFlower > 68) insights.push({ icon:'📅', text:'<strong>Your runs tend to go long.</strong> Average finish is '+avgFlower.toFixed(1)+' days — longer than the typical 63-day target.' });
-  if (avgFlower && avgFlower < 56) insights.push({ icon:'⚡', text:'<strong>Fast finisher.</strong> Your average flower time is '+avgFlower.toFixed(1)+' days.' });
-  if (vpdPct !== null && vpdPct < 70) insights.push({ icon:'💧', text:'<strong>VPD is frequently out of range</strong> — only '+vpdPct+'% of logged readings were in the target zone.' });
-  if (vpdPct !== null && vpdPct >= 90) insights.push({ icon:'✅', text:'<strong>VPD is dialed.</strong> '+vpdPct+'% of your logged readings are in the target zone.' });
-  if (neverPopped > 20) insights.push({ icon:'🫙', text:'<strong>'+neverPopped+' strains have never been popped.</strong> Worth rotating before they age out.' });
-  if (lowStockSeeds.length) insights.push({ icon:'⚠️', text:'<strong>'+lowStockSeeds.length+' strain'+(lowStockSeeds.length>1?'s are':' is')+' critically low</strong> (3 seeds or fewer): '+lowStockSeeds.slice(0,3).map(s=>s.strain).join(', ')+(lowStockSeeds.length>3?' and more':'')+'.' });
-  if (journal.length < 10 && plants.length > 0) insights.push({ icon:'📓', text:'<strong>Start journaling more.</strong> Only '+journal.length+' entries across '+plants.length+' plant'+(plants.length>1?'s':'')+'.' });
-  if (strainList.length && strainList[0].pmPct === 0 && strainList[0].runs >= 2) insights.push({ icon:'🏆', text:'<strong>'+strainList[0].name+'</strong> has run clean across '+strainList[0].runs+' run'+(strainList[0].runs>1?'s':'')+'.' });
+  if (pmPct >= 50) insights.push({ icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M19 18a2 2 0 0 0 2-2 8 8 0 0 0-16 0 2 2 0 0 0 2 2h12z"/><path d="M12 18v4"/><path d="M9 22h6"/></svg>`, text:'<strong>PM is a recurring problem.</strong> It showed up in '+pmPct+'% of your harvested runs. Consider dialing humidity down in late flower and keeping air moving.' });
+  else if (pmPct > 0) insights.push({ icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M19 18a2 2 0 0 0 2-2 8 8 0 0 0-16 0 2 2 0 0 0 2 2h12z"/><path d="M12 18v4"/><path d="M9 22h6"/></svg>`, text:'PM appeared in '+pmPct+'% of your harvested runs ('+pmRuns+' of '+harvestRuns+'). Still worth watching late flower humidity.' });
+  if (avgFlower && avgFlower > 68) insights.push({ icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`, text:'<strong>Your runs tend to go long.</strong> Average finish is '+avgFlower.toFixed(1)+' days — longer than the typical 63-day target.' });
+  if (avgFlower && avgFlower < 56) insights.push({ icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`, text:'<strong>Fast finisher.</strong> Your average flower time is '+avgFlower.toFixed(1)+' days.' });
+  if (vpdPct !== null && vpdPct < 70) insights.push({ icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`, text:'<strong>VPD is frequently out of range</strong> — only '+vpdPct+'% of logged readings were in the target zone.' });
+  if (vpdPct !== null && vpdPct >= 90) insights.push({ icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><polyline points="20 6 9 17 4 12"/></svg>`, text:'<strong>VPD is dialed.</strong> '+vpdPct+'% of your logged readings are in the target zone.' });
+  if (neverPopped > 20) insights.push({ icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M8 2h8"/><path d="M9 2v2.789a4 4 0 0 1-.672 2.219l-.656.984A4 4 0 0 0 7 10.212V20a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-9.789a4 4 0 0 0-.672-2.219l-.656-.984A4 4 0 0 1 15 4.788V2"/><path d="M7 15a6.472 6.472 0 0 1 5 0 6.47 6.47 0 0 0 5 0"/></svg>`, text:'<strong>'+neverPopped+' strains have never been popped.</strong> Worth rotating before they age out.' });
+  if (lowStockSeeds.length) insights.push({ icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`, text:'<strong>'+lowStockSeeds.length+' strain'+(lowStockSeeds.length>1?'s are':' is')+' critically low</strong> (3 seeds or fewer): '+lowStockSeeds.slice(0,3).map(s=>s.strain).join(', ')+(lowStockSeeds.length>3?' and more':'')+'.' });
+  if (journal.length < 10 && plants.length > 0) insights.push({ icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`, text:'<strong>Start journaling more.</strong> Only '+journal.length+' entries across '+plants.length+' plant'+(plants.length>1?'s':'')+'.' });
+  if (strainList.length && strainList[0].pmPct === 0 && strainList[0].runs >= 2) insights.push({ icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>`, text:'<strong>'+strainList[0].name+'</strong> has run clean across '+strainList[0].runs+' run'+(strainList[0].runs>1?'s':'')+'.' });
   if (cullPct >= 30 && totalRuns >= 5) insights.push({ icon:'♂', text:'<strong>'+cullCount+' of '+totalRuns+' records</strong> ('+cullPct+'%) are culled or lost plants.' });
 
   function donut(slices, size) {
@@ -3151,8 +3346,7 @@ function stats() {
     return '<svg width="'+size+'" height="'+size+'" viewBox="0 0 '+size+' '+size+'">'+'<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="var(--surface2)"/>'+paths.join('')+'<circle cx="'+cx+'" cy="'+cy+'" r="'+(r-sw)+'" fill="var(--surface)"/></svg>';
   }
 
-  const typeColors = { 'Heirloom/IBL':'var(--warn)','Regular Hybrid':'var(--accent)','Feminized':'var(--pink)','Autoflower':'var(--orange)','My Seeds':'var(--teal)','Wish List':'var(--blue)' };
-  const donutSlices = Object.entries(typeBreakdown).map(([t,n])=>({ label:t, val:n, color:typeColors[t]||'var(--text-dim)' }));
+  const donutSlices = Object.entries(typeBreakdown).map(([t,n])=>({ label:t, val:n, color:SEED_TYPE_ACCENT[t]||'var(--text-dim)' }));
 
   let html = '';
 
@@ -3234,14 +3428,14 @@ const SX = {
     q: "What's going on with your plant?",
     hint: "Choose the symptom category that best matches what you're seeing.",
     choices: [
-      { icon:'🍃', label:'Leaf discoloration', desc:'Yellowing, browning, spots, or unusual color', next:'leaf_color' },
-      { icon:'🍄', label:'White powder or fuzz', desc:'Powdery or fuzzy coating on leaves or buds', next:'white_powder' },
-      { icon:'🐛', label:'Pest damage', desc:'Holes, stippling, webbing, insects visible', next:'pests' },
-      { icon:'💧', label:'Drooping or wilting', desc:'Leaves sagging, curling, or limp', next:'droop' },
-      { icon:'🌿', label:'Leaf deformities', desc:'Clawing, cupping, twisting, unusual growth', next:'deform' },
-      { icon:'🌱', label:'Root / stem issues', desc:'Stem rot, root smell, slow growth, damping off', next:'roots' },
-      { icon:'💡', label:'Light or heat stress', desc:'Bleaching, burning, fox-tailing', next:'light' },
-      { icon:'🌸', label:'Flower problems', desc:'Herming, nanners, foxtailing, bud rot', next:'flower' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>`, label:'Leaf discoloration', desc:'Yellowing, browning, spots, or unusual color', next:'leaf_color' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M19 18a2 2 0 0 0 2-2 8 8 0 0 0-16 0 2 2 0 0 0 2 2h12z"/><path d="M12 18v4"/><path d="M9 22h6"/></svg>`, label:'White powder or fuzz', desc:'Powdery or fuzzy coating on leaves or buds', next:'white_powder' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="8" y="6" width="8" height="14" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 12-3-1"/><path d="m5 12 3-1"/><path d="m19 17-3-2"/><path d="m5 17 3-2"/><path d="M9 2h6"/></svg>`, label:'Pest damage', desc:'Holes, stippling, webbing, insects visible', next:'pests' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`, label:'Drooping or wilting', desc:'Leaves sagging, curling, or limp', next:'droop' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>`, label:'Leaf deformities', desc:'Clawing, cupping, twisting, unusual growth', next:'deform' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 1 1.1 4.8c-1.6.1-3-.4-4-1.2a5 5 0 0 1-1.2-3.9C12 5 13.4 5.4 14.1 6z"/></svg>`, label:'Root / stem issues', desc:'Stem rot, root smell, slow growth, damping off', next:'roots' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>`, label:'Light or heat stress', desc:'Bleaching, burning, fox-tailing', next:'light' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>`, label:'Flower problems', desc:'Herming, nanners, foxtailing, bud rot', next:'flower' },
     ]
   },
 
@@ -3253,17 +3447,17 @@ const SX = {
       { icon:'⬇️', label:'Lower / older leaves first', desc:'Yellowing working upward from the bottom', next:'lower_yellow' },
       { icon:'⬆️', label:'New growth / top leaves', desc:'Yellowing, spots, or discoloration on newest growth', next:'new_growth' },
       { icon:'↔️', label:'Whole plant or random', desc:'Uniform pale green, or discoloration throughout', next:'whole_plant' },
-      { icon:'🟤', label:'Brown spots or edges', desc:'Brown tips, margins, or irregular spots anywhere', next:'brown_spots' },
+      { icon:'●', label:'Brown spots or edges', desc:'Brown tips, margins, or irregular spots anywhere', next:'brown_spots' },
     ]
   },
 
   lower_yellow: {
     q: "What does the yellowing look like?",
     choices: [
-      { icon:'🟡', label:'Uniform pale yellow, leaves drop', desc:'Classic nitrogen look — whole leaf fades evenly', next:'nitrogen_def' },
-      { icon:'🟣', label:'Purple or red tones on leaves/stems', desc:'Phosphorus often shows as purple, especially in cold', next:'phosphorus_check' },
-      { icon:'🟡', label:'Yellow between green veins', desc:'Veins stay green, leaf tissue yellows — interveinal', next:'magnesium_def' },
-      { icon:'🟠', label:'Rusty brown spots + yellowing', desc:'Irregular brown patches with yellow halos', next:'lower_spots' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="10"/></svg>`, label:'Uniform pale yellow, leaves drop', desc:'Classic nitrogen look — whole leaf fades evenly', next:'nitrogen_def' },
+      { icon:'●', label:'Purple or red tones on leaves/stems', desc:'Phosphorus often shows as purple, especially in cold', next:'phosphorus_check' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="10"/></svg>`, label:'Yellow between green veins', desc:'Veins stay green, leaf tissue yellows — interveinal', next:'magnesium_def' },
+      { icon:'●', label:'Rusty brown spots + yellowing', desc:'Irregular brown patches with yellow halos', next:'lower_spots' },
     ]
   },
 
@@ -3287,8 +3481,8 @@ const SX = {
     q: "Is it cold in your grow space right now?",
     hint: "Temps below 60°F lock out phosphorus even when pH is correct. Rule out cold before treating.",
     choices: [
-      { icon:'🥶', label:'Yes, temps have been under 65°F', next:'phosphorus_cold' },
-      { icon:'🌡️', label:'No, temps are normal (65°F+)', next:'phosphorus_def' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`, label:'Yes, temps have been under 65°F', next:'phosphorus_cold' },
+      { icon:'<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>️', label:'No, temps are normal (65°F+)', next:'phosphorus_def' },
     ]
   },
 
@@ -3356,9 +3550,9 @@ const SX = {
   new_growth: {
     q: "What does the new growth look like?",
     choices: [
-      { icon:'🟡', label:'New leaves pale yellow or lime green', desc:'Uniform lightness on the newest growth only', next:'iron_def' },
-      { icon:'🟫', label:'Brown or dead spots on new tips/leaves', desc:'Necrotic patches or burnt-looking tips on new growth', next:'calcium_new' },
-      { icon:'🌀', label:'New growth twisted or contorted', desc:'Deformed new leaves, combined with discoloration', next:'deform' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="10"/></svg>`, label:'New leaves pale yellow or lime green', desc:'Uniform lightness on the newest growth only', next:'iron_def' },
+      { icon:'●', label:'Brown or dead spots on new tips/leaves', desc:'Necrotic patches or burnt-looking tips on new growth', next:'calcium_new' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>`, label:'New growth twisted or contorted', desc:'Deformed new leaves, combined with discoloration', next:'deform' },
     ]
   },
 
@@ -3396,9 +3590,9 @@ const SX = {
   whole_plant: {
     q: "What does the overall pallor look like?",
     choices: [
-      { icon:'🟢', label:'Uniformly pale / light green everywhere', desc:'Whole plant looks washed out, not just spots', next:'nitrogen_overall' },
-      { icon:'🟡', label:'Yellowing with very dark or clawed leaves nearby', desc:'Mixed symptoms — some dark, some yellow', next:'overwater_check' },
-      { icon:'🌸', label:'Late in flower — lower leaves yellowing fast', desc:'Weeks 7–9, plant is fading out', next:'late_fade' },
+      { icon:'●', label:'Uniformly pale / light green everywhere', desc:'Whole plant looks washed out, not just spots', next:'nitrogen_overall' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="10"/></svg>`, label:'Yellowing with very dark or clawed leaves nearby', desc:'Mixed symptoms — some dark, some yellow', next:'overwater_check' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>`, label:'Late in flower — lower leaves yellowing fast', desc:'Weeks 7–9, plant is fading out', next:'late_fade' },
     ]
   },
 
@@ -3438,8 +3632,8 @@ const SX = {
   brown_spots: {
     q: "Where are the brown spots or burns?",
     choices: [
-      { icon:'✂️', label:'Crispy brown tips or edges only', desc:'Tip burn, marginal scorch — leaf body still green', next:'tip_burn' },
-      { icon:'🟤', label:'Random spots across leaf surface', desc:'Irregular patches, may have yellow halos', next:'calcium_spots' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>`, label:'Crispy brown tips or edges only', desc:'Tip burn, marginal scorch — leaf body still green', next:'tip_burn' },
+      { icon:'●', label:'Random spots across leaf surface', desc:'Irregular patches, may have yellow halos', next:'calcium_spots' },
       { icon:'☀️', label:'Bleached or papery white-brown patches, top of canopy', desc:'Upper leaves look bleached or scorched', next:'light_stress' },
     ]
   },
@@ -3471,9 +3665,9 @@ const SX = {
   white_powder: {
     q: "Where exactly is the white substance?",
     choices: [
-      { icon:'🍃', label:'On leaf surfaces — powdery, dry, wipes off', desc:'White circular patches, can be rubbed off', next:'pm_confirm' },
-      { icon:'🌸', label:'On or inside buds — fuzzy gray-white', desc:'Gray or white fuzz growing inside or on bud structure', next:'bud_rot' },
-      { icon:'🌱', label:'White webbing under leaves or on stems', desc:'Fine silk-like threads, possible moving dots', next:'spider_mites' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>`, label:'On leaf surfaces — powdery, dry, wipes off', desc:'White circular patches, can be rubbed off', next:'pm_confirm' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>`, label:'On or inside buds — fuzzy gray-white', desc:'Gray or white fuzz growing inside or on bud structure', next:'bud_rot' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 1 1.1 4.8c-1.6.1-3-.4-4-1.2a5 5 0 0 1-1.2-3.9C12 5 13.4 5.4 14.1 6z"/></svg>`, label:'White webbing under leaves or on stems', desc:'Fine silk-like threads, possible moving dots', next:'spider_mites' },
     ]
   },
 
@@ -3512,11 +3706,11 @@ const SX = {
   pests: {
     q: "What are you seeing?",
     choices: [
-      { icon:'🕸️', label:'Fine webbing, tiny dots on leaf undersides', desc:'Speckling (stippling) on tops, webbing underneath', next:'spider_mites' },
-      { icon:'🦟', label:'Tiny flies around soil, larvae in medium', desc:'Small fungus gnats flying, slow/yellowing plants', next:'fungus_gnats' },
-      { icon:'🐌', label:'Tiny white insects on stem/undersides', desc:'Fluffy white clusters, sticky residue (honeydew)', next:'aphids_mealybugs' },
-      { icon:'🌿', label:'Russet mites / broad mites', desc:'No visible insects, but leaves curl up, plant looks sick', next:'russet_mites' },
-      { icon:'🦗', label:'Thrips', desc:'Silver streaking on leaves, tiny elongated insects', next:'thrips' },
+      { icon:'<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="4"/><line x1="2" y1="2" x2="8" y2="8"/><line x1="22" y1="2" x2="16" y2="8"/><line x1="8" y1="16" x2="2" y2="22"/><line x1="16" y1="16" x2="22" y2="22"/></svg>️', label:'Fine webbing, tiny dots on leaf undersides', desc:'Speckling (stippling) on tops, webbing underneath', next:'spider_mites' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="8" y="6" width="8" height="14" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 17-3-2"/><path d="m5 17 3-2"/></svg>`, label:'Tiny flies around soil, larvae in medium', desc:'Small fungus gnats flying, slow/yellowing plants', next:'fungus_gnats' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M2 13a6 6 0 1 0 12 0 4 4 0 1 0-8 0 2 2 0 0 0 4 0"/><circle cx="20" cy="9" r="2"/><path d="M22 9c0-7-14-7-14 0"/><path d="M14 14c0 7 14 7 14 0"/></svg>`, label:'Tiny white insects on stem/undersides', desc:'Fluffy white clusters, sticky residue (honeydew)', next:'aphids_mealybugs' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>`, label:'Russet mites / broad mites', desc:'No visible insects, but leaves curl up, plant looks sick', next:'russet_mites' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="8" y="6" width="8" height="14" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 17-3-2"/><path d="m5 17 3-2"/></svg>`, label:'Thrips', desc:'Silver streaking on leaves, tiny elongated insects', next:'thrips' },
     ]
   },
 
@@ -3595,9 +3789,9 @@ const SX = {
   droop: {
     q: "When does the drooping happen and what do the leaves look like?",
     choices: [
-      { icon:'💧', label:'Drooping, soil is wet, leaves thick and curved down', desc:'Curling down like a claw, heavy looking', next:'overwater_droop' },
-      { icon:'🏜️', label:'Drooping, pot feels light, leaves thin and limp', desc:'Wilted and sad, crispy or thin feeling', next:'underwater_droop' },
-      { icon:'🌅', label:'Drooping at end of lights-out only', desc:'Plants sleep-droop at night, fine when lights on', next:'normal_droop' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`, label:'Drooping, soil is wet, leaves thick and curved down', desc:'Curling down like a claw, heavy looking', next:'overwater_droop' },
+      { icon:'<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>️', label:'Drooping, pot feels light, leaves thin and limp', desc:'Wilted and sad, crispy or thin feeling', next:'underwater_droop' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>`, label:'Drooping at end of lights-out only', desc:'Plants sleep-droop at night, fine when lights on', next:'normal_droop' },
       { icon:'☀️', label:'Drooping under lights, especially at canopy top', desc:'Heat wilting, upper leaves affected most', next:'heat_droop' },
     ]
   },
@@ -3651,10 +3845,10 @@ const SX = {
   deform: {
     q: "What kind of deformity?",
     choices: [
-      { icon:'🦅', label:'Leaves clawing downward (nitrogen claw)', desc:'Leaf tips curling down sharply, like a claw', next:'nitrogen_claw' },
-      { icon:'🌮', label:'Leaves tacoing / cupping upward', desc:'Leaf edges curling up like a taco shell', next:'taco_leaf' },
-      { icon:'🌀', label:'New growth twisted or mutated', desc:'Weird, asymmetric, or contorted new leaves', next:'broad_mite_check' },
-      { icon:'🫧', label:'Leaves bubbling / blistering', desc:'Raised blisters or bubbles on leaf surface', next:'broad_mite_check' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>`, label:'Leaves clawing downward (nitrogen claw)', desc:'Leaf tips curling down sharply, like a claw', next:'nitrogen_claw' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>`, label:'Leaves tacoing / cupping upward', desc:'Leaf edges curling up like a taco shell', next:'taco_leaf' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>`, label:'New growth twisted or mutated', desc:'Weird, asymmetric, or contorted new leaves', next:'broad_mite_check' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`, label:'Leaves bubbling / blistering', desc:'Raised blisters or bubbles on leaf surface', next:'broad_mite_check' },
     ]
   },
 
@@ -3698,8 +3892,8 @@ const SX = {
     q: "What are you seeing?",
     choices: [
       { icon:'✕', label:'Seedling falling over at soil line', desc:'Young seedling collapses or stem looks pinched/brown', next:'damping_off' },
-      { icon:'🦠', label:'Brown slimy roots (hydro/aero)', desc:'Roots in reservoir look brown and smell bad', next:'root_rot' },
-      { icon:'🐛', label:'Slow growth, yellow lower leaves, wet soil', desc:'Multiple symptoms, soil stays wet too long', next:'fungus_gnats' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="8" y="6" width="8" height="14" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 17-3-2"/><path d="m5 17 3-2"/></svg>`, label:'Brown slimy roots (hydro/aero)', desc:'Roots in reservoir look brown and smell bad', next:'root_rot' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="8" y="6" width="8" height="14" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 12-3-1"/><path d="m5 12 3-1"/><path d="m19 17-3-2"/><path d="m5 17 3-2"/><path d="M9 2h6"/></svg>`, label:'Slow growth, yellow lower leaves, wet soil', desc:'Multiple symptoms, soil stays wet too long', next:'fungus_gnats' },
     ]
   },
 
@@ -3735,8 +3929,8 @@ const SX = {
     q: "What are you seeing?",
     choices: [
       { icon:'⬜', label:'Top leaves bleached white or very pale', desc:'Tops look washed out, white, or paper-like', next:'light_bleach' },
-      { icon:'🔥', label:'Crispy brown top buds or leaves near light', desc:'Burnt or dried out at the very top', next:'light_burn' },
-      { icon:'🌸', label:'Foxtailing buds — spiky growth at top', desc:'Buds growing extra spiky or elongated pistils', next:'foxtail' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"/></svg>`, label:'Crispy brown top buds or leaves near light', desc:'Burnt or dried out at the very top', next:'light_burn' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>`, label:'Foxtailing buds — spiky growth at top', desc:'Buds growing extra spiky or elongated pistils', next:'foxtail' },
     ]
   },
 
@@ -3779,9 +3973,9 @@ const SX = {
   flower: {
     q: "What flower problem are you seeing?",
     choices: [
-      { icon:'🍌', label:'Bananas / nanners on buds', desc:'Yellow banana-shaped structures in buds', next:'nanners' },
+      { icon:'<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M4 13c3.5-2 8-2 10 2a5.5 5.5 0 0 1 8 5"/><path d="M5.15 17.89c5.52-1.52 8.65-6.89 7-12C11.55 4 11.5 2 13 2c3.22 0 5 4.97 5 7 0 6.5-4.2 12-10.49 12C5.11 21 3 20 3 19c0-.68.32-1.18.68-1.61A3 3 0 0 1 5.15 17.89z"/></svg>', label:'Bananas / nanners on buds', desc:'Yellow banana-shaped structures in buds', next:'nanners' },
       { icon:'♂️', label:'Male flowers developing', desc:'Ball-shaped pollen sacs forming', next:'herm_balls' },
-      { icon:'🍂', label:'Buds not fattening / stalling', desc:'Buds look small or stopped developing', next:'bud_stall' },
+      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>`, label:'Buds not fattening / stalling', desc:'Buds look small or stopped developing', next:'bud_stall' },
     ]
   },
 
@@ -3852,7 +4046,7 @@ function symptomChecker() {
   if (!node) return '<div class="sx-card"><div class="sx-question">Unknown node. <button class="btn btn-ghost btn-sm" onclick="sxReset()">Start Over</button></div></div>';
 
   const disclaimer = `<div style="font-size:10px;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin-bottom:14px;line-height:1.6">
-    ⚕ <strong style="color:var(--text-mid)">Educational tool only.</strong> Diagnoses are based on common patterns and should be treated as a starting point, not a definitive answer. Multiple issues can present similarly. When in doubt, consult experienced growers or extension resources.
+     <strong style="color:var(--text-mid)">Educational tool only.</strong> Diagnoses are based on common patterns and should be treated as a starting point, not a definitive answer. Multiple issues can present similarly. When in doubt, consult experienced growers or extension resources.
   </div>`;
 
   // Breadcrumb
@@ -3929,7 +4123,7 @@ function reference() {
 
   const tabs = `<div class="ref-tabs">
     <div class="ref-tab ${refTab==='reference'?'active':''}" onclick="nav('reference')">Reference</div>
-    <div class="ref-tab ${refTab==='symptoms'?'active':''}" onclick="nav('symptoms')">🩺 Symptom Checker</div>
+    <div class="ref-tab ${refTab==='symptoms'?'active':''}" onclick="nav('symptoms')"><svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg> Symptom Checker</div>
   </div>`;
 
   if (refTab === 'symptoms') return `
@@ -4308,7 +4502,8 @@ function buildForm(section, item) {
   if (section === 'containers') return `
     <div class="modal-header"><div class="modal-title">${title} Container</div><button class="modal-close" onclick="closeModal()">✕</button></div>
     <div class="form-grid">
-      <div class="form-field full"><div class="form-label">Container Name<span class="req">*</span></div><input class="form-input" id="f-name" placeholder="e.g. Blue Tin, Fridge Jar, Main Tupperware" value="${v(item,'name')}" /></div>
+      <div class="form-field"><div class="form-label">Label / ID<span class="req">*</span></div><input class="form-input" id="f-contid" placeholder="e.g. Tin 2, Fridge 1" value="${v(item,'id')}" /></div>
+      <div class="form-field"><div class="form-label">Container Name</div><input class="form-input" id="f-name" placeholder="e.g. Blue Tin, Fridge Jar" value="${v(item,'name')}" /></div>
       <div class="form-field"><div class="form-label">Type</div>
         <select class="form-select" id="f-ctype">${CONTAINER_TYPES.map(o=>`<option ${v(item,'type')===o?'selected':''}>${o}</option>`).join('')}</select>
       </div>
@@ -4347,7 +4542,7 @@ function buildForm(section, item) {
     <div class="form-grid">
       <div class="form-field full"><div class="form-label">Strain Name<span class="req">*</span></div><input class="form-input" id="f-strain" placeholder="e.g. Pakistani Chitral Kush IBL" value="${v(item,'strain')}" /></div>
       <div class="form-field"><div class="form-label">Type</div>
-        <select class="form-select" id="f-type">${['Heirloom/IBL','Regular Hybrid','Feminized','Autoflower','My Seeds','Wish List'].map(o=>`<option ${v(item,'type')===o?'selected':''}>${o}</option>`).join('')}</select>
+        <select class="form-select" id="f-type">${['Landrace, Heirloom & IBL','Regular Hybrid','Feminized','Autoflower','My Seeds','Wish List'].map(o=>`<option ${v(item,'type')===o?'selected':''}>${o}</option>`).join('')}</select>
       </div>
       <div class="form-field"><div class="form-label">Quantity</div><input class="form-input" id="f-qty" type="text" placeholder="10" value="${v(item,'qty')}" /></div>
       <div class="form-field"><div class="form-label">Breeder</div>
@@ -4480,7 +4675,7 @@ function saveForm(section) {
   } else if (section === 'containers') {
     if (!fv('f-name')) { toast('Container name is required.','error'); return; }
     const id = (_editIdx !== null) ? DB.containers[_editIdx].id : nextContainerId();
-    obj = { id, name:fv('f-name'), type:fv('f-ctype'), location:fv('f-clocation'), notes:fv('f-notes') };
+    obj = { id: fv('f-contid') || fv('f-name') || ('C'+(DB.containers.length+1)), name:fv('f-name'), type:fv('f-ctype'), location:fv('f-clocation'), notes:fv('f-notes') };
 
   } else if (section === 'seeds') {
     if (!fv('f-strain')) { toast('Strain name is required.','error'); return; }
@@ -4730,10 +4925,10 @@ function cullPlant(i) {
     <p class="modal-hint" style="margin-bottom:20px">What happened to this plant?</p>
     <div style="display:flex;flex-direction:column;gap:10px">
       ${optionBtn('btn-warn', 'cullMaleModal('+i+')', '♂', 'Confirmed Male — Cull', 'Sex confirmed, plant removed. No breeding use.')}
-      ${optionBtn('btn-warn', 'keepMaleModal('+i+')', '🧬', 'Confirmed Male — Keep for Breeding', 'Move to Breeding Hold status on Plants page.')}
-      ${optionBtn('btn-ghost', 'cullMutantRuntModal('+i+')', '🧬', 'Mutant / Runt', 'Unusual morphology, stunted growth, or genetic abnormality — keep or cull.')}
+      ${optionBtn('btn-warn', 'keepMaleModal('+i+')', `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M2 15c6.667-6 13.333 0 20-6"/><path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/><path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"/><path d="m17 6-2.5-2.5"/><path d="m14 8-1-1"/><path d="m7 18 2.5 2.5"/><path d="m3.5 14.5.5.5"/><path d="m10 16 1 1"/><path d="m13 12 3.5 3.5"/></svg>`, 'Confirmed Male — Keep for Breeding', 'Move to Breeding Hold status on Plants page.')}
+      ${optionBtn('btn-ghost', 'cullMutantRuntModal('+i+')', `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M2 15c6.667-6 13.333 0 20-6"/><path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/><path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"/><path d="m17 6-2.5-2.5"/><path d="m14 8-1-1"/><path d="m7 18 2.5 2.5"/><path d="m3.5 14.5.5.5"/><path d="m10 16 1 1"/><path d="m13 12 3.5 3.5"/></svg>`, 'Mutant / Runt', 'Unusual morphology, stunted growth, or genetic abnormality — keep or cull.')}
       ${optionBtn('btn-ghost', 'cullOtherModal('+i+',\'died\')', '✕', 'Plant Died', 'Disease, neglect, accident, root issue, etc.')}
-      ${optionBtn('btn-ghost', 'cullOtherModal('+i+',\'culled_other\')', '✂️', 'Culled (Other)', 'Space, hermie, stress, changed mind, etc.')}
+      ${optionBtn('btn-ghost', 'cullOtherModal('+i+',\'culled_other\')', `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>`, 'Culled (Other)', 'Space, hermie, stress, changed mind, etc.')}
     </div>`);
 }
 
@@ -4784,13 +4979,13 @@ function cullOtherModal(i, fate) {
 function cullMutantRuntModal(i) {
   const g = DB.grows[i];
   showModal(`
-    <div class="modal-header"><div class="modal-title">🧬 Mutant / Runt — ${esc(g.strain)}</div><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-header"><div class="modal-title">Mutant / Runt — ${esc(g.strain)}</div><button class="modal-close" onclick="closeModal()">✕</button></div>
     <p class="modal-hint">Is this plant worth keeping or should it be removed?</p>
     <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
-      ${optionBtn('btn-ghost', 'mutantKeepModal('+i+",'mutant')", '🧬', 'Keep — Interesting Mutant', 'Unusual trait worth watching. Stays on Plants page, flagged as mutant.')}
-      ${optionBtn('btn-ghost', 'mutantKeepModal('+i+",'runt')", '📉', 'Keep — Runt (worth seeing out)', 'Small or slow but still running. Stays on Plants page, flagged as runt.')}
-      ${optionBtn('btn-warn', 'mutantCullModal('+i+",'culled_mutant')", '🧬✂️', 'Cull — Mutant (not worth keeping)', 'Bad mutation, non-viable, or wasting space. Logged to History.')}
-      ${optionBtn('btn-warn', 'mutantCullModal('+i+",'culled_runt')", '📉✂️', 'Cull — Runt (not worth running)', 'Too far behind, not viable. Logged to History.')}
+      ${optionBtn('btn-ghost', 'mutantKeepModal('+i+",'mutant')", `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M2 15c6.667-6 13.333 0 20-6"/><path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/><path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"/><path d="m17 6-2.5-2.5"/><path d="m14 8-1-1"/><path d="m7 18 2.5 2.5"/><path d="m3.5 14.5.5.5"/><path d="m10 16 1 1"/><path d="m13 12 3.5 3.5"/></svg>`, 'Keep — Interesting Mutant', 'Unusual trait worth watching. Stays on Plants page, flagged as mutant.')}
+      ${optionBtn('btn-ghost', 'mutantKeepModal('+i+",'runt')", '<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>', 'Keep — Runt (worth seeing out)', 'Small or slow but still running. Stays on Plants page, flagged as runt.')}
+      ${optionBtn('btn-warn', 'mutantCullModal('+i+",'culled_mutant')", `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M2 15c6.667-6 13.333 0 20-6"/><path d="M9 22c1.798-1.998 2.518-3.995 2.807-5.993"/><path d="M15 2c-1.798 1.998-2.518 3.995-2.807 5.993"/><path d="m17 6-2.5-2.5"/><path d="m14 8-1-1"/><path d="m7 18 2.5 2.5"/><path d="m3.5 14.5.5.5"/><path d="m10 16 1 1"/><path d="m13 12 3.5 3.5"/></svg><svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>`, 'Cull — Mutant (not worth keeping)', 'Bad mutation, non-viable, or wasting space. Logged to History.')}
+      ${optionBtn('btn-warn', 'mutantCullModal('+i+",'culled_runt')", `<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>`, 'Cull — Runt (not worth running)', 'Too far behind, not viable. Logged to History.')}
     </div>
     <div class="btn-row"><button class="btn btn-ghost" onclick="cullPlant(${i})">← Back</button></div>`);
 }
@@ -4965,11 +5160,6 @@ function addSeedFromBreed(i) {
   nav('seeds');
 }
 
-function prefillPlant(plantId) {
-  const el = document.getElementById('f-plantId');
-  if (el) el.value = plantId;
-}
-
 // ── CLONE BATCH FUNCTIONS ─────────────────────────────────────────────────
 
 const CLONE_METHODS = ['Aerocloner', 'Rockwool', 'Rapid Rooter', 'Oasis Cubes', 'Peat Pellet', 'Coco/Perlite', 'Soil', 'Other'];
@@ -5134,20 +5324,80 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 
 function openSettings() {
   const t = getStageTargets();
-  showModal(`<div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:16px">Settings</div>
+  const types = getSeedTypes();
+  const conts = DB.containers;
+  showModal(`<div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:20px">Settings</div>
+
     <div style="font-size:10px;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">Stage Duration Defaults</div>
-    <div style="font-size:11px;color:var(--text-dim);margin-bottom:14px;line-height:1.6">These are used for progress bars and countdowns when no per-plant target is set. Every strain is different — these are just starting points.</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px">
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:14px;line-height:1.6">Used for progress bars and countdowns when no per-plant target is set.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px">
       <div class="form-field"><div class="form-label">Seedling → Veg (days)</div><input class="form-input" id="st-seedling" type="number" min="7" max="60" value="${t.seedling}"/></div>
       <div class="form-field"><div class="form-label">Veg target (days)</div><input class="form-input" id="st-veg" type="number" min="14" max="120" value="${t.veg}"/></div>
       <div class="form-field"><div class="form-label">Default flower (days)</div><input class="form-input" id="st-flower" type="number" min="42" max="120" value="${t.flower}"/></div>
       <div class="form-field"><div class="form-label">Drying target (days)</div><input class="form-input" id="st-drying" type="number" min="7" max="21" value="${t.drying}"/></div>
     </div>
+
+    <div style="font-size:10px;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">Seed Storage Containers</div>
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:14px;line-height:1.6">Name the physical containers your seeds live in. These appear on the masking tape labels in the Seed Library.</div>
+    <div id="containers-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+      ${conts.map((c,i) => `
+        <div style="display:flex;align-items:center;gap:8px" id="cont-row-${i}">
+          <input class="form-input" style="width:100px;flex-shrink:0" value="${esc(c.id)}" id="cont-id-${i}" placeholder="e.g. Tin 2" />
+          <input class="form-input" style="flex:1" value="${esc(c.name)}" id="cont-name-${i}" placeholder="Description (optional)" />
+          <button class="btn btn-danger btn-sm" onclick="removeContainerRow(${i})">✕</button>
+        </div>`).join('')}
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="addContainerRow()" style="margin-bottom:24px">+ Add Container</button>
+
+    <div style="font-size:10px;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">Seed Library Types</div>
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:14px;line-height:1.6">Add, remove, or reorder your seed categories.</div>
+    <div id="seed-types-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+      ${types.map((t,i) => `
+        <div style="display:flex;align-items:center;gap:8px" id="stype-${i}">
+          <input class="form-input" style="flex:1" value="${esc(t)}" id="stype-val-${i}" />
+          <button class="btn btn-danger btn-sm" onclick="removeTypeRow(${i})" title="Remove">✕</button>
+        </div>`).join('')}
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="addTypeRow()" style="margin-bottom:20px">+ Add Type</button>
+
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
       <button class="btn btn-ghost btn-sm" onclick="resetSettings()">Reset Defaults</button>
       <button class="btn btn-primary" onclick="saveSettings()">Save</button>
     </div>`);
+}
+
+function addContainerRow() {
+  const list = document.getElementById('containers-list');
+  if (!list) return;
+  const i = list.children.length;
+  const div = document.createElement('div');
+  div.style.cssText = 'display:flex;align-items:center;gap:8px';
+  div.id = `cont-row-${i}`;
+  div.innerHTML = `<input class="form-input" style="width:100px;flex-shrink:0" value="" id="cont-id-${i}" placeholder="e.g. Tin 2" /><input class="form-input" style="flex:1" value="" id="cont-name-${i}" placeholder="Description (optional)" /><button class="btn btn-danger btn-sm" onclick="removeContainerRow(${i})">✕</button>`;
+  list.appendChild(div);
+  document.getElementById(`cont-id-${i}`).focus();
+}
+
+function removeContainerRow(i) {
+  const el = document.getElementById(`cont-row-${i}`);
+  if (el) el.remove();
+}
+
+function addTypeRow() {
+  const list = document.getElementById('seed-types-list');
+  if (!list) return;
+  const i = list.children.length;
+  const div = document.createElement('div');
+  div.style.cssText = 'display:flex;align-items:center;gap:8px';
+  div.id = `stype-${i}`;
+  div.innerHTML = `<input class="form-input" style="flex:1" value="" id="stype-val-${i}" placeholder="New type…" /><button class="btn btn-danger btn-sm" onclick="removeTypeRow(${i})" title="Remove">✕</button>`;
+  list.appendChild(div);
+}
+
+function removeTypeRow(i) {
+  const el = document.getElementById(`stype-${i}`);
+  if (el) el.remove();
 }
 
 function saveSettings() {
@@ -5158,6 +5408,28 @@ function saveSettings() {
     drying:   parseInt(document.getElementById('st-drying').value)   || 12,
   };
   localStorage.setItem(STAGE_TARGETS_KEY, JSON.stringify(targets));
+
+  // Save containers — collect all rows with non-empty id
+  const contRows = document.querySelectorAll('#containers-list > div');
+  const newConts = [];
+  contRows.forEach((row, idx) => {
+    const id   = document.getElementById(`cont-id-${idx}`)?.value.trim();
+    const name = document.getElementById(`cont-name-${idx}`)?.value.trim() || id;
+    if (id) {
+      const existing = DB.containers.find(c => c.id === id);
+      newConts.push(existing ? { ...existing, id, name } : { id, name, type: 'Other', location: '', notes: '' });
+    }
+  });
+  DB.containers = newConts;
+
+  // Save seed types
+  const typeInputs = document.querySelectorAll('#seed-types-list input');
+  const types = [...typeInputs].map(el => el.value.trim()).filter(Boolean);
+  if (types.length) localStorage.setItem(SEED_TYPES_KEY, JSON.stringify(types));
+  else localStorage.removeItem(SEED_TYPES_KEY);
+  SEED_TYPES = ['All', ...getSeedTypes()];
+
+  save();
   closeModal();
   render();
   toast('Settings saved.');
@@ -5165,6 +5437,8 @@ function saveSettings() {
 
 function resetSettings() {
   localStorage.removeItem(STAGE_TARGETS_KEY);
+  localStorage.removeItem(SEED_TYPES_KEY);
+  SEED_TYPES = ['All', ...getSeedTypes()];
   closeModal();
   render();
   toast('Settings reset to defaults.');
@@ -5370,18 +5644,27 @@ function toggleLightMode() {
   localStorage.setItem(THEME_KEY, isLight ? 'light' : 'dark');
   const btn = document.getElementById('theme-btn');
   if (btn) btn.innerHTML = isLight
-    ? `<svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Dark Mode`
-    : `<svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>Light Mode`;
+    ? `<svg viewBox="0 0 24 24" class="icon" style="width:13px;height:13px"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Dark Mode`
+    : `<svg viewBox="0 0 24 24" class="icon" style="width:13px;height:13px"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>Light Mode`;
 }
 if (localStorage.getItem(THEME_KEY) === 'light') {
   document.body.classList.add('light-mode');
   document.addEventListener('DOMContentLoaded', () => {
     const btn = document.getElementById('theme-btn');
-    if (btn) btn.innerHTML = `<svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Dark Mode`;
+    if (btn) btn.innerHTML = `<svg viewBox="0 0 24 24" class="icon" style="width:13px;height:13px"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>Dark Mode`;
   });
 }
 
 _startup();
+
+function _migrateData() {
+  let changed = false;
+  DB.seeds.forEach(s => {
+    if (s.type === 'Heirloom/IBL') { s.type = 'Landrace, Heirloom & IBL'; changed = true; }
+  });
+  if (changed) save();
+}
+_migrateData();
 
 // PWA install prompt
 let _pwaPrompt = null;
