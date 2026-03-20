@@ -1,6 +1,6 @@
 # GrowLog
 
-> **v4.1 — Security & reliability fixes. Back up your data before updating.**
+> **v4.2 — UI overhaul, photo storage upgrade, and feature polish. Back up your data before updating.**
 
 **A personal grow tracker built for privacy-first growers.**
 
@@ -26,7 +26,7 @@ You shouldn't trust any software blindly — including this. Here's how to verif
 Open the file in your browser. Open DevTools (F12) → Network tab. Reload. Nothing. No Google. No analytics. No fonts. No CDN. Empty.
 
 **2. Your data never leaves your device.**
-Everything is stored in your browser's `localStorage`. Open DevTools → Application → Local Storage and read it yourself. It goes nowhere.
+Everything is stored in your browser's `localStorage` and `IndexedDB`. Open DevTools → Application and read it yourself. It goes nowhere.
 
 **3. You can read every line of code.**
 It's one HTML file. No minification, no obfuscation, no build step. Open it in a text editor and read exactly what it does.
@@ -41,6 +41,16 @@ Your browser automatically caches the file after loading it. No internet require
 
 ## Changelog
 
+### v4.2 — UI Overhaul & Polish
+- **Consistent row layout** — Drying & Curing, History, and Containers pages rebuilt with the same row design language as the Plants page: accent bars, tape labels, signal dots, column headers, and expandable drawers
+- **Photo storage upgraded** — journal photos now stored in IndexedDB instead of localStorage, eliminating the 5MB storage ceiling. Backups include photos; import restores them automatically
+- **Sidebar redesigned** — color-coded pip indicators per page, no section labels, reordered navigation: Dashboard → Plants → Drying & Curing → Breeding Lab → History → Seed Library → Containers
+- **Seeds Harvested flow** — consolidated into a single button on both the Breeding Lab and Drying & Curing pages; logs seed count and adds directly to the Seed Library in one step
+- **Managed breeders list** — breeder autocomplete is now user-editable from Settings, seeded from your existing data on first load
+- **Search fixed** — search bars now use DOM filtering instead of full page re-renders, fixing focus loss and page disappearing on the Plants page with large grows
+- **Reference & Symptom Checker removed** — streamlined to the pages growers actually use
+- **UID overflow fixed** — plant UIDs now use timestamp + random suffix instead of sequential G001 padding
+
 ### v4.1 — Security & Reliability Fixes
 - **Encryption hardened** — undo no longer bypasses encryption; all undo operations now write through the encrypted save path
 - **Import confirmation** — importing a backup now requires explicit confirmation before overwriting existing data
@@ -53,29 +63,21 @@ Your browser automatically caches the file after loading it. No internet require
 - **VPD auto-calculator** — enter temp and RH in any log entry and VPD fills in automatically using leaf-surface VPD formula
 - **Trend sparklines** — VPD, temp, and RH trends visualized inline in each plant's log tab
 - **Light / dark mode** — toggle in the sidebar, preference persists across sessions
-- **Photo notes** — attach photos to journal entries, compressed and stored locally *(note: heavy photo use can approach browser storage limits — export backups regularly)*
+- **Photo notes** — attach photos to journal entries, compressed and stored locally *(export backups regularly)*
 - **Print / PDF export** — clean print layout with sidebar hidden and tiles reformatted for paper
 - **PWA install prompt** — install button appears automatically when the browser supports it
 - **Keyboard shortcuts** — `N` new plant, `J` log entry on open plant, `/` focus search, `ESC` close modal
 - **Breeding Lab rebuilt** — status tracking (Active / Seeds Harvested / Complete), pollination progress bar, quick-complete flow that auto-adds seeds to the library
-- **History yield stats** — avg flower time, avg dry yield, best yield, most-run strain, success rate shown above the timeline
-- **Breeding → Seed Library** — one-click to add a completed run's seeds directly to your library
-- **Lucide icon system** — all emoji replaced with consistent SVG icons throughout the app
-- **VPD ranges corrected** — seedling (0.4–0.8), veg (0.8–1.2), early flower (1.0–1.5), mid/late flower (1.2–1.8). Source-cited on reference page.
-- **Settings panel** — configure stage duration defaults (seedling, veg, flower, drying)
-- **About panel** — privacy model, architecture explanation, source link
-- **Symptom checker disclaimer** — educational tool notice on every diagnosis
-- **Drag-and-drop tile reordering** — rearrange plants within each stage group
+- **History yield stats** — avg flower time, avg dry yield, best yield, most-run strain, success rate shown above the list
+- **Drag-and-drop reordering** — rearrange plants within each stage group
 - **Stage grouping** — plants page permanently grouped by stage with colored headers
 
 ### v4.0
 - **Containers** — organize your grow space, assign seed packs to containers
 - **Clone batch tracking** — log batches with target root days, graduate directly into active plants
-- **Plant tiles** — responsive card grid with at-a-glance status signals, stage, age, VPD, and progress bars
+- **Plant tiles** — responsive row layout with at-a-glance status signals, stage, age, VPD, and progress bars
 - **Harvest pulse** — tiles within 7 days of harvest animate with a red heartbeat glow
-- **Drying & Curing redesign** — rebuilt with the same tile/drawer layout as plants
 - **Dashboard stats** — full grow stats embedded directly on the dashboard
-- **Renamed sections** — "Seed Vault" → "Seed Library", "Cure Tracker" → "Drying & Curing"
 
 ---
 
@@ -87,9 +89,7 @@ Your browser automatically caches the file after loading it. No internet require
 - **Breeding Lab** — crosses, pollen donors, seed runs, reversals, status tracking, progress
 - **Drying & Curing** — drying progress, jar tracking, phase tracking, smoke reports
 - **History** — complete fate records: culls, males, mutants, runts, losses. Yield stats per strain.
-- **Symptom Checker** — guided decision tree for deficiencies, pests, environmental issues
-- **Reference** — VPD charts, PPFD targets, Aerocloner calculator, drying and cure protocol
-- **Export / Import** — JSON backups, CSV import. Your data is always portable.
+- **Export / Import** — JSON backups with photos, CSV import. Your data is always portable.
 - **Encryption** — optional AES-256 passphrase lock
 - **Installable** — works as a PWA on desktop and mobile
 - **Undo** — last 20 actions undoable

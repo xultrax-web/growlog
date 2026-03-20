@@ -112,6 +112,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--mono); font
   .nav-item.active { border-left: none; border-bottom-color: var(--accent); }
   .nav-badge { display: none; }
   .nav-item-more { display: flex; }
+  .sidebar-footer { display: none; }
   .main { padding: 20px 16px; }
   .stats-bar { grid-template-columns: 1fr 1fr; }
   .dashboard-grid { grid-template-columns: 1fr !important; }
@@ -120,7 +121,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--mono); font
   .cards-grid { grid-template-columns: 1fr !important; }
   .modal { margin: 0; max-height: 100vh; border-radius: 0; }
 }
-.nav-item-more { display: none; }
+.nav-item-more { display: none !important; }
 .mobile-menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
 .mobile-menu-btn { display: flex; align-items: center; gap: 8px; padding: 12px 10px; border-radius: 6px; font-family: var(--mono); font-size: 11px; color: var(--text-dim); background: var(--surface2); border: 1px solid var(--border); cursor: pointer; transition: all 0.15s; text-align: left; }
 .mobile-menu-btn:hover { color: var(--text); border-color: var(--border2); background: var(--surface3); }
@@ -134,12 +135,14 @@ body { background: var(--bg); color: var(--text); font-family: var(--mono); font
 .logo-sub { font-size: 9px; color: var(--text-dim); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 5px; }
 .logo-version { display: inline-block; margin-top: 8px; font-size: 9px; color: var(--accent-dim); background: rgba(74,222,128,0.08); border: 1px solid var(--accent-dim); border-radius: 4px; padding: 2px 6px; letter-spacing: 0.1em; }
 .nav { padding: 10px 0; flex: 1; }
-.section-label { font-size: 10px; color: var(--text-mid); letter-spacing: 0.16em; text-transform: uppercase; padding: 18px 20px 6px; font-weight: 700; }
-.nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 20px; cursor: pointer; color: var(--text-dim); font-size: 11px; letter-spacing: 0.04em; transition: all 0.15s; border-left: 3px solid transparent; user-select: none; }
+.nav-item { display: flex; align-items: center; gap: 9px; padding: 10px 16px; cursor: pointer; color: var(--text-dim); font-size: 11px; letter-spacing: 0.04em; transition: all 0.15s; border-left: none; user-select: none; }
 .nav-item:hover { color: var(--text); background: var(--surface2); }
-.nav-item.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-glow); }
+.nav-item.active { color: var(--text); background: var(--surface2); }
 .nav-item.nav-primary { color: var(--text); font-size: 12px; }
 .nav-item.nav-primary:hover { color: var(--text); background: var(--surface2); }
+.nav-pip { width: 3px; height: 20px; border-radius: 2px; flex-shrink: 0; opacity: 0.4; transition: opacity 0.15s; }
+.nav-item:hover .nav-pip { opacity: 0.7; }
+.nav-item.active .nav-pip { opacity: 1; }
 .nav-icon { width: 14px; height: 14px; flex-shrink: 0; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .nav-label { flex: 1; }
 .nav-badge { background: var(--accent-dim); color: var(--accent); font-size: 9px; padding: 1px 6px; border-radius: 10px; font-weight: 700; min-width: 20px; text-align: center; }
@@ -246,22 +249,12 @@ tbody td { padding: 10px 14px; font-size: 12px; color: var(--text-mid); vertical
 .card-notes { font-size: 11px; color: var(--text-dim); line-height: 1.55; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top:8px; }
 
 /* ── TIMELINE ── */
-.timeline { padding: 4px 0; }
-.timeline-item { display: flex; gap: 0; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.1s; }
-.timeline-item:hover { background: rgba(74,222,128,0.03); }
-.timeline-item:last-child { border-bottom: none; }
-.tl-dot-col { width: 44px; display: flex; flex-direction: column; align-items: center; padding: 16px 0 0; }
-.tl-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.tl-dot.green  { background: var(--accent); }
-.tl-dot.yellow { background: var(--warn); }
-.tl-dot.red    { background: var(--danger); }
-.tl-dot.gray   { background: var(--border2); }
-.tl-line { flex: 1; width: 2px; background: var(--border); margin-top: 5px; }
-.tl-content { flex: 1; padding: 12px 16px 12px 0; }
-.tl-name { font-size: 13px; color: var(--text); font-weight: 700; }
-.tl-id { font-size: 11px; color: var(--text-dim); font-weight: 400; }
-.tl-meta { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
-.tl-tags { display: flex; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
+.hist-row-h { display: grid; grid-template-columns: 4px 22px 1fr 90px 70px 60px 80px 80px; gap: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 4px; overflow: hidden; min-height: 46px; align-items: stretch; cursor: pointer; transition: border-color 0.12s, background 0.12s; }
+.hist-row-h:hover { background: var(--surface2); border-color: var(--border2); }
+.hist-row-h.hist-row-open { border-color: var(--teal); background: rgba(94,234,212,0.03); border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: none; }
+.hist-row-h.hist-row-culled { border-color: rgba(248,113,113,0.35); }
+.hist-row-drawer { background: var(--surface); border: 1px solid var(--teal); border-top: none; border-radius: 0 0 6px 6px; margin-bottom: 4px; overflow: hidden; }
+.hist-row-drawer.hist-drawer-culled { border-color: var(--danger); }
 
 /* ── MODAL ── */
 .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.2s; backdrop-filter: blur(2px); }
@@ -306,53 +299,6 @@ tbody td { padding: 10px 14px; font-size: 12px; color: var(--text-mid); vertical
 
 
 
-.ref-tabs { display: flex; gap: 0; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
-.ref-tab { padding: 10px 20px; font-size: 11px; cursor: pointer; color: var(--text-dim); border-bottom: 2px solid transparent; margin-bottom: -1px; letter-spacing: 0.05em; transition: all 0.15s; }
-.ref-tab:hover { color: var(--text); }
-.ref-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-.sx-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px; max-width: 680px; }
-.sx-question { font-family: var(--serif); font-size: 20px; font-style: italic; color: var(--text); margin-bottom: 8px; line-height: 1.3; }
-.sx-hint { font-size: 11px; color: var(--text-dim); margin-bottom: 20px; line-height: 1.6; }
-.sx-choices { display: flex; flex-direction: column; gap: 8px; }
-.sx-choice { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all 0.15s; text-align: left; width: 100%; font-family: var(--mono); }
-.sx-choice:hover { border-color: var(--accent); background: var(--accent-glow); }
-.sx-choice-icon { font-size: 16px; flex-shrink: 0; line-height: 1.3; }
-.sx-choice-text { font-size: 12px; color: var(--text-mid); line-height: 1.5; }
-.sx-choice-text strong { color: var(--text); display: block; margin-bottom: 2px; font-size: 12px; }
-.sx-breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 10px; color: var(--text-dim); margin-bottom: 16px; flex-wrap: wrap; }
-.sx-breadcrumb-sep { opacity: 0.4; }
-.sx-nav { display: flex; gap: 8px; margin-top: 20px; }
-.sx-result { border-left: 3px solid var(--accent); }
-.sx-result-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 6px; }
-.sx-result-title { font-family: var(--serif); font-size: 24px; font-style: italic; color: var(--text); margin-bottom: 4px; }
-.sx-result-sub { font-size: 11px; color: var(--text-dim); margin-bottom: 20px; }
-.sx-section { margin-bottom: 18px; }
-.sx-section-title { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
-.sx-section-body { font-size: 12px; color: var(--text-mid); line-height: 1.7; }
-.sx-section-body strong { color: var(--text); }
-.sx-protocol { display: flex; flex-direction: column; gap: 6px; }
-.sx-step { display: flex; gap: 10px; align-items: flex-start; padding: 8px 12px; background: var(--surface2); border-radius: 6px; border: 1px solid var(--border); }
-.sx-step-num { font-family: var(--serif); font-size: 18px; font-style: italic; color: var(--accent); flex-shrink: 0; line-height: 1.2; min-width: 18px; }
-.sx-step-text { font-size: 12px; color: var(--text-mid); line-height: 1.5; }
-.sx-step-text strong { color: var(--text); }
-.sx-severity { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; margin-bottom: 16px; }
-.sx-sev-low  { background: var(--accent-glow); color: var(--accent); border: 1px solid var(--accent-dim); }
-.sx-sev-med  { background: var(--warn-dim); color: var(--warn); border: 1px solid rgba(251,191,36,0.3); }
-.sx-sev-high { background: var(--danger-dim); color: var(--danger); border: 1px solid rgba(248,113,113,0.3); }
-@media (max-width: 768px) { .ref-grid { grid-template-columns: 1fr; } .sx-start-grid { grid-template-columns: 1fr 1fr; } }
-
-
-.ref-section { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
-.ref-title { font-family: var(--serif); font-size: 18px; font-style: italic; margin-bottom: 16px; color: var(--text); }
-.ref-table { width: 100%; border-collapse: collapse; }
-.ref-table th { font-size: 9px; color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase; padding: 8px 12px; border-bottom: 1px solid var(--border); text-align: left; font-weight: 400; }
-.ref-table td { padding: 10px 12px; font-size: 12px; color: var(--text-mid); border-bottom: 1px solid var(--border); }
-.ref-table tr:last-child td { border-bottom: none; }
-.ref-table .stage-cell { font-weight: 700; color: var(--text); }
-.ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.calc-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
-.calc-label { font-size: 11px; color: var(--text-mid); min-width: 140px; }
-.calc-val { font-size: 14px; color: var(--accent); font-family: var(--serif); font-style: italic; min-width: 80px; }
 
 /* ── BREEDING ── */
 .breed-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; cursor: pointer; transition: all 0.15s; margin-bottom: 10px; }
@@ -637,19 +583,11 @@ tbody td { padding: 10px 14px; font-size: 12px; color: var(--text-mid); vertical
 hr.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
 
 /* ── CONTAINERS ── */
-.container-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
-.container-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px; cursor: pointer; transition: all 0.15s; }
-.container-card:hover { border-color: var(--border2); transform: translateY(-1px); box-shadow: var(--shadow); }
-.container-card-head { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
-.container-icon { font-size: 26px; flex-shrink: 0; line-height: 1.1; }
-.container-id-badge { display: inline-block; font-size: 9px; color: var(--accent); background: var(--accent-glow); border: 1px solid var(--accent-dim); border-radius: 4px; padding: 1px 6px; letter-spacing: 0.08em; margin-bottom: 3px; }
-.container-name { font-size: 14px; color: var(--text); font-weight: 700; line-height: 1.2; }
-.container-meta { font-size: 11px; color: var(--text-dim); margin-top: 3px; }
-.container-stats { display: flex; gap: 14px; margin: 10px 0; padding: 10px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.container-stat { display: flex; flex-direction: column; gap: 2px; }
-.container-stat-val { font-family: var(--serif); font-size: 20px; font-style: italic; color: var(--accent); line-height: 1; }
-.container-stat-lbl { font-size: 9px; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; }
-.container-pack-list { margin-top: 10px; }
+.container-row-h { display: grid; grid-template-columns: 4px 22px 1fr 80px 90px 70px 80px; gap: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 4px; overflow: hidden; min-height: 46px; align-items: stretch; user-select: none; cursor: pointer; transition: border-color 0.12s, background 0.12s; }
+.container-row-h:hover { background: var(--surface2); border-color: var(--border2); }
+.container-row-h.cont-row-open { border-color: #d4bc8a; background: rgba(212,188,138,0.03); border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom: none; }
+.container-row-h.cont-row-warn { border-color: rgba(217,119,6,0.4); }
+.cont-row-drawer { background: var(--surface); border: 1px solid #d4bc8a; border-top: none; border-radius: 0 0 6px 6px; margin-bottom: 4px; overflow: hidden; }
 .container-pack-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; font-size: 11px; border-bottom: 1px solid var(--border); gap: 8px; }
 .container-pack-row:last-child { border-bottom: none; }
 .container-pack-strain { color: var(--text-mid); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
@@ -685,46 +623,44 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; 
       <div class="logo-version">v4.0 Beta</div>
     </div>
     <div class="nav">
-      <div class="section-label">Track</div>
       <div class="nav-item active" onclick="nav('dashboard')" id="nav-dashboard">
+        <span class="nav-pip" style="background:var(--accent)"></span>
         <svg class="nav-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         <span class="nav-label">Dashboard</span>
       </div>
       <div class="nav-item" onclick="nav('plants')" id="nav-plants">
+        <span class="nav-pip" style="background:var(--accent)"></span>
         <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
         <span class="nav-label">Plants</span><span class="nav-badge" id="badge-plants">0</span>
       </div>
       <div class="nav-item" onclick="nav('cures')" id="nav-cures">
+        <span class="nav-pip" style="background:var(--orange)"></span>
         <svg class="nav-icon" viewBox="0 0 24 24"><path d="M8 2h8v3H8z"/><path d="M6 5h12a1 1 0 0 1 1 1v1a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a1 1 0 0 1 1-1z"/><path d="M7 9v10a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9"/><line x1="9" y1="13" x2="15" y2="13"/></svg>
-        <span class="nav-label">Drying & Curing</span><span class="nav-badge" id="badge-cures">0</span>
+        <span class="nav-label">Drying &amp; Curing</span><span class="nav-badge" style="background:rgba(251,146,60,0.15);color:var(--orange)" id="badge-cures">0</span>
       </div>
       <div class="nav-item" onclick="nav('breeding')" id="nav-breeding">
+        <span class="nav-pip" style="background:var(--blue)"></span>
         <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-        <span class="nav-label">Breeding Lab</span><span class="nav-badge" id="badge-breeding">0</span>
+        <span class="nav-label">Breeding Lab</span><span class="nav-badge" style="background:rgba(147,197,253,0.15);color:var(--blue)" id="badge-breeding">0</span>
       </div>
       <div class="nav-item" onclick="nav('history')" id="nav-history">
+        <span class="nav-pip" style="background:var(--teal)"></span>
         <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 3h18v4H3z"/><path d="M5 7v14h14V7"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="13" y2="15"/></svg>
-        <span class="nav-label">History</span><span class="nav-badge" id="badge-history">0</span>
+        <span class="nav-label">History</span><span class="nav-badge" style="background:rgba(94,234,212,0.12);color:var(--teal)" id="badge-history">0</span>
       </div>
-      <div class="section-label">Inventory</div>
       <div class="nav-item" onclick="nav('seeds')" id="nav-seeds">
+        <span class="nav-pip" style="background:var(--purple)"></span>
         <svg class="nav-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-        <span class="nav-label">Seed Library</span><span class="nav-badge" id="badge-seeds">0</span>
+        <span class="nav-label">Seed Library</span><span class="nav-badge" style="background:rgba(196,181,253,0.15);color:var(--purple)" id="badge-seeds">0</span>
       </div>
       <div class="nav-item" onclick="nav('containers')" id="nav-containers">
+        <span class="nav-pip" style="background:#d4bc8a"></span>
         <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-        <span class="nav-label">Containers</span><span class="nav-badge" id="badge-containers">0</span>
+        <span class="nav-label">Containers</span><span class="nav-badge" style="background:rgba(212,188,138,0.15);color:#d4bc8a" id="badge-containers">0</span>
       </div>
-      <div class="section-label">Info</div>
-      <div class="nav-item" onclick="nav('reference')" id="nav-reference">
-        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span class="nav-label">Reference</span>
-      </div>
-      <div class="nav-item" onclick="nav('symptoms')" id="nav-symptoms">
-        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        <span class="nav-label">Symptom Checker</span>
-      </div>
+
       <div class="nav-item nav-item-more" onclick="openMobileMenu()">
+        <span class="nav-pip" style="background:var(--text-dim)"></span>
         <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
         <span class="nav-label">More</span>
       </div>
@@ -1276,6 +1212,9 @@ function blankGrow() {
     smokeReport:  '',
     notes:        '',
 
+    // Seeds
+    seedsProduced: null,    // seed count string if seeds were harvested from this plant
+
     // Fate (culled/died records)
     fate:           null,   // null | 'culled_male' | 'culled_male_keeper' | 'culled_other' | 'died'
     cullDate:       null,
@@ -1594,6 +1533,75 @@ function issueTags(notes='') {
   return tags.join('');
 }
 
+let _searchTimer = null;
+function searchInput(val) {
+  search = val;
+  clearTimeout(_searchTimer);
+  _searchTimer = setTimeout(_applySearchFilter, 80);
+}
+
+function _applySearchFilter() {
+  const q = search.toLowerCase().trim();
+
+  // Plants: .plant-row-h and their paired .row-h-drawer
+  document.querySelectorAll('.plant-row-h[data-search]').forEach(row => {
+    const match = !q || row.dataset.search.includes(q);
+    row.style.display = match ? '' : 'none';
+    // Also hide paired drawer if row is hidden
+    const uid = row.id;
+    const drawer = row.nextElementSibling;
+    if (drawer && drawer.classList.contains('row-h-drawer')) {
+      drawer.style.display = match ? '' : 'none';
+    }
+  });
+
+  // Seeds: .seed-row-h and their paired drawers
+  document.querySelectorAll('.seed-row-h[data-search]').forEach(row => {
+    const match = !q || row.dataset.search.includes(q);
+    row.style.display = match ? '' : 'none';
+    const drawer = row.nextElementSibling;
+    if (drawer && drawer.classList.contains('seed-row-drawer')) {
+      drawer.style.display = match ? '' : 'none';
+    }
+  });
+
+  // Breeding: .breed-card
+  document.querySelectorAll('.breed-card[data-search]').forEach(card => {
+    card.style.display = (!q || card.dataset.search.includes(q)) ? '' : 'none';
+  });
+
+  // Hide stage group headers when all their rows are hidden
+  document.querySelectorAll('.plant-section').forEach(section => {
+    const rows = section.querySelectorAll('.plant-row-h[data-search]');
+    const anyVisible = [...rows].some(r => r.style.display !== 'none');
+    section.style.display = anyVisible ? '' : 'none';
+  });
+
+  // Show/hide no-results message
+  const main = document.getElementById('main');
+  if (!main) return;
+  let noResultsEl = main.querySelector('.search-no-results');
+  if (q) {
+    const allSearchable = main.querySelectorAll('.plant-row-h[data-search], .seed-row-h[data-search], .breed-card[data-search]');
+    const anyVisible = [...allSearchable].some(el => el.style.display !== 'none');
+    if (!anyVisible && allSearchable.length > 0) {
+      if (!noResultsEl) {
+        noResultsEl = document.createElement('div');
+        noResultsEl.className = 'search-no-results';
+        noResultsEl.style.cssText = 'padding:24px;text-align:center;color:var(--text-dim);font-size:11px;letter-spacing:0.06em';
+        noResultsEl.textContent = `No results for "${search}"`;
+        main.appendChild(noResultsEl);
+      } else {
+        noResultsEl.textContent = `No results for "${search}"`;
+      }
+    } else if (noResultsEl) {
+      noResultsEl.remove();
+    }
+  } else if (noResultsEl) {
+    noResultsEl.remove();
+  }
+}
+
 function toast(msg, type='') {
   const el = document.getElementById('toast');
   el.textContent = msg;
@@ -1616,18 +1624,10 @@ let search = '';
 let filter = 'All';
 
 function nav(p) {
-  // 'symptoms' is a virtual route — renders reference page with symptom tab active
-  if (p === 'symptoms') {
-    refTab = 'symptoms';
-    sxPath = []; sxNode = 'root';
-    page = 'reference';
-  } else {
-    page = p;
-    if (p !== 'reference') { refTab = 'reference'; sxPath = []; sxNode = 'root'; }
-  }
+  page = p;
   search = ''; filter = 'All'; boardExpanded = null; vaultExpanded = null;
   document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-  const activeId = p === 'symptoms' ? 'nav-symptoms' : 'nav-' + p;
+  const activeId = 'nav-' + p;
   const el = document.getElementById(activeId);
   if (el) el.classList.add('active');
   render();
@@ -1636,7 +1636,7 @@ function nav(p) {
 function render() {
   autoTransitionSeedlings();
   const el = document.getElementById('main');
-  const pages = { dashboard, plants, history, cures, seeds, breeding, reference, containers };
+  const pages = { dashboard, plants, history, cures, seeds, breeding, containers };
   el.innerHTML = (pages[page] || dashboard)();
   if (page === 'seeds') setTimeout(_applyVaultCols, 0);
   if (page === 'plants') setTimeout(_applyPlantCols, 0);
@@ -1774,7 +1774,8 @@ function welcome() {
       <div class="feature-card" onclick="nav('seeds');openAdd('seeds')"><div class="feature-icon"><svg width="36" height="36" viewBox="0 0 24 24" style="stroke:#4ade80;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="feature-title">Seed Library</div><div class="feature-desc">Catalog your entire collection — breeders, bins, quantities, lineage. Wish list included.</div></div>
       <div class="feature-card" onclick="nav('breeding');openAdd('breeding')"><div class="feature-icon"><svg width="36" height="36" viewBox="0 0 24 24" style="stroke:#4ade80;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto"><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div><div class="feature-title">Breeding Lab</div><div class="feature-desc">Track crosses, pollen donors, seed runs, and reversals. Link back to seeds in your vault.</div></div>
       <div class="feature-card" onclick="nav('cures');openAdd('cures')"><div class="feature-icon"><svg width="36" height="36" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto"><rect x="32" y="8" width="36" height="10" rx="3" fill="#4ade80"/><rect x="28" y="18" width="44" height="6" rx="2" fill="#4ade80" opacity="0.7"/><path d="M30 24 Q26 28 26 35 L26 80 Q26 88 34 88 L66 88 Q74 88 74 80 L74 35 Q74 28 70 24 Z" fill="#4ade80" opacity="0.25"/><path d="M30 24 Q26 28 26 35 L26 80 Q26 88 34 88 L66 88 Q74 88 74 80 L74 35 Q74 28 70 24 Z" fill="none" stroke="#4ade80" stroke-width="3.5"/><line x1="26" y1="48" x2="74" y2="48" stroke="#4ade80" stroke-width="1.5" opacity="0.4"/><ellipse cx="50" cy="70" rx="14" ry="5" fill="#4ade80" opacity="0.15"/></svg></div><div class="feature-title">Drying &amp; Curing</div><div class="feature-desc">Track drying, jar RH, burp schedule, and smoke reports from harvest to final cure.</div></div>
-      <div class="feature-card" onclick="nav('symptoms')"><div class="feature-icon"><svg width="36" height="36" viewBox="0 0 24 24" style="stroke:#4ade80;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="feature-title">Symptom Checker</div><div class="feature-desc">Diagnose pests, deficiencies, fungal issues, and environmental problems with a guided decision tree.</div></div>
+      <div class="feature-card" onclick="nav('dashboard')"><div class="feature-icon"><svg width="36" height="36" viewBox="0 0 24 24" style="stroke:#4ade80;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div><div class="feature-title">Dashboard</div><div class="feature-desc">At-a-glance stats, harvest countdowns, alerts, and a full view of your active grow.</div></div>
+
       <div class="feature-card" onclick="triggerImport()"><div class="feature-icon"><svg width="36" height="36" viewBox="0 0 24 24" style="stroke:#4ade80;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><div class="feature-title">Your Data</div><div class="feature-desc">Export to JSON, import backups, import from CSV. Everything stays on your device — no account needed.</div></div>
     </div>
   </div>`;
@@ -2171,7 +2172,7 @@ function plants() {
     <div class="page-subtitle">${list.length} of ${DB.grows.filter(g=>STAGES_PLANTS.includes(g.stage)).length} active${DB.clone_batches&&DB.clone_batches.length?' · '+DB.clone_batches.length+' clones':''}</div>
   </div>
   <div class="toolbar">
-    <div class="search-wrap"><span class="search-icon">⌕</span><input type="text" placeholder="Search strain, ID, notes…" value="${esc(search)}" oninput="search=this.value;render()" /></div>
+    <div class="search-wrap"><span class="search-icon">⌕</span><input type="text" placeholder="Search strain, ID, notes…" value="${esc(search)}" oninput="searchInput(this.value)" /></div>
   </div>
   ${alertBar}
   ${(()=>{
@@ -2282,7 +2283,7 @@ function plants() {
         isPulse?'row-h-pulse':sig==='red'?'row-h-danger':sig==='yellow'?'row-h-warn':'',
       ].filter(Boolean).join(' ');
 
-      return `<div class="${rowClass}" id="tile-${g.uid}" data-uid="${g.uid}" data-stage="${g.stage}"
+      return `<div class="${rowClass}" id="tile-${g.uid}" data-uid="${g.uid}" data-stage="${g.stage}" data-search="${esc((g.strain+' '+(g.id||'')+' '+(g.notes||'')+' '+(g.breeder||'')).toLowerCase())}"
           draggable="true"
           ondragstart="tileDragStart(event,'${g.uid}','${g.stage}')"
           ondragend="tileDragEnd('${g.uid}')"
@@ -2508,13 +2509,12 @@ function history() {
   const harvests   = allComplete.filter(g => !g.fate);
   const culled     = allComplete.filter(g => g.fate);
 
-  // Filter chip state
   const hf = window._histFilter || 'all';
   let list = hf === 'harvests' ? harvests : hf === 'culled' ? culled : allComplete;
   list = list.slice().sort((a,b) => (b.completedDate||b.cullDate||b.harvestDate||'').localeCompare(a.completedDate||a.cullDate||a.harvestDate||''));
   if (search) { const _q = search.toLowerCase(); list = list.filter(g => (g.strain+' '+(g.id||'')+' '+(g.notes||'')+' '+(g.cullNotes||'')+' '+(g.smokeReport||'')).toLowerCase().includes(_q)); }
 
-  const chip = (key, label, count) => `<button class="chip${hf===key?' active':''}" onclick="window._histFilter='${key}';render()">${label}${count!=null?' <span style="opacity:0.6;font-size:10px">('+count+')</span>':''}</button>`;
+  const chip = (key, label, count) => `<button class="chip${hf===key?' active':''}" onclick="window._histFilter='${key}';render()">${label} <span style="opacity:0.6;font-size:10px">(${count})</span></button>`;
 
   const withFlowerDays = harvests.filter(g => g.flipDate && g.harvestDate);
   const avgFlowerDays = withFlowerDays.length ? Math.round(withFlowerDays.reduce((s,g) => s + daysBetween(g.flipDate, g.harvestDate), 0) / withFlowerDays.length) : null;
@@ -2534,10 +2534,86 @@ function history() {
     <div class="stat-card"><div class="stat-label">Success Rate</div><div class="stat-value" style="color:${harvests.length/(harvests.length+culled.length)>=0.7?'var(--accent)':'var(--warn)'}">${Math.round(harvests.length/(harvests.length+culled.length||1)*100)}<span style="font-size:14px">%</span></div><div class="stat-sub">${harvests.length} of ${allComplete.length} runs</div></div>
   </div>` : '';
 
+  const colHeader = `<div class="plant-col-header" style="grid-template-columns:4px 22px 1fr 90px 70px 60px 80px 80px">
+    <div></div><div></div>
+    <div>Strain</div>
+    <div>Completed</div>
+    <div>Flower</div>
+    <div>Yield</div>
+    <div>Fate</div>
+    <div>Rating</div>
+  </div>`;
+
+  const rows = list.map(g => {
+    const fate = g.fate || null;
+    const isCulled = !!fate;
+    const idx = DB.grows.indexOf(g);
+    const isOpen = boardExpanded === idx;
+    const fd = g.flipDate && g.harvestDate ? daysBetween(g.flipDate, g.harvestDate) : null;
+    const shrink = g.wetWeight && g.dryWeight ? ((g.dryWeight/g.wetWeight)*100).toFixed(1)+'%' : null;
+    const completedOn = g.completedDate || g.cullDate || g.harvestDate || null;
+    const isPM   = /\bpm\b/i.test((g.notes||'')+(g.cullNotes||''));
+    const isHerm = /herm/i.test((g.notes||'')+(g.cullNotes||''));
+    const accentColor = isCulled ? 'var(--danger)' : 'var(--teal)';
+    const sigColor    = isCulled ? 'var(--danger)' : 'var(--teal)';
+    const rowClass = ['hist-row-h', isOpen ? 'hist-row-open' : '', isCulled ? 'hist-row-culled' : ''].filter(Boolean).join(' ');
+    const drawerClass = 'hist-row-drawer' + (isCulled ? ' hist-drawer-culled' : '');
+    const fateCell = isCulled
+      ? fateBadge(fate)
+      : `<span style="font-size:9px;padding:1px 6px;border-radius:4px;font-weight:700;background:rgba(94,234,212,0.12);color:var(--teal)">Harvested</span>`;
+    const drawerHtml = `
+      <div class="drawer-grid" style="padding:16px 20px">
+        <div class="drawer-col">
+          <div class="drawer-col-title">Grow Details</div>
+          ${completedOn ? `<div class="drawer-row"><span class="drawer-label">${isCulled?'Culled':'Harvested'}</span><span class="drawer-value">${fmtDate(completedOn)}</span></div>` : ''}
+          ${g.flipDate ? `<div class="drawer-row"><span class="drawer-label">Flip date</span><span class="drawer-value">${fmtDate(g.flipDate)}</span></div>` : ''}
+          ${fd ? `<div class="drawer-row"><span class="drawer-label">Days in flower</span><span class="drawer-value" style="color:var(--teal)">${fd}d</span></div>` : ''}
+          ${g.wetWeight ? `<div class="drawer-row"><span class="drawer-label">Wet weight</span><span class="drawer-value">${g.wetWeight}g</span></div>` : ''}
+          ${g.dryWeight ? `<div class="drawer-row"><span class="drawer-label">Dry weight</span><span class="drawer-value" style="color:var(--accent)">${g.dryWeight}g</span></div>` : ''}
+          ${shrink ? `<div class="drawer-row"><span class="drawer-label">Shrinkage</span><span class="drawer-value">${shrink}</span></div>` : ''}
+          ${g.jarCount ? `<div class="drawer-row"><span class="drawer-label">Jars</span><span class="drawer-value">${g.jarCount}</span></div>` : ''}
+          ${g.rating ? `<div class="drawer-row"><span class="drawer-label">Rating</span><span class="drawer-value">${esc(g.rating)}</span></div>` : ''}
+          ${g.sexConfirmedDays && fate==='culled_male' ? `<div class="drawer-row"><span class="drawer-label">Sex confirmed</span><span class="drawer-value">day ${g.sexConfirmedDays}</span></div>` : ''}
+          ${isPM ? `<div style="margin-top:8px"><span class="badge badge-pm">PM</span></div>` : ''}
+          ${isHerm ? `<div style="margin-top:8px"><span class="badge badge-herm">Herm</span></div>` : ''}
+        </div>
+        <div class="drawer-col" style="grid-column:span 2">
+          ${g.smokeReport && !isCulled ? `<div class="drawer-col-title">Smoke Report</div><div style="font-size:11px;color:var(--text-mid);line-height:1.7;margin-bottom:14px">${esc(g.smokeReport)}</div>` : ''}
+          ${g.cullNotes ? `<div class="drawer-col-title">Notes</div><div style="font-size:11px;color:var(--text-mid);line-height:1.7;margin-bottom:14px">${esc(g.cullNotes)}</div>` : ''}
+          ${g.notes && !g.cullNotes ? `<div class="drawer-col-title">Notes</div><div style="font-size:11px;color:var(--text-mid);line-height:1.7;margin-bottom:14px">${esc(g.notes)}</div>` : ''}
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openEdit('history',${idx})">Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();del('history',${idx})">Delete</button>
+          </div>
+        </div>
+      </div>`;
+    return `<div class="${rowClass}" style="grid-template-columns:4px 22px 1fr 90px 70px 60px 80px 80px"
+        id="brow-${idx}" data-search="${esc((g.strain+' '+(g.id||'')+' '+(g.notes||'')+' '+(g.cullNotes||'')+' '+(g.smokeReport||'')).toLowerCase())}"
+        onclick="toggleBoardRow(${idx})">
+      <div class="row-h-accent" style="background:${accentColor}"></div>
+      <div class="row-h-drag">⠿</div>
+      <div class="row-h-strain">
+        <span class="row-h-sig" style="background:${sigColor};box-shadow:0 0 4px ${sigColor}66"></span>
+        ${g.id ? `<div class="tape-tag-wrap">${makeTapeTag(g.id)}</div>` : '<div style="width:90px;flex-shrink:0"></div>'}
+        <span class="row-h-name">${esc(g.strain)}</span>
+      </div>
+      <div class="row-h-cell"><span class="row-h-val dim">${completedOn ? fmtDate(completedOn) : '—'}</span></div>
+      <div class="row-h-cell"><span class="row-h-val" style="color:${isCulled?'var(--text-dim)':'var(--teal)'}">${fd ? fd+'d' : '—'}</span></div>
+      <div class="row-h-cell"><span class="row-h-val ${g.dryWeight?'accent':'dim'}">${g.dryWeight ? g.dryWeight+'g' : '—'}</span></div>
+      <div class="row-h-cell">${fateCell}</div>
+      <div class="row-h-cell"><span class="row-h-val dim">${g.rating ? g.rating.split(' ')[0] : '—'}</span></div>
+    </div>
+    ${isOpen ? `<div class="${drawerClass}"><div class="tile-drawer" id="drawer-${idx}">${drawerHtml}</div></div>` : ''}`;
+  }).join('');
+
+  const emptyIcon = hf === 'culled'
+    ? `<svg width="44" height="44" viewBox="0 0 24 24" style="stroke:var(--danger);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
+    : `<svg width="44" height="44" viewBox="0 0 24 24" style="stroke:#4ade80;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto"><path d="M3 3h18v4H3z"/><path d="M5 7v14h14V7"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="13" y2="15"/></svg>`;
+
   return `
   <div class="page-header">
     <div class="page-title">History</div>
-    <div class="page-subtitle">${harvests.length} harvested · ${culled.length} culled/died</div>
+    <div class="page-subtitle">${harvests.length} harvested · ${culled.length} culled / died</div>
     <div class="header-actions">
       <button class="btn btn-primary" onclick="openAdd('history')">+ Add Record</button>
     </div>
@@ -2548,50 +2624,16 @@ function history() {
       ${chip('harvests','Harvested', harvests.length)}
       ${chip('culled','Culled / Died', culled.length)}
     </div>
-    <div class="search-wrap"><span class="search-icon">⌕</span><input type="text" placeholder="Search strain, notes…" value="${esc(search)}" oninput="search=this.value;render()" /></div>
+    <div class="search-wrap"><span class="search-icon">⌕</span><input type="text" placeholder="Search strain, notes…" value="${esc(search)}" oninput="searchInput(this.value)" /></div>
   </div>
   ${summaryBar}
-  <div class="table-wrap">
-    ${list.length ? `<div class="timeline">${list.map(g => {
-      const fate = g.fate || null;
-      const isPM   = /\bpm\b/i.test((g.notes||'')+(g.cullNotes||''));
-      const isHerm = /herm/i.test((g.notes||'')+(g.cullNotes||''));
-      const dotClass = fate === 'culled_male'        ? 'yellow'
-                     : fate === 'culled_male_keeper' ? 'yellow'
-                     : fate === 'culled_mutant'      ? 'yellow'
-                     : fate === 'culled_runt'        ? 'yellow'
-                     : fate === 'died'               ? 'red'
-                     : fate === 'culled_other'       ? 'red'
-                     : g.harvestDate                 ? 'green' : 'red';
-      const idx = DB.grows.indexOf(g);
-      const fd = g.flipDate && g.harvestDate ? daysBetween(g.flipDate, g.harvestDate) : null;
-      const shrink = g.wetWeight && g.dryWeight ? ((g.dryWeight/g.wetWeight)*100).toFixed(1)+'%' : null;
-      return `<div class="timeline-item" onclick="openView('history',${idx})">
-        <div class="tl-dot-col"><div class="tl-dot ${dotClass}"></div><div class="tl-line"></div></div>
-        <div class="tl-content">
-          <div class="tl-name">${esc(g.strain)} <span class="tl-id">${g.id?'· '+esc(g.id):''}</span>
-            ${g.rating && !fate ? `<span style="font-size:11px;margin-left:6px">${g.rating.split(' ')[0]}</span>` : ''}
-          </div>
-          <div class="tl-meta">
-            ${fate ? (g.cullDate ? '✗ '+fmtDate(g.cullDate) : '✗ Culled')
-                   : (g.harvestDate ? '✓ '+fmtDate(g.harvestDate) : '✗ No harvest')}
-            ${fd && !fate ? '· '+fd+'d flower' : ''}
-            ${g.dryWeight && !fate ? '· '+g.dryWeight+'g dry' : ''}
-            ${shrink && !fate ? '('+shrink+')' : ''}
-            ${g.sexConfirmedDays && fate==='culled_male' ? '· sex day '+g.sexConfirmedDays : ''}
-          </div>
-          <div class="tl-tags" style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-            ${fate ? fateBadge(fate) : ''}
-            ${isPM ?'<span class="badge badge-pm">PM</span>':''}
-            ${isHerm?'<span class="badge badge-herm">Herm</span>':''}
-            ${g.smokeReport && !fate ?`<span class="txt-dim-xs"><svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> smoke report</span>`:''}
-            ${g.cullNotes ? `<span class="txt-dim-xs">${esc(g.cullNotes.substring(0,60))}${g.cullNotes.length>60?'…':''}</span>` : ''}
-          </div>
-        </div>
-      </div>`;
-    }).join('')}</div>` :
-    `<div class="empty"><div class="empty-icon">${hf==='culled'?'✕':'<svg width="44" height="44" viewBox="0 0 24 24" style="stroke:#4ade80;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;display:block;margin:0 auto"><path d="M3 3h18v4H3z"/><path d="M5 7v14h14V7"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="13" y2="15"/></svg>'}</div><div class="empty-title">${hf==='culled'?'No culled or dead plants':'No history yet'}</div><div class="empty-hint">${hf==='culled'?'When you cull a plant or it dies, it appears here.':'Complete a cure from the Drying &amp; Curing or add a record manually.'}</div>${hf!=='culled'?'<button class="btn btn-primary" onclick="openAdd(\'history\')">+ Add Record</button>':''}</div>`}
-  </div>`;
+  ${list.length
+    ? colHeader + rows
+    : `<div class="table-wrap"><div class="empty"><div class="empty-icon">${emptyIcon}</div>
+        <div class="empty-title">${hf==='culled'?'No culled or dead plants':'No history yet'}</div>
+        <div class="empty-hint">${hf==='culled'?'When you cull a plant or it dies, it appears here.':'Complete a cure from the Drying &amp; Curing or add a record manually.'}</div>
+        ${hf!=='culled'?'<button class=\"btn btn-primary\" onclick=\"openAdd(\'history\')\">' + '+ Add Record</button>':''}
+      </div></div>`}`;
 }
 
 // ── CURE TRACKER ──
@@ -2670,9 +2712,9 @@ function cureProgressBar(g) {
 function cures() {
   const allDryCure = _gc().curing.slice();
   let drying = allDryCure.filter(g => g.stage === 'drying')
-    .sort((a,b) => (dryDays(a)||0) - (dryDays(b)||0));
+    .sort((a,b) => (dryDays(b)||0) - (dryDays(a)||0));
   let curing = allDryCure.filter(g => g.stage === 'curing')
-    .sort((a,b) => (cureDays(a)||0) - (cureDays(b)||0));
+    .sort((a,b) => (cureDays(b)||0) - (cureDays(a)||0));
 
   if (search) {
     const q = search.toLowerCase();
@@ -2694,65 +2736,107 @@ function cures() {
       <button class="btn btn-primary" onclick="openAdd('cures')">+ Add Manually</button>
     </div></div>`;
 
-  const renderCureTile = (g) => {
+  const colHeader = (isDrying) => {
+    const sec = isDrying ? 'Target' : 'Phase';
+    const labels = ['','','Strain','Countdown', sec,'Wet Wt.','Dry Wt.', isDrying ? 'Harvested' : 'Jarred'];
+    return `<div class="plant-col-header" style="grid-template-columns:4px 22px 1fr 120px 70px 70px 70px 80px">
+      ${labels.map((l,i) => i < 2 ? `<div></div>` : `<div>${l}</div>`).join('')}
+    </div>`;
+  };
+
+  const renderCureRow = (g) => {
     const idx = DB.grows.indexOf(g);
     const isDrying = g.stage === 'drying';
     const dd = dryDays(g) || 0;
     const cd = cureDays(g) || 0;
     const isOpen = boardExpanded === idx;
-    const progBar = isDrying ? dryProgressBar(g) : cureProgressBar(g);
-    const primaryColor = isDrying ? 'var(--orange)' : curePhaseColor(g);
     const shrinkPct = g.wetWeight && g.dryWeight ? ((g.dryWeight/g.wetWeight)*100).toFixed(1)+'%' : '—';
+    const primaryColor = isDrying ? 'var(--orange)' : curePhaseColor(g);
 
-    const tileClass = ['plant-tile', isOpen ? 'tile-open' : ''].filter(Boolean).join(' ');
+    // Progress
+    const progPct = isDrying
+      ? Math.min(100, Math.round((dd / (g.targetDryDays||12)) * 100))
+      : Math.min(100, Math.round((cd / 30) * 100));
 
-    const drawerHtml = `<div class="board-drawer" id="drawer-${idx}">
+    // Countdown color
+    const daysLeft = isDrying ? Math.max(0, (g.targetDryDays||12) - dd) : null;
+    const countdownClass = isDrying
+      ? (daysLeft !== null && daysLeft <= 2 ? 'danger' : daysLeft !== null && daysLeft <= 4 ? 'warn' : 'orange')
+      : 'accent';
+    const countdownVal = isDrying
+      ? `${dd}d drying`
+      : `${cd}d curing`;
+    const secVal = isDrying
+      ? `<span class="row-h-val dim">${g.targetDryDays||12}d</span>`
+      : `<span class="row-h-val teal">${curePhaseName(g)}</span>`;
+
+    const sigColor = isDrying
+      ? (daysLeft !== null && daysLeft <= 2 ? 'var(--danger)' : daysLeft !== null && daysLeft <= 4 ? 'var(--warn)' : 'var(--orange)')
+      : curePhaseColor(g);
+
+    const rowClass = ['plant-row-h',
+      isOpen ? 'row-h-open' : '',
+      isDrying && daysLeft !== null && daysLeft <= 2 ? 'row-h-danger' : '',
+      isDrying && daysLeft !== null && daysLeft <= 4 && daysLeft > 2 ? 'row-h-warn' : '',
+    ].filter(Boolean).join(' ');
+
+    const drawerHtml = `
       <div class="drawer-grid" style="padding:16px 20px">
         <div class="drawer-col">
           <div class="drawer-col-title">Details</div>
           ${g.harvestDate ? `<div class="drawer-row"><span class="drawer-label">Harvested</span><span class="drawer-value">${fmtDate(g.harvestDate)}</span></div>` : ''}
           ${g.jarDate ? `<div class="drawer-row"><span class="drawer-label">Jarred</span><span class="drawer-value">${fmtDate(g.jarDate)}</span></div>` : ''}
-          ${g.wetWeight ? `<div class="drawer-row"><span class="drawer-label">Wet</span><span class="drawer-value">${g.wetWeight}g</span></div>` : ''}
-          ${g.dryWeight ? `<div class="drawer-row"><span class="drawer-label">Dry</span><span class="drawer-value">${g.dryWeight}g</span></div>` : ''}
-          ${g.trimWeight ? `<div class="drawer-row"><span class="drawer-label">Trim</span><span class="drawer-value">${g.trimWeight}g</span></div>` : ''}
-          ${g.wetWeight && g.dryWeight ? `<div class="drawer-row"><span class="drawer-label">Shrink</span><span class="drawer-value">${shrinkPct}</span></div>` : ''}
+          <div class="drawer-row"><span class="drawer-label">${isDrying ? 'Days drying' : 'Days curing'}</span><span class="drawer-value" style="color:${primaryColor}">${isDrying ? dd+'d of '+(g.targetDryDays||12)+'d' : cd+'d'}</span></div>
+          ${g.wetWeight ? `<div class="drawer-row"><span class="drawer-label">Wet weight</span><span class="drawer-value">${g.wetWeight}g</span></div>` : ''}
+          ${g.dryWeight ? `<div class="drawer-row"><span class="drawer-label">Dry weight</span><span class="drawer-value">${g.dryWeight}g</span></div>` : ''}
+          ${g.trimWeight ? `<div class="drawer-row"><span class="drawer-label">Trim weight</span><span class="drawer-value">${g.trimWeight}g</span></div>` : ''}
+          ${g.wetWeight && g.dryWeight ? `<div class="drawer-row"><span class="drawer-label">Shrinkage</span><span class="drawer-value">${shrinkPct}</span></div>` : ''}
           ${g.jarCount ? `<div class="drawer-row"><span class="drawer-label">Jars</span><span class="drawer-value">${g.jarCount}</span></div>` : ''}
         </div>
         <div class="drawer-col" style="grid-column:span 2">
           <div class="drawer-col-title">Actions</div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-            ${isDrying ? `<button class="btn btn-primary btn-sm" onclick="advanceStage(${idx})">Move to Jars →</button>` : ''}
-            ${!isDrying ? `<button class="btn btn-primary btn-sm" onclick="completeCure(${idx})">Complete →</button>` : ''}
-            <button class="btn btn-ghost btn-sm" onclick="openEdit('cures',${idx})">Edit</button>
-            <button class="btn btn-danger btn-sm" onclick="del('cures',${idx})">Delete</button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+            ${isDrying ? `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation();advanceStage(${idx})">Move to Jars →</button>` : ''}
+            ${isDrying ? `<button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();cureHarvest(${idx})">Seeds Harvested →</button>` : ''}
+            ${!isDrying ? `<button class="btn btn-primary btn-sm" onclick="event.stopPropagation();completeCure(${idx})">Complete →</button>` : ''}
+            <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openEdit('cures',${idx})">Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();del('cures',${idx})">Delete</button>
           </div>
+          ${g.notes ? `<div class="drawer-col-title">Notes</div><div style="font-size:11px;color:var(--text-mid);line-height:1.6;margin-bottom:12px">${esc(g.notes)}</div>` : ''}
           ${g.smokeReport ? `<div class="drawer-col-title">Smoke Report</div><div style="font-size:11px;color:var(--text-mid);line-height:1.6">${esc(g.smokeReport)}</div>` : ''}
         </div>
-      </div>
-    </div>`;
+      </div>`;
 
-    return `<div class="${tileClass}" id="brow-${idx}" onclick="toggleBoardRow(${idx})">
-      <div class="tile-accent-bar" style="background:${primaryColor}"></div>
-      <div class="tile-inner">
-        <div class="tile-head">
-          <span class="tile-sig" style="width:7px;height:7px;border-radius:50%;background:${primaryColor};flex-shrink:0;display:block"></span>
-          <span class="tile-name">${esc(g.strain)}</span>
-          ${g.id ? `<span class="tile-id" style="font-size:10px;color:var(--text-dim);font-weight:700;background:var(--surface2);padding:1px 5px;border-radius:3px;border:1px solid var(--border)">${esc(g.id)}</span>` : ''}
-          ${stageBadge(g.stage)}
-        </div>
-        <div class="tile-cells">
-          <div class="tile-cell"><div class="tile-cell-label">Days</div><div class="tile-cell-value" style="color:${primaryColor}">${isDrying ? dd+'d drying' : cd+'d curing'}</div></div>
-          <div class="tile-cell"><div class="tile-cell-label">${isDrying ? 'Target' : 'Phase'}</div><div class="tile-cell-value dim">${isDrying ? (g.targetDryDays||12)+'d' : curePhaseName(g)}</div></div>
-          <div class="tile-cell"><div class="tile-cell-label">Wet</div><div class="tile-cell-value dim">${g.wetWeight ? g.wetWeight+'g' : '—'}</div></div>
-          <div class="tile-cell"><div class="tile-cell-label">Dry</div><div class="tile-cell-value dim">${g.dryWeight ? g.dryWeight+'g' : '—'}</div></div>
-          <div class="tile-cell"><div class="tile-cell-label">Shrink</div><div class="tile-cell-value dim">${shrinkPct}</div></div>
-          <div class="tile-cell"><div class="tile-cell-label">Jars</div><div class="tile-cell-value dim">${g.jarCount||'—'}</div></div>
-        </div>
-        <div style="margin-top:8px">${progBar}</div>
+    return `<div class="${rowClass}" style="grid-template-columns:4px 22px 1fr 120px 70px 70px 70px 80px"
+        data-search="${esc((g.strain+' '+(g.id||'')+' '+(g.notes||'')).toLowerCase())}"
+        id="brow-${idx}" onclick="toggleBoardRow(${idx})">
+      <div class="row-h-accent" style="background:${primaryColor}"></div>
+      <div class="row-h-drag">⠿</div>
+      <div class="row-h-strain">
+        <span class="row-h-sig" style="background:${sigColor};box-shadow:0 0 4px ${sigColor}66"></span>
+        ${g.id ? `<div class="tape-tag-wrap">${makeTapeTag(g.id)}</div>` : '<div style="width:90px;flex-shrink:0"></div>'}
+        <span class="row-h-name">${esc(g.strain)}</span>
       </div>
+      <div class="row-h-cell">
+        <span class="row-h-val ${countdownClass}">${countdownVal}</span>
+        <div class="row-h-prog"><div class="row-h-prog-fill" style="width:${progPct}%;background:${primaryColor}"></div></div>
+      </div>
+      <div class="row-h-cell">${secVal}</div>
+      <div class="row-h-cell"><span class="row-h-val dim">${g.wetWeight ? g.wetWeight+'g' : '—'}</span></div>
+      <div class="row-h-cell"><span class="row-h-val ${g.dryWeight ? 'accent' : 'dim'}">${g.dryWeight ? g.dryWeight+'g' : '—'}</span></div>
+      <div class="row-h-cell"><span class="row-h-val dim">${isDrying ? (g.harvestDate ? fmtDate(g.harvestDate) : '—') : (g.jarDate ? fmtDate(g.jarDate) : '—')}</span></div>
     </div>
-    ${isOpen ? `<div class="tile-drawer-wrap" id="drawer-wrap-${idx}" style="grid-column:1/-1"><div class="tile-drawer">${drawerHtml}</div></div>` : ''}`;
+    ${isOpen ? `<div class="row-h-drawer${sigColor==='var(--danger)'?' drawer-danger':sigColor==='var(--warn)'?' drawer-warn':''}">
+      <div class="tile-drawer" id="drawer-${idx}">${drawerHtml}</div>
+    </div>` : ''}`;
   };
+
+  // Harvest alerts — drying plants within 2 days of target
+  const alerts = drying.filter(g => {
+    const dd = dryDays(g) || 0;
+    const left = (g.targetDryDays||12) - dd;
+    return left >= 0 && left <= 2;
+  });
 
   return `
   <div class="page-header">
@@ -2763,18 +2847,32 @@ function cures() {
     </div>
   </div>
   <div class="toolbar">
-    <div class="search-wrap"><span class="search-icon">⌕</span><input type="text" placeholder="Search strain…" value="${esc(search)}" oninput="search=this.value;render()" /></div>
+    <div class="search-wrap"><span class="search-icon">⌕</span><input type="text" placeholder="Search strain…" value="${esc(search)}" oninput="searchInput(this.value)" /></div>
   </div>
+  ${alerts.length ? `<div class="board-alerts">
+    ${alerts.map(g => {
+      const left = (g.targetDryDays||12) - (dryDays(g)||0);
+      return `<div class="alert alert-harvest" style="cursor:pointer" onclick="boardExpanded=DB.grows.indexOf(g);render()">
+        <svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <strong>${esc(g.id||g.strain)}</strong> — ${left===0?'ready to jar now':'jar in '+left+'d'}
+      </div>`;
+    }).join('')}
+  </div>` : ''}
   ${drying.length ? `
-    <div style="margin-bottom:28px">
+    <div class="plant-section">
       <div class="stage-group-header" style="color:var(--orange)">Drying <span class="stage-group-count">${drying.length} plant${drying.length!==1?'s':''}</span></div>
-      <div class="tile-grid">${drying.map(renderCureTile).join('')}</div>
+      ${colHeader(true)}
+      ${drying.map(renderCureRow).join('')}
     </div>` : ''}
   ${curing.length ? `
-    <div style="margin-bottom:28px">
+    <div class="plant-section">
       <div class="stage-group-header" style="color:var(--accent)">Curing <span class="stage-group-count">${curing.length} jar${curing.length!==1?'s':''}</span></div>
-      <div class="tile-grid">${curing.map(renderCureTile).join('')}</div>
-    </div>` : ''}`;
+      ${colHeader(false)}
+      ${curing.map(renderCureRow).join('')}
+    </div>` : ''}
+  <div style="margin-top:16px">
+    <button class="btn btn-primary" onclick="openAdd('cures')">+ Add Manually</button>
+  </div>`;
 }
 
 
@@ -2830,74 +2928,122 @@ function containers() {
   const totalPacks = DB.seeds.filter(s => s.containerId).length;
   const unassigned = DB.seeds.filter(s => !s.containerId).length;
 
+  const colHeader = `<div class="plant-col-header" style="grid-template-columns:4px 22px 1fr 80px 90px 70px 80px">
+    <div></div><div></div>
+    <div>Container</div>
+    <div>Packs</div>
+    <div>Seeds</div>
+    <div>Low Stock</div>
+    <div>Location</div>
+  </div>`;
+
+  const rows = list.map((c, i) => {
+    const packs = containerPackList(c.id);
+    const totalSeeds = packs.reduce((s, p) => s + (parseFloat(p.qty) || 0), 0);
+    const lowStock = packs.filter(p => { const q = parseFloat(p.qty); return !isNaN(q) && q <= 3; });
+    const isOpen = boardExpanded === i;
+    const hasWarn = lowStock.length > 0;
+
+    const sigColor = hasWarn ? 'var(--warn)' : 'var(--accent)';
+    const rowClass = ['container-row-h', isOpen ? 'cont-row-open' : '', hasWarn ? 'cont-row-warn' : ''].filter(Boolean).join(' ');
+
+    const drawerHtml = `
+      <div class="drawer-grid" style="padding:16px 20px">
+        <div class="drawer-col">
+          <div class="drawer-col-title">Details</div>
+          ${c.type ? `<div class="drawer-row"><span class="drawer-label">Type</span><span class="drawer-value">${esc(c.type)}</span></div>` : ''}
+          ${c.location ? `<div class="drawer-row"><span class="drawer-label">Location</span><span class="drawer-value">${esc(c.location)}</span></div>` : ''}
+          <div class="drawer-row"><span class="drawer-label">Packs</span><span class="drawer-value" style="color:var(--accent)">${packs.length}</span></div>
+          <div class="drawer-row"><span class="drawer-label">Total seeds</span><span class="drawer-value" style="color:var(--purple)">~${Math.round(totalSeeds)}</span></div>
+          ${lowStock.length ? `<div class="drawer-row"><span class="drawer-label">Low stock</span><span class="drawer-value" style="color:var(--warn)">${lowStock.length} pack${lowStock.length !== 1 ? 's' : ''}</span></div>` : ''}
+          ${c.notes ? `<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--text-mid);line-height:1.6">${esc(c.notes)}</div>` : ''}
+        </div>
+        <div class="drawer-col" style="grid-column:span 2">
+          <div class="drawer-col-title">Packs in this container</div>
+          ${packs.length
+            ? `<div style="margin-bottom:12px">${packs.slice(0, 8).map(p => `
+                <div class="container-pack-row">
+                  <span class="container-pack-strain">${esc(p.strain)}</span>
+                  <span class="container-pack-qty" style="color:${seedQtyColor(p.qty)}">${esc(p.qty || '?')}</span>
+                </div>`).join('')}
+                ${packs.length > 8 ? `<div style="font-size:10px;color:var(--text-dim);padding-top:6px">+${packs.length - 8} more packs</div>` : ''}
+              </div>`
+            : `<div class="container-empty">Empty — no packs assigned</div>`}
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+            <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openEdit('containers',${i})">Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="event.stopPropagation();del('containers',${i})">Delete</button>
+          </div>
+        </div>
+      </div>`;
+
+    return `<div class="${rowClass}" style="grid-template-columns:4px 22px 1fr 80px 90px 70px 80px"
+        id="brow-${i}" onclick="toggleBoardRow(${i})">
+      <div class="row-h-accent" style="background:#d4bc8a"></div>
+      <div class="row-h-drag">⠿</div>
+      <div class="row-h-strain">
+        <span class="row-h-sig" style="background:${sigColor};box-shadow:0 0 4px ${sigColor}66"></span>
+        ${c.id ? `<div class="tape-tag-wrap">${makeTapeTag(c.id)}</div>` : '<div style="width:90px;flex-shrink:0"></div>'}
+        <span class="row-h-name">${esc(c.name || c.id)}</span>
+      </div>
+      <div class="row-h-cell"><span class="row-h-val accent">${packs.length}</span></div>
+      <div class="row-h-cell"><span class="row-h-val purple">~${Math.round(totalSeeds)}</span></div>
+      <div class="row-h-cell"><span class="row-h-val ${hasWarn ? 'warn' : 'dim'}">${hasWarn ? lowStock.length + ' low' : '—'}</span></div>
+      <div class="row-h-cell"><span class="row-h-val dim">${esc(c.location || '—')}</span></div>
+    </div>
+    ${isOpen ? `<div class="cont-row-drawer"><div class="tile-drawer" id="drawer-${i}">${drawerHtml}</div></div>` : ''}`;
+  }).join('');
+
   return `
   <div class="page-header">
     <div class="page-title">Containers</div>
-    <div class="page-subtitle">${list.length} container${list.length!==1?'s':''} · ${totalPacks} packs assigned${unassigned?` · <span style="color:var(--warn)">${unassigned} unassigned</span>`:''}</div>
+    <div class="page-subtitle">${list.length} container${list.length !== 1 ? 's' : ''} · ${totalPacks} packs assigned${unassigned ? ` · <span style="color:var(--warn)">${unassigned} unassigned</span>` : ''}</div>
     <div class="header-actions">
       <button class="btn btn-primary" onclick="openAdd('containers')">+ Add Container</button>
     </div>
   </div>
-  ${unassigned ? `<div class="alert alert-harvest" style="margin-bottom:16px">
-    <svg width="16" height="16" viewBox="0 0 24 24" class="icon" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-    <div>${unassigned} seed pack${unassigned!==1?'s are':' is'} not assigned to a container yet. <span style="cursor:pointer;text-decoration:underline" onclick="nav('seeds')">Go to Seed Library →</span></div>
+  ${unassigned ? `<div class="board-alerts">
+    <div class="alert alert-harvest">
+      <svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <div>${unassigned} seed pack${unassigned !== 1 ? 's are' : ' is'} not assigned to a container. <span style="cursor:pointer;text-decoration:underline" onclick="nav('seeds')">Go to Seed Library →</span></div>
+    </div>
   </div>` : ''}
-  <div class="container-grid">
-    ${list.map((c, i) => {
-      const packs = containerPackList(c.id);
-      const totalSeeds = packs.reduce((s,p) => s + (parseFloat(p.qty)||0), 0);
-      const lowStock = packs.filter(p => { const q=parseFloat(p.qty); return !isNaN(q)&&q<=3; });
-      return `
-      <div class="container-card" onclick="openView('containers',${i})">
-        <div class="container-card-head">
-          <div class="container-icon">${containerIcon(c.type)}</div>
-          <div style="flex:1;min-width:0">
-            <div class="container-id-badge">${esc(c.id)}</div>
-            <div class="container-name">${esc(c.name)}</div>
-            <div class="container-meta">${esc(c.type||'—')} · ${esc(c.location||'—')}</div>
-          </div>
-          ${lowStock.length ? `<span style="font-size:10px;padding:2px 7px;background:var(--warn-dim);color:var(--warn);border-radius:4px;border:1px solid rgba(251,191,36,0.2);flex-shrink:0">⚠ ${lowStock.length} low</span>` : ''}
-        </div>
-        <div class="container-stats">
-          <div class="container-stat"><div class="container-stat-val">${packs.length}</div><div class="container-stat-lbl">Packs</div></div>
-          <div class="container-stat"><div class="container-stat-val" style="color:var(--purple)">~${Math.round(totalSeeds)}</div><div class="container-stat-lbl">Seeds</div></div>
-          ${c.location?`<div class="container-stat"><div class="container-stat-val" style="font-size:13px;color:var(--text-mid);margin-top:3px">${esc(c.location)}</div><div class="container-stat-lbl">Location</div></div>`:''}
-        </div>
-        <div class="container-pack-list">
-          ${packs.length ? packs.slice(0,5).map(p => `
-            <div class="container-pack-row">
-              <span class="container-pack-strain">${esc(p.strain)}</span>
-              <span class="container-pack-qty" style="color:${seedQtyColor(p.qty)}">${esc(p.qty||'?')}</span>
-            </div>`).join('') + (packs.length - 5 > 0 ? `<div style="font-size:10px;color:var(--text-dim);padding-top:6px">+${packs.length-5} more packs</div>` : '')
-          : `<div class="container-empty">Empty — no packs assigned</div>`}
-        </div>
-        ${c.notes?`<div style="font-size:11px;color:var(--text-dim);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);line-height:1.5">${esc(c.notes)}</div>`:''}
-      </div>`;
-    }).join('')}
+  ${colHeader}
+  ${rows}
+  <div style="margin-top:16px">
+    <button class="btn btn-primary" onclick="openAdd('containers')">+ Add Container</button>
   </div>`;
 }
 
 // ── SEED VAULT — BIG BOARD ──
-const BREEDERS = [
-  // ── US CRAFT ──
-  'xULTRAx',
-  'Bodhi Seeds', 'CSI Humboldt', 'Archive Seed Bank', 'Seed Junky Genetics',
-  'Capulator', 'Exotic Genetix', 'Cannarado Genetics', 'In House Genetics',
-  'Compound Genetics', 'Jungle Boys Genetics', 'Dying Breed Seeds',
-  'Oni Seed Co', 'Bloom Seed Co', 'Purple City Genetics', 'Clearwater Genetics',
-  'Dark Horse Genetics', 'Skunk House Genetics', 'Relentless Genetics',
-  'Crockett Family Farms', 'Masonic Seed Co', 'Aficionado Seeds',
-  // ── EUROPEAN CLASSICS ──
+const BREEDERS_KEY = 'growlog_breeders';
+const BREEDERS_DEFAULTS = [
+  'Home Bred', 'Personal Collection',
+  'Bodhi Seeds', 'CSI Humboldt', 'Humboldt Seed Co.', 'Archive Seed Bank',
+  'Seed Junky Genetics', 'Capulator', 'Exotic Genetix', 'Cannarado Genetics',
+  'In House Genetics', 'Compound Genetics', 'Jungle Boys Genetics',
+  'Dying Breed Seeds', 'Oni Seed Co', 'Bloom Seed Co', 'Purple City Genetics',
+  'Clearwater Genetics', 'Dark Horse Genetics', 'Skunk House Genetics',
+  'Relentless Genetics', 'Crockett Family Farms', 'Masonic Seed Co',
+  'Aficionado Seeds', 'Ethos Genetics', 'Humboldt CSI', '707 Seed Bank',
   'Sensi Seeds', 'Dutch Passion', 'DNA Genetics', 'Paradise Seeds',
   'Dinafem', 'Royal Queen Seeds', 'FastBuds', "Barney's Farm",
   'Green House Seeds', 'Philosopher Seeds', 'Serious Seeds',
-  // ── CANADIAN ──
   'Jordan of the Islands', 'BC Bud Depot',
-  // ── LANDRACE / HERITAGE ──
   'Ace Seeds', 'Mandala Seeds', 'Cannabiogen', 'Swami Organic Seed',
-  // ── HOME BRED / PERSONAL ──
-  'Home Bred', 'Personal Collection',
-]
+];
+
+function getBreeders() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(BREEDERS_KEY));
+    if (saved && saved.length) return saved;
+  } catch(e) {}
+  // First run — seed from any breeders already in DB.seeds
+  const fromData = [...new Set((DB.seeds||[]).map(s => (s.breeder||'').trim()).filter(Boolean))];
+  const merged = [...new Set([...BREEDERS_DEFAULTS, ...fromData])].sort((a,b) => a.toLowerCase().localeCompare(b.toLowerCase()));
+  return merged;
+}
+
+let BREEDERS = getBreeders();
 const SEED_TYPES_KEY = 'growlog_seed_types';
 const SEED_TYPES_DEFAULTS = ['Landrace, Heirloom & IBL','Regular Hybrid','Feminized','Autoflower','My Seeds','Wish List'];
 function getSeedTypes() {
@@ -3051,7 +3197,7 @@ function seeds() {
     const containerVal = getContainerVal(s);
     const notes = (s.notes||'').replace(/\n/g,' ').slice(0,60);
 
-    return `<div class="seed-row-h ${isOpen?'seed-row-open':''} ${isWish?'seed-dimmed':''}" id="vrow-${i}" onclick="toggleVaultRow(${i})">
+    return `<div class="seed-row-h ${isOpen?'seed-row-open':''} ${isWish?'seed-dimmed':''}" id="vrow-${i}" data-search="${esc((s.strain+' '+(s.breeder||'')+' '+(s.notes||'')+' '+(s.type||'')+' '+(s.year||'')).toLowerCase())}" onclick="toggleVaultRow(${i})">
       <div class="seed-accent" style="background:${accent}"></div>
       <div class="seed-tape-cell">
         ${containerVal ? `<span class="seed-tape">${esc(containerVal)}</span>` : `<span style="font-size:10px;color:var(--border2)">—</span>`}
@@ -3166,7 +3312,7 @@ function seeds() {
     </div>
     <div style="display:flex;align-items:center;padding:7px 14px">
       <span style="color:var(--text-dim);font-size:13px;margin-right:-22px;z-index:1">⌕</span>
-      <input type="text" class="form-input" style="padding-left:28px" placeholder="Search strain, notes…" value="${esc(search)}" oninput="search=this.value;render()" />
+      <input type="text" class="form-input" style="padding-left:28px" placeholder="Search strain, notes…" value="${esc(search)}" oninput="searchInput(this.value)" />
     </div>
   </div>
 
@@ -3203,7 +3349,7 @@ function breeding() {
     const progColor = progPct >= 100 ? 'var(--accent)' : progPct >= 70 ? 'var(--warn)' : 'var(--purple)';
     const isActive = !b.status || b.status === 'active';
 
-    return `<div class="breed-card" onclick="openView('breeding',${i})">
+    return `<div class="breed-card" data-search="${esc((b.mother+' '+(b.father||'')+' '+(b.crossName||'')+' '+(b.notes||'')).toLowerCase())}" onclick="openView('breeding',${i})">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
         <div class="breed-cross">
           <span>${esc(b.mother||'?')}</span>
@@ -3230,10 +3376,6 @@ function breeding() {
       <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap" onclick="event.stopPropagation()">
         ${isActive ? `<button class="btn btn-primary btn-sm" onclick="breedingHarvest(${i})">Seeds Harvested →</button>` : ''}
         ${b.status === 'harvested' ? `<button class="btn btn-primary btn-sm" onclick="breedingComplete(${i})">Complete →</button>` : ''}
-        ${b.crossName && (b.seedsProduced || b.status === 'harvested') ? `<button class="btn btn-ghost btn-sm" onclick="breedingToSeeds(${i})">
-          <svg width="12" height="12" viewBox="0 0 24 24" class="icon"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          Add to Seed Library
-        </button>` : ''}
         <button class="btn btn-ghost btn-sm" onclick="openEdit('breeding',${i})" style="margin-left:auto">Edit</button>
         <button class="btn btn-danger btn-sm" onclick="del('breeding',${i})">Delete</button>
       </div>
@@ -3251,7 +3393,7 @@ function breeding() {
     </div>
   </div>
   <div class="toolbar">
-    <div class="search-wrap"><span class="search-icon">⌕</span><input type="text" placeholder="Search crosses, donors, notes…" value="${esc(search)}" oninput="search=this.value;render()" /></div>
+    <div class="search-wrap"><span class="search-icon">⌕</span><input type="text" placeholder="Search crosses, donors, notes…" value="${esc(search)}" oninput="searchInput(this.value)" /></div>
     <div class="filter-chips">
       ${chip('all','All',DB.breeding.length)}
       ${chip('active','Active',active.length)}
@@ -3266,28 +3408,48 @@ function breeding() {
 function breedingHarvest(i) {
   const b = DB.breeding[i];
   if (!b) return;
+  const name = esc(b.crossName || b.mother+' × '+b.father);
+  const alreadyInLib = b.crossName && DB.seeds.find(s => s.strain === b.crossName);
   showModal(`
-    <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:16px">Seeds Harvested — ${esc(b.crossName||b.mother+' × '+b.father)}</div>
-    <div class="form-field" style="margin-bottom:16px">
+    <div class="modal-header"><div class="modal-title">Seeds Harvested — ${name}</div><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="form-field" style="margin-bottom:12px">
       <div class="form-label">How many seeds were produced?</div>
       <input class="form-input" id="harvest-seed-count" type="text" placeholder="e.g. ~40" autofocus />
     </div>
-    <div class="form-hint" style="margin-bottom:16px">Leave blank if you haven't counted yet.</div>
+    ${alreadyInLib ? `<div style="margin-bottom:14px;padding:8px 12px;background:var(--warn-dim);border:1px solid var(--warn);border-radius:6px;font-size:11px;color:var(--warn)">
+      "${esc(b.crossName)}" is already in your Seed Library. A new entry will still be added.
+    </div>` : ''}
+    <div class="form-hint" style="margin-bottom:16px">Seeds will be added to your Seed Library automatically.</div>
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-primary" onclick="confirmBreedingHarvest(${i})">Confirm Harvest</button>
+      <button class="btn btn-primary" onclick="confirmBreedingHarvest(${i})">Confirm &amp; Add to Library</button>
     </div>`);
 }
 
-function confirmBreedingHarvest(i) {
+async function confirmBreedingHarvest(i) {
   const b = DB.breeding[i];
   if (!b) return;
   const count = document.getElementById('harvest-seed-count')?.value.trim();
-  push();
+  _undoStack.push(JSON.stringify(DB));
   b.status = 'harvested';
   if (count) b.seedsProduced = count;
-  save(); closeModal(); render();
-  toast('Run marked as seeds harvested.');
+  if (b.crossName) {
+    const seed = {
+      uid: Math.random().toString(36).slice(2,10),
+      strain: b.crossName,
+      breeder: 'Home Bred',
+      type: 'My Seeds',
+      qty: count || '',
+      notes: `From breeding run: ${b.mother||'?'} × ${b.father||'?'}${b.date?' ('+fmtDate(b.date)+')':''}${b.reversal?' — reversal':''}`,
+      timesPopped: 0,
+      wishList: false
+    };
+    DB.seeds.push(seed);
+    toast(`Seeds harvested. "${esc(b.crossName)}" added to Seed Library.`);
+  } else {
+    toast('Run marked as seeds harvested.');
+  }
+  await save(); closeModal(); render();
 }
 
 function breedingComplete(i) {
@@ -3308,12 +3470,11 @@ function breedingComplete(i) {
     </div>`);
 }
 
-function confirmBreedingComplete(i) {
+async function confirmBreedingComplete(i) {
   const b = DB.breeding[i];
   if (!b) return;
-  push();
+  _undoStack.push(JSON.stringify(DB));
   b.status = 'complete';
-  save();
   // Auto-add to seed library if not already there
   if (b.crossName && !DB.seeds.find(s => s.strain === b.crossName)) {
     const seed = {
@@ -3327,35 +3488,55 @@ function confirmBreedingComplete(i) {
       wishList: false
     };
     DB.seeds.push(seed);
-    save();
+    await save(); closeModal(); render();
     toast(`Run complete. "${b.crossName}" added to Seed Library.`);
   } else {
+    await save(); closeModal(); render();
     toast('Run marked complete.');
   }
-  closeModal(); render();
 }
 
 
-function breedingToSeeds(i) {
-  const b = DB.breeding[i];
-  if (exists) { toast(`"${b.crossName}" is already in your Seed Library.`, 'warn'); return; }
-  push();
+function cureHarvest(idx) {
+  const g = DB.grows[idx];
+  if (!g) return;
+  const alreadyInLib = g.strain && DB.seeds.find(s => s.strain === g.strain);
+  showModal(`
+    <div class="modal-header"><div class="modal-title">Seeds Harvested — ${esc(g.id||g.strain)}</div><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="form-field" style="margin-bottom:12px">
+      <div class="form-label">How many seeds were produced?</div>
+      <input class="form-input" id="cure-seed-count" type="text" placeholder="e.g. ~40" autofocus />
+    </div>
+    ${alreadyInLib ? `<div style="margin-bottom:14px;padding:8px 12px;background:var(--warn-dim);border:1px solid var(--warn);border-radius:6px;font-size:11px;color:var(--warn)">
+      "${esc(g.strain)}" is already in your Seed Library. A new entry will still be added.
+    </div>` : ''}
+    <div class="form-hint" style="margin-bottom:16px">Strain, breeder, qty, and grow notes will be added to the Seed Library automatically.</div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmCureHarvest(${idx})">Confirm &amp; Add to Library</button>
+    </div>`);
+}
+
+async function confirmCureHarvest(idx) {
+  const g = DB.grows[idx];
+  if (!g) return;
+  const count = document.getElementById('cure-seed-count')?.value.trim();
+  _undoStack.push(JSON.stringify(DB));
+  if (count) g.seedsProduced = count;
   const seed = {
     uid: Math.random().toString(36).slice(2,10),
-    strain: b.crossName,
-    breeder: 'Home Bred',
+    strain: g.strain || 'Unknown',
+    breeder: g.breeder || '',
     type: 'My Seeds',
-    qty: b.seedsProduced || '',
-    notes: `From breeding run: ${b.mother||'?'} × ${b.father||'?'}${b.date?' ('+fmtDate(b.date)+')':''}${b.reversal?' — reversal':''}`,
+    qty: count || '',
+    notes: `Harvested from grow${g.id ? ' '+g.id : ''}${g.harvestDate ? ' — '+fmtDate(g.harvestDate) : ''}${g.notes ? '. '+g.notes : ''}`,
     timesPopped: 0,
     wishList: false
   };
   DB.seeds.push(seed);
-  save();
-  toast(`"${b.crossName}" added to Seed Library.`);
-  render();
+  await save(); closeModal(); render();
+  toast(`Seeds logged. "${esc(g.strain)}" added to Seed Library.`);
 }
-
 
 function stats() {
   const { history: allComplete, plants } = _gc();
@@ -3536,786 +3717,6 @@ function stats() {
 
   return html;
 }
-
-let refGallons = 2;
-let refTab = 'reference'; // 'reference' | 'symptoms'
-let sxPath = []; // breadcrumb trail of node ids
-let sxNode = 'root'; // current node id
-
-// ── SYMPTOM TREE ──
-// Each node: { q, hint?, choices: [{icon, label, desc?, next}] }
-// Terminal nodes: { result: true, title, category, severity, confirm, what, treat: [{step,text}], prevent, notes? }
-const SX = {
-
-  root: {
-    q: "What's going on with your plant?",
-    hint: "Choose the symptom category that best matches what you're seeing.",
-    choices: [
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>`, label:'Leaf discoloration', desc:'Yellowing, browning, spots, or unusual color', next:'leaf_color' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M19 18a2 2 0 0 0 2-2 8 8 0 0 0-16 0 2 2 0 0 0 2 2h12z"/><path d="M12 18v4"/><path d="M9 22h6"/></svg>`, label:'White powder or fuzz', desc:'Powdery or fuzzy coating on leaves or buds', next:'white_powder' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="8" y="6" width="8" height="14" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 12-3-1"/><path d="m5 12 3-1"/><path d="m19 17-3-2"/><path d="m5 17 3-2"/><path d="M9 2h6"/></svg>`, label:'Pest damage', desc:'Holes, stippling, webbing, insects visible', next:'pests' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`, label:'Drooping or wilting', desc:'Leaves sagging, curling, or limp', next:'droop' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>`, label:'Leaf deformities', desc:'Clawing, cupping, twisting, unusual growth', next:'deform' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 1 1.1 4.8c-1.6.1-3-.4-4-1.2a5 5 0 0 1-1.2-3.9C12 5 13.4 5.4 14.1 6z"/></svg>`, label:'Root / stem issues', desc:'Stem rot, root smell, slow growth, damping off', next:'roots' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>`, label:'Light or heat stress', desc:'Bleaching, burning, fox-tailing', next:'light' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>`, label:'Flower problems', desc:'Herming, nanners, foxtailing, bud rot', next:'flower' },
-    ]
-  },
-
-  // ── LEAF COLOR ──
-  leaf_color: {
-    q: "Where is the discoloration showing first?",
-    hint: "Mobile nutrients (N, P, K, Mg) deficiencies start on older/lower leaves. Immobile (Ca, Fe, Mn) show on new growth first.",
-    choices: [
-      { icon:'⬇️', label:'Lower / older leaves first', desc:'Yellowing working upward from the bottom', next:'lower_yellow' },
-      { icon:'⬆️', label:'New growth / top leaves', desc:'Yellowing, spots, or discoloration on newest growth', next:'new_growth' },
-      { icon:'↔️', label:'Whole plant or random', desc:'Uniform pale green, or discoloration throughout', next:'whole_plant' },
-      { icon:'●', label:'Brown spots or edges', desc:'Brown tips, margins, or irregular spots anywhere', next:'brown_spots' },
-    ]
-  },
-
-  lower_yellow: {
-    q: "What does the yellowing look like?",
-    choices: [
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="10"/></svg>`, label:'Uniform pale yellow, leaves drop', desc:'Classic nitrogen look — whole leaf fades evenly', next:'nitrogen_def' },
-      { icon:'●', label:'Purple or red tones on leaves/stems', desc:'Phosphorus often shows as purple, especially in cold', next:'phosphorus_check' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="10"/></svg>`, label:'Yellow between green veins', desc:'Veins stay green, leaf tissue yellows — interveinal', next:'magnesium_def' },
-      { icon:'●', label:'Rusty brown spots + yellowing', desc:'Irregular brown patches with yellow halos', next:'lower_spots' },
-    ]
-  },
-
-  nitrogen_def: {
-    result: true,
-    title: 'Nitrogen Deficiency',
-    category: 'Deficiency',
-    severity: 'med',
-    confirm: 'Lower leaves yellow uniformly from tip to base, progressing upward. Leaf feels limp. Plant looks generally pale or light green. Common late flower — may be intentional (fade).',
-    what: 'Nitrogen is a mobile macronutrient. Plants cannibalize older leaves to feed new growth when N is short. In late flower (wk 6+) this is normal and desirable. Earlier is a problem.',
-    treat: [
-      { step:1, text:'<strong>Confirm it\'s not a pH lockout first.</strong> Check runoff pH — coco/soil target 6.0–6.5, hydro 5.5–6.0. Lockout mimics deficiency.' },
-      { step:2, text:'<strong>If early-mid veg or flower:</strong> Increase nitrogen. Top-dress with blood meal (soil), bump grow nutes, or foliar feed dilute fish emulsion.' },
-      { step:3, text:'<strong>If late flower (wk 6+):</strong> This is the natural fade — reduce or stop nitrogen and let it run. Pulling N now improves flavor.' },
-      { step:4, text:'<strong>Remove severely yellowed leaves</strong> that are more than 50% gone — they\'re not recovering and invite mold.' },
-    ],
-    prevent: 'Dial in a proper feed schedule for your medium. Coco is hungry — feed every watering. Soil holds N well but amendments deplete. Track EC at feed and runoff to catch drift early.',
-  },
-
-  phosphorus_check: {
-    q: "Is it cold in your grow space right now?",
-    hint: "Temps below 60°F lock out phosphorus even when pH is correct. Rule out cold before treating.",
-    choices: [
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`, label:'Yes, temps have been under 65°F', next:'phosphorus_cold' },
-      { icon:'<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"/></svg>️', label:'No, temps are normal (65°F+)', next:'phosphorus_def' },
-    ]
-  },
-
-  phosphorus_cold: {
-    result: true,
-    title: 'Cold-Induced Phosphorus Lockout',
-    category: 'Environment',
-    severity: 'med',
-    confirm: 'Purple/red discoloration on leaves and stems, especially undersides. Worse in morning (coldest temps). Roots may also be cold-locked.',
-    what: 'Phosphorus uptake shuts down below ~60°F. The plant has enough P — it just can\'t absorb it. Fixing temps fixes the problem without any feeding changes.',
-    treat: [
-      { step:1, text:'<strong>Get temps up.</strong> 68–77°F lights-on, no lower than 65°F lights-off in flower. Add a small fan heater if needed.' },
-      { step:2, text:'<strong>Warm your reservoir or feed water.</strong> Cold root zone is often the culprit. Aim for 65–68°F solution temp.' },
-      { step:3, text:'<strong>Give it 3–5 days</strong> after temps stabilize — coloring should improve noticeably.' },
-    ],
-    prevent: 'Monitor temps at canopy and root level separately, especially overnight and in cold seasons.',
-  },
-
-  phosphorus_def: {
-    result: true,
-    title: 'Phosphorus Deficiency',
-    category: 'Deficiency',
-    severity: 'med',
-    confirm: 'Dark green or purple leaves (especially undersides and stems), starting on older growth. Leaves may become bronze or brown in severe cases. Smaller buds in flower.',
-    what: 'Phosphorus is critical for root development and flowering. Most common cause is pH lockout — P absorbs best at 6.0–7.0 (soil) or 5.5–6.2 (hydro/coco). Actual P deficiency in a feeding plant is rare.',
-    treat: [
-      { step:1, text:'<strong>Check and correct pH first.</strong> This is the #1 cause. Flush and re-feed at correct pH before adding more P.' },
-      { step:2, text:'<strong>If pH is fine:</strong> Increase P-dominant nutrients. Bloom boosters, bone meal (soil), or a dedicated P supplement.' },
-      { step:3, text:'<strong>Ensure root zone isn\'t too cold</strong> — even correct pH won\'t help if roots are at 58°F.' },
-    ],
-    prevent: 'Calibrate pH meter monthly. Check runoff pH every few waterings. In late veg/early flower, ensure your feed has sufficient P for transition.',
-  },
-
-  magnesium_def: {
-    result: true,
-    title: 'Magnesium Deficiency',
-    category: 'Deficiency',
-    severity: 'med',
-    confirm: 'Interveinal chlorosis — leaf tissue yellows while veins stay green. Starts on lower/older leaves. Classic "tiger stripe" look in moderate cases.',
-    what: 'Magnesium is a mobile macronutrient and central to chlorophyll. Deficiency is extremely common in coco and light soils. Also frequently caused by pH lockout or calcium excess displacing Mg.',
-    treat: [
-      { step:1, text:'<strong>Cal-Mag supplement</strong> at 5–10ml/gal is the standard fix. Most grow-store cal-mag is heavy on Ca — look for higher Mg ratios.' },
-      { step:2, text:'<strong>Epsom salt foliar:</strong> 1 tsp per liter, spray undersides of leaves. Fast uptake, results in 48–72 hours.' },
-      { step:3, text:'<strong>Check pH</strong> — Mg locks out below 6.0 in soil. Confirm you\'re in range before adding more.' },
-      { step:4, text:'<strong>Don\'t overdo calcium</strong> — high Ca competes with Mg. If using heavy cal-mag already, look at ratios.' },
-    ],
-    prevent: 'In coco: cal-mag every watering. In RO water builds: add cal-mag before pH\'ing. Hard tap water often has enough Mg naturally.',
-  },
-
-  lower_spots: {
-    result: true,
-    title: 'Calcium Deficiency',
-    category: 'Deficiency',
-    severity: 'med',
-    confirm: 'Irregular brown/rust spots on lower-to-mid leaves, often with yellow halos. Spots feel dry and crispy. Edges may curl. Random distribution across leaf surface.',
-    what: 'Calcium is immobile in plants — deficiency usually shows mid-plant first (new growth isn\'t affected yet). Common in RO/soft water grows, coco, or pH below 6.2. Often paired with Mg deficiency.',
-    treat: [
-      { step:1, text:'<strong>Cal-mag supplement</strong> — 5–10ml/gal. Calcium absorbs best at pH 6.2–7.0 in soil, 5.8–6.5 in coco.' },
-      { step:2, text:'<strong>Check pH first.</strong> Calcium is very pH sensitive. Adjust before adding more.' },
-      { step:3, text:'<strong>Affected leaves won\'t recover</strong> — watch new growth. Improvement should show in 5–7 days on new leaves.' },
-    ],
-    prevent: 'Always use cal-mag with RO water. Test your tap water — high Ca tap water often doesn\'t need supplementing.',
-  },
-
-  new_growth: {
-    q: "What does the new growth look like?",
-    choices: [
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="10"/></svg>`, label:'New leaves pale yellow or lime green', desc:'Uniform lightness on the newest growth only', next:'iron_def' },
-      { icon:'●', label:'Brown or dead spots on new tips/leaves', desc:'Necrotic patches or burnt-looking tips on new growth', next:'calcium_new' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>`, label:'New growth twisted or contorted', desc:'Deformed new leaves, combined with discoloration', next:'deform' },
-    ]
-  },
-
-  iron_def: {
-    result: true,
-    title: 'Iron Deficiency (or pH Lockout)',
-    category: 'Deficiency',
-    severity: 'med',
-    confirm: 'Bright yellow or lime-green new leaves while older leaves stay green. Veins may stay slightly greener than tissue. Appears on the newest growth first — opposite of nitrogen.',
-    what: 'Iron is immobile — new growth suffers first. Almost always caused by pH being too high (above 7.0 in soil, above 6.5 in hydro/coco). Actual iron deficiency in a feeding plant is very rare.',
-    treat: [
-      { step:1, text:'<strong>Lower pH immediately.</strong> Iron absorbs at 6.0–6.5 (soil) and 5.5–6.2 (coco/hydro). Flush with pH-correct water.' },
-      { step:2, text:'<strong>Chelated iron supplement</strong> if pH is already correct — rare but possible in heavily buffered media.' },
-      { step:3, text:'<strong>Avoid high phosphorus</strong> — excess P locks out iron. Back off P-heavy bloom boosters temporarily.' },
-    ],
-    prevent: 'Keep pH dialed in. Calibrate meter regularly. Check runoff pH — it often drifts higher than your feed pH over time.',
-  },
-
-  calcium_new: {
-    result: true,
-    title: 'Calcium Deficiency — New Growth',
-    category: 'Deficiency',
-    severity: 'high',
-    confirm: 'Brown or dead edges on brand-new leaves, sometimes before they even unfurl. Tips may be burnt-looking. New growth crinkled or failing to develop properly.',
-    what: 'Calcium is critical for cell wall development. When new leaves can\'t get enough Ca during development, they die at the tips and edges. This is more urgent than lower-leaf Ca def because it\'s actively damaging growth sites.',
-    treat: [
-      { step:1, text:'<strong>Correct pH first</strong> — Ca absorbs poorly below 6.0. This is the most common cause.' },
-      { step:2, text:'<strong>Foliar feed calcium</strong> — 5ml cal-mag per liter, spray new growth carefully. Bypasses root uptake issues temporarily.' },
-      { step:3, text:'<strong>Increase cal-mag</strong> in feed solution. Check you\'re not overwatering — waterlogged roots can\'t absorb Ca.' },
-      { step:4, text:'<strong>Improve airflow.</strong> Calcium is transpiration-dependent — low air movement reduces uptake even when plenty is available.' },
-    ],
-    prevent: 'Good airflow, dialed pH, and consistent cal-mag. In coco especially — never skip cal-mag.',
-  },
-
-  whole_plant: {
-    q: "What does the overall pallor look like?",
-    choices: [
-      { icon:'●', label:'Uniformly pale / light green everywhere', desc:'Whole plant looks washed out, not just spots', next:'nitrogen_overall' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="10"/></svg>`, label:'Yellowing with very dark or clawed leaves nearby', desc:'Mixed symptoms — some dark, some yellow', next:'overwater_check' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>`, label:'Late in flower — lower leaves yellowing fast', desc:'Weeks 7–9, plant is fading out', next:'late_fade' },
-    ]
-  },
-
-  nitrogen_overall: { result: true, title: 'Overall Nitrogen Deficiency', category: 'Deficiency', severity: 'med',
-    confirm: 'Whole plant looks uniformly pale or light green. Growth is slow. Leaves are small and thin. Plant looks hungry.',
-    what: 'When the whole plant is pale rather than lower-leaf-only, it\'s a more significant N shortage — the plant has been under-fed for a while.',
-    treat: [
-      { step:1, text:'<strong>Bump nitrogen significantly</strong> — increase to full recommended rate if you\'ve been conservative.' },
-      { step:2, text:'<strong>Check pH and EC.</strong> If EC is high but plant is pale, lockout is more likely than actual deficiency.' },
-      { step:3, text:'<strong>Quick fix:</strong> Foliar spray with dilute fish emulsion or liquid seaweed (1/4 strength) for fast uptake while roots catch up.' },
-    ],
-    prevent: 'Track EC in and out. Feed at appropriate rates for your medium and stage.' },
-
-  overwater_check: {
-    result: true, title: 'Possible Overwatering + Stress',
-    category: 'Environment', severity: 'med',
-    confirm: 'Mixed symptoms — some clawing, some yellowing, slow growth, soil/coco stays wet for days. Pot feels heavy. Lower leaves yellow and drop.',
-    what: 'Overwatering deprives roots of oxygen, causing nutrient uptake failure that looks like multiple deficiencies simultaneously.',
-    treat: [
-      { step:1, text:'<strong>Let medium dry properly</strong> between waterings. Lift the pot — water only when light. Coco can go slightly dry; soil should be 50–70% dry.' },
-      { step:2, text:'<strong>Improve drainage</strong> if needed — add more perlite to future mixes. Ensure pot has adequate drainage holes.' },
-      { step:3, text:'<strong>Add Hydroguard or beneficial bacteria</strong> to help root health recover (2ml/gal).' },
-      { step:4, text:'<strong>Reduce feed strength temporarily</strong> — stressed roots can\'t handle full EC.' },
-    ],
-    prevent: 'Lift-weigh-water method. Coco should be watered more frequently but in smaller amounts with good drainage.' },
-
-  late_fade: { result: true, title: 'Late Flower Fade — Normal', category: 'Normal', severity: 'low',
-    confirm: 'Weeks 6–9 of flower. Lower and middle leaves yellowing rapidly. Plant eating itself. Buds still healthy and swelling.',
-    what: 'This is exactly what you want in late flower. The plant is pulling nutrients out of fan leaves to feed the buds. Accelerating the fade by pulling nitrogen early improves end flavor and smoothness.',
-    treat: [
-      { step:1, text:'<strong>Stop or drastically reduce nitrogen.</strong> Use a 0-N finish formula or just water.' },
-      { step:2, text:'<strong>Continue phosphorus and potassium</strong> through the finish — the buds still need them.' },
-      { step:3, text:'<strong>Remove leaves that are >60% yellow</strong> to prevent mold habitat.' },
-    ],
-    prevent: 'This isn\'t a problem. Plan for it — start pulling N at week 5–6 of flower intentionally.' },
-
-  brown_spots: {
-    q: "Where are the brown spots or burns?",
-    choices: [
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>`, label:'Crispy brown tips or edges only', desc:'Tip burn, marginal scorch — leaf body still green', next:'tip_burn' },
-      { icon:'●', label:'Random spots across leaf surface', desc:'Irregular patches, may have yellow halos', next:'calcium_spots' },
-      { icon:'☀️', label:'Bleached or papery white-brown patches, top of canopy', desc:'Upper leaves look bleached or scorched', next:'light_stress' },
-    ]
-  },
-
-  tip_burn: {
-    result: true, title: 'Nutrient Burn (Tip Burn)',
-    category: 'Environment', severity: 'low',
-    confirm: 'Brown, crispy leaf tips — starting at the very tip and working in. More common on lower leaves in early stages. Leaf body otherwise healthy.',
-    what: 'Classic overfeed. The plant is getting more nutrients than it can use, and salts accumulate at the leaf tips (where water transpires). Common when pushing EC too high or not flushing enough.',
-    treat: [
-      { step:1, text:'<strong>Reduce feed strength by 25–30%.</strong> If you\'re at 1200 EC, come down to 900 and assess.' },
-      { step:2, text:'<strong>Flush once</strong> with plain pH\'d water at 2x pot volume to clear salt buildup.' },
-      { step:3, text:'<strong>Burned tips don\'t recover</strong> — watch new growth for improvement. Don\'t trim unless leaves are mostly dead.' },
-    ],
-    prevent: 'Measure runoff EC. If it\'s significantly higher than feed EC, salts are building up — flush or water-only for a cycle.' },
-
-  calcium_spots: {
-    result: true, title: 'Calcium Deficiency — Leaf Spots',
-    category: 'Deficiency', severity: 'med',
-    confirm: 'Random rust/brown spots with yellow halos scattered across middle leaves. Spots feel dry and crumbly. May progress to larger dead patches.',
-    what: 'See Calcium Deficiency — same cause and treatment. Spot pattern (vs tip burn) confirms it\'s Ca, not overfeed.',
-    treat: [
-      { step:1, text:'<strong>Cal-mag at 5–10ml/gal.</strong> Check pH is above 6.2 for proper Ca absorption.' },
-      { step:2, text:'<strong>Improve airflow</strong> — Ca is transpiration-dependent. Stagnant air slows uptake.' },
-    ],
-    prevent: 'Consistent cal-mag, good airflow, dialed pH.' },
-
-  // ── WHITE POWDER ──
-  white_powder: {
-    q: "Where exactly is the white substance?",
-    choices: [
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>`, label:'On leaf surfaces — powdery, dry, wipes off', desc:'White circular patches, can be rubbed off', next:'pm_confirm' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>`, label:'On or inside buds — fuzzy gray-white', desc:'Gray or white fuzz growing inside or on bud structure', next:'bud_rot' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M7 20h10"/><path d="M10 20c5.5-2.5.8-6.4 3-10"/><path d="M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8z"/><path d="M14.1 6a7 7 0 0 1 1.1 4.8c-1.6.1-3-.4-4-1.2a5 5 0 0 1-1.2-3.9C12 5 13.4 5.4 14.1 6z"/></svg>`, label:'White webbing under leaves or on stems', desc:'Fine silk-like threads, possible moving dots', next:'spider_mites' },
-    ]
-  },
-
-  pm_confirm: {
-    result: true, title: 'Powdery Mildew (PM)',
-    category: 'Fungal', severity: 'high',
-    confirm: 'White circular powdery patches on leaf surfaces. Can be rubbed off (unlike downy mildew which is underneath). Smell may be musty. Spreads in circular patterns from infection sites.',
-    what: 'Botrytis/PM thrives at 50–80°F with high humidity and poor airflow. Spores are everywhere — conditions trigger it. Genetic susceptibility varies hugely. Once established, it\'s a management game, not a cure.',
-    treat: [
-      { step:1, text:'<strong>Immediately isolate the plant</strong> if possible. Don\'t shake or disturb leaves — spores spread.' },
-      { step:2, text:'<strong>Reduce humidity NOW.</strong> Get RH below 50% in flower, below 45% in late flower. PM cannot establish below 45% RH.' },
-      { step:3, text:'<strong>Remove visibly infected leaves</strong> — bag immediately, don\'t compost. Don\'t cut more than 20% of the plant at once.' },
-      { step:4, text:'<strong>Treatment options:</strong> 1) Potassium bicarbonate (Green Cure) — most effective, disrupts spore cell membrane. 2) Dilute hydrogen peroxide (3% H₂O₂ : water, 1:9 ratio) — spray at lights-off. 3) Dilute neem oil (early veg only — not in flower, taints buds). 4) Milk spray (30% milk:70% water) — genuinely works, creates alkaline environment.' },
-      { step:5, text:'<strong>Spray every 3 days</strong> minimum until clear, then weekly as prevention. Alternate products to avoid resistance.' },
-      { step:6, text:'<strong>Bud wash at harvest</strong> — H₂O₂ wash is essential if PM reached buds at any point.' },
-    ],
-    prevent: 'Airflow is king. Every leaf should move slightly. Keep RH under 50% in flower. UV-C light systems prevent PM. Silica supplements strengthen cell walls. Consider PM-resistant genetics (critical if you have recurring issues).',
-    notes: 'PM spores overwinter on surfaces. Clean your tent/room between runs with dilute bleach or H₂O₂. Your environment is the problem — genetics are secondary.' },
-
-  bud_rot: {
-    result: true, title: 'Botrytis (Bud Rot)',
-    category: 'Fungal', severity: 'high',
-    confirm: 'Gray or white fuzzy mold growing inside or on bud structure. Individual pistils may turn brown and die in a circular pattern. When you pull the bud apart, the inside may be gray, mushy, or dry and dusty. It smells off.',
-    what: 'Botrytis cinerea. The most devastating late-flower disease. Spreads by spores and thrives in high humidity, dense buds, poor airflow, and temps 60–77°F. Once visible, significant internal spread has already occurred.',
-    treat: [
-      { step:1, text:'<strong>Remove infected material immediately and completely.</strong> Cut 2–3 inches below visible infection. Bag it. Don\'t shake it.' },
-      { step:2, text:'<strong>Ruthlessly check neighboring buds.</strong> Pull buds apart at infection sites — look for gray interior. If you find it in multiple sites, consider early harvest.' },
-      { step:3, text:'<strong>Drop humidity hard.</strong> Below 45% RH. Run dehumidifier constantly. Increase airflow through canopy.' },
-      { step:4, text:'<strong>If widespread:</strong> Harvest early. A 70% done bud you can use beats 100% done bud you have to throw away.' },
-      { step:5, text:'<strong>Bud wash at harvest</strong> — mandatory. H₂O₂ wash kills surface spores.' },
-    ],
-    prevent: 'Defoliate strategically in late flower to open up bud sites to airflow. Lower RH aggressively after week 5. Avoid wetting buds during watering or spraying. Avoid dense outdoor-type genetics indoors in humid climates.',
-    notes: 'There is no saving a bud that has rot inside it. Your time is better spent on containment and harvest planning than trying to treat it.' },
-
-  // ── PESTS ──
-  pests: {
-    q: "What are you seeing?",
-    choices: [
-      { icon:'<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="4"/><line x1="2" y1="2" x2="8" y2="8"/><line x1="22" y1="2" x2="16" y2="8"/><line x1="8" y1="16" x2="2" y2="22"/><line x1="16" y1="16" x2="22" y2="22"/></svg>️', label:'Fine webbing, tiny dots on leaf undersides', desc:'Speckling (stippling) on tops, webbing underneath', next:'spider_mites' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="8" y="6" width="8" height="14" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 17-3-2"/><path d="m5 17 3-2"/></svg>`, label:'Tiny flies around soil, larvae in medium', desc:'Small fungus gnats flying, slow/yellowing plants', next:'fungus_gnats' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M2 13a6 6 0 1 0 12 0 4 4 0 1 0-8 0 2 2 0 0 0 4 0"/><circle cx="20" cy="9" r="2"/><path d="M22 9c0-7-14-7-14 0"/><path d="M14 14c0 7 14 7 14 0"/></svg>`, label:'Tiny white insects on stem/undersides', desc:'Fluffy white clusters, sticky residue (honeydew)', next:'aphids_mealybugs' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>`, label:'Russet mites / broad mites', desc:'No visible insects, but leaves curl up, plant looks sick', next:'russet_mites' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="8" y="6" width="8" height="14" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 17-3-2"/><path d="m5 17 3-2"/></svg>`, label:'Thrips', desc:'Silver streaking on leaves, tiny elongated insects', next:'thrips' },
-    ]
-  },
-
-  spider_mites: {
-    result: true, title: 'Spider Mites',
-    category: 'Pest', severity: 'high',
-    confirm: 'Stippling (tiny yellow/white dots) on leaf tops from feeding punctures. Check undersides with a loupe — tiny oval mites, may see eggs. Fine silk webbing in heavy infestations. Rapid reproduction in hot/dry conditions.',
-    what: 'Two-spotted spider mite (Tetranychus urticae) is most common. They thrive above 80°F and in low humidity. Can go from nothing to full infestation in 5–7 days in ideal conditions. Resistance develops quickly to pesticides.',
-    treat: [
-      { step:1, text:'<strong>Identify severity.</strong> Early (dots, few mites) vs late (visible webbing everywhere) require different responses.' },
-      { step:2, text:'<strong>Immediate: lower temp below 75°F and raise humidity to 60%+</strong> — hostile to mites. Won\'t fix it but slows them.' },
-      { step:3, text:'<strong>Spray undersides of all leaves</strong> with your treatment — that\'s where mites live. Top leaf spraying barely helps.' },
-      { step:4, text:'<strong>Treatment rotation (resistance prevention):</strong> Week 1 — Spinosad (Monterey Garden). Week 2 — Isopropyl alcohol (50% dilution in water). Week 3 — Neem oil (veg only). Repeat. Never use same product twice in a row.' },
-      { step:5, text:'<strong>In flower:</strong> Avoid neem and anything with residual systemic action. Spinosad and dilute H₂O₂ (1:9) are safest late in flower.' },
-      { step:6, text:'<strong>Predatory mites</strong> (Phytoseiulus persimilis, Amblyseius californicus) — the gold standard. Release 3–7 days in a row. No resistance possible. Works best before heavy infestation.' },
-    ],
-    prevent: 'Inspect plants weekly with a loupe. Sticky traps at canopy level. Keep temps under 80°F. Introduce predatory mites preventatively. Never bring outdoor plants inside without full inspection.' },
-
-  fungus_gnats: {
-    result: true, title: 'Fungus Gnats',
-    category: 'Pest', severity: 'med',
-    confirm: 'Adult gnats are small (2–3mm), dark, with long legs — they flutter lazily. Larvae are the real problem: white, thread-like, in the top 2" of medium. Plants look overwatered — gnats damage roots.',
-    what: 'Adults are annoying but mostly harmless. Larvae feed on root hairs and organic matter in the top of your medium. This causes nutrient deficiency symptoms and overwatering-like drooping. Wet soil is the cause.',
-    treat: [
-      { step:1, text:'<strong>Let medium dry out more between waterings.</strong> Larvae need moisture — drying the top 2" kills eggs and starves larvae.' },
-      { step:2, text:'<strong>Yellow sticky traps</strong> at soil level — catches adults and breaks the reproductive cycle. Replace weekly.' },
-      { step:3, text:'<strong>Bacillus thuringiensis israelensis (BTi) — Gnatrol or Mosquito Bits</strong> — drench soil with each watering. BTi is a bacteria that kills larvae specifically. Safe, organic, highly effective.' },
-      { step:4, text:'<strong>Top-dress with diatomaceous earth (DE)</strong> — 1/4" layer on soil surface. Physically kills larvae crawling through.' },
-      { step:5, text:'<strong>Beneficial nematodes</strong> (Steinernema feltiae) — soil drench, hunt and kill larvae. Works well in combination with BTi.' },
-    ],
-    prevent: 'Don\'t overwater. Never leave standing water. Avoid using compost-heavy mixes that stay wet. Ensure good soil drainage. Yellow sticky traps as early warning system.' },
-
-  aphids_mealybugs: {
-    result: true, title: 'Aphids / Mealybugs',
-    category: 'Pest', severity: 'med',
-    confirm: 'Aphids: small (1–3mm) soft-bodied insects, green/black/white, clustered on new growth and stems. Mealybugs: white fluffy cottony masses, usually at stem joints and leaf undersides. Both produce honeydew (sticky residue) that encourages sooty mold.',
-    what: 'Both are sap-suckers. Aphids reproduce extremely fast (asexual in controlled environments). Mealybugs are slower but harder to reach. Both weaken plants and can transmit disease.',
-    treat: [
-      { step:1, text:'<strong>Manual removal first</strong> — wipe or spray off colonies with water. Reduces population for follow-up treatment to finish off.' },
-      { step:2, text:'<strong>Insecticidal soap</strong> (potassium salts of fatty acids) — 2–3 applications, 3 days apart. Coat all surfaces. Safe in veg and early flower.' },
-      { step:3, text:'<strong>Neem oil</strong> — effective in veg, avoid in flower (affects taste). Add a few drops of dish soap as emulsifier.' },
-      { step:4, text:'<strong>Spinosad</strong> — effective on aphids, less so mealybugs. Good rotation partner.' },
-      { step:5, text:'<strong>Predatory insects:</strong> Ladybugs and lacewings for aphids. Cryptolaemus beetle for mealybugs. Best for prevention or light infestations.' },
-    ],
-    prevent: 'Inspect new plants before introducing. Screen intake vents. Companion planting (basil, marigolds) can deter. Regular inspections with loupe.' },
-
-  russet_mites: {
-    result: true, title: 'Russet / Broad Mites',
-    category: 'Pest', severity: 'high',
-    confirm: 'No visible insects without 60x+ magnification. Symptoms: new growth curls upward (taco-ing), leaves look shiny or greasy, growth is stunted and twisted, tips may die. Plant looks sick with no obvious cause. Often misdiagnosed as nutrient issues or pH problems.',
-    what: 'Aculops cannibicola (russet mite) and Polyphagotarsonemus latus (broad mite) are microscopic. By the time damage is visible, infestation is heavy. They live inside growing tips — very hard to reach with contact sprays.',
-    treat: [
-      { step:1, text:'<strong>Confirm with a 60x loupe or microscope</strong> — look at the underside of new growth and inside curled leaf edges. Russet mites are barely visible white/yellow specs. Broad mites are similar.' },
-      { step:2, text:'<strong>Spinosad (Monterey Garden Insect Spray)</strong> — most effective spray treatment. Must contact mites directly. Spray into growing tips and new growth where they hide.' },
-      { step:3, text:'<strong>Sulfur-based products</strong> (not in flower — sulfur affects flavor and can be harmful when heated). Effective in veg.' },
-      { step:4, text:'<strong>Heat treatment:</strong> 15 minutes at 115°F kills all stages of broad mites. Use a heat chamber if you have cuttings or small plants.' },
-      { step:5, text:'<strong>Amblyseius cucumeris</strong> predatory mites — effective at hunting russet and broad mites. Release preventatively or at first sign.' },
-    ],
-    prevent: 'Quarantine all new clones/plants for 2 weeks. These come in almost exclusively on plant material. Inspect with magnification. Preventative predatory mite releases.' },
-
-  thrips: {
-    result: true, title: 'Thrips',
-    category: 'Pest', severity: 'med',
-    confirm: 'Silver or bronze streaking on leaves (feeding scars). Tiny (1–2mm) elongated insects, pale yellow to brown, visible on leaf surfaces. Black specks of frass (droppings) nearby. Eggs laid inside leaf tissue. Heavy infestations can hit buds.',
-    what: 'Thrips rasp leaf cells and suck contents, leaving silvery scars. They also transmit plant viruses. Western flower thrips are the most common species in indoor grows. They have a soil pupal stage which complicates treatment.',
-    treat: [
-      { step:1, text:'<strong>Blue sticky traps</strong> — thrips are attracted to blue. Hang at canopy level.' },
-      { step:2, text:'<strong>Spinosad</strong> — very effective on thrips adults. Apply every 5–7 days, 3 treatments. Spray tops and undersides.' },
-      { step:3, text:'<strong>Predatory mites</strong> (Amblyseius cucumeris) attack thrips larvae specifically. Release 2–3 times, 5 days apart.' },
-      { step:4, text:'<strong>Azadirachtin (pure neem extract)</strong> — systemic action, disrupts thrips lifecycle. Use in veg only.' },
-      { step:5, text:'<strong>Treat the soil too</strong> — thrips pupate in soil. BTi drench or beneficial nematodes (S. feltiae) kill the soil stage.' },
-    ],
-    prevent: 'Screen intakes. Sticky traps as monitors. Predatory mites preventatively. Thrips often come in through open windows — seal your environment.' },
-
-  // ── DROOPING ──
-  droop: {
-    q: "When does the drooping happen and what do the leaves look like?",
-    choices: [
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>`, label:'Drooping, soil is wet, leaves thick and curved down', desc:'Curling down like a claw, heavy looking', next:'overwater_droop' },
-      { icon:'<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2"/></svg>️', label:'Drooping, pot feels light, leaves thin and limp', desc:'Wilted and sad, crispy or thin feeling', next:'underwater_droop' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>`, label:'Drooping at end of lights-out only', desc:'Plants sleep-droop at night, fine when lights on', next:'normal_droop' },
-      { icon:'☀️', label:'Drooping under lights, especially at canopy top', desc:'Heat wilting, upper leaves affected most', next:'heat_droop' },
-    ]
-  },
-
-  overwater_droop: {
-    result: true, title: 'Overwatering',
-    category: 'Environment', severity: 'med',
-    confirm: 'Leaves droop but feel thick and firm (not limp). Soil is wet or damp. Pot is heavy. Leaves may be dark green. Stems may look bloated. Classic "the claw" in nitrogen-rich overwatered plants.',
-    what: 'Overwatering drowns roots — no oxygen = no nutrient uptake. The plant looks drooped even though there\'s plenty of water because the roots can\'t function. This is the #1 beginner mistake.',
-    treat: [
-      { step:1, text:'<strong>Stop watering immediately.</strong> Let the medium dry out properly — until the pot is noticeably lighter.' },
-      { step:2, text:'<strong>Improve drainage</strong> if there are no drainage holes or they\'re blocked.' },
-      { step:3, text:'<strong>Gently increase airflow</strong> to help medium dry faster.' },
-      { step:4, text:'<strong>Recovery takes 2–4 days</strong> of dry-out. Don\'t water again until the pot is light and the top 1–2" is dry.' },
-    ],
-    prevent: 'Lift-weigh method: pick up the pot when dry (baseline weight) and when saturated. Water only when it\'s back near dry weight. In coco: smaller, more frequent waterings with fast drainage.' },
-
-  underwater_droop: {
-    result: true, title: 'Underwatering / Drought Stress',
-    category: 'Environment', severity: 'low',
-    confirm: 'Leaves limp and thin-feeling, drooping heavily. Pot is very light. Soil pulling away from edges. In coco: medium feels almost dry to the touch.',
-    what: 'Simpler and easier to fix than overwatering. The plant is just thirsty.',
-    treat: [
-      { step:1, text:'<strong>Water thoroughly</strong> — water until runoff, ensure the whole root zone is wet. Don\'t just wet the surface.' },
-      { step:2, text:'<strong>Recovery is fast</strong> — most plants perk up within 30–60 minutes of a good watering.' },
-      { step:3, text:'<strong>If plant doesn\'t recover in 2–3 hours,</strong> there may be a root issue complicating things.' },
-    ],
-    prevent: 'Check plants daily in hot weather or late flower when transpiration is high. Autoflowers and small pots dry out fast.' },
-
-  normal_droop: {
-    result: true, title: 'Normal Sleep Drooping',
-    category: 'Normal', severity: 'low',
-    confirm: 'Plants droop at night (or end of dark period) and perk back up when lights come on. This is called nyctinasty — a normal circadian response.',
-    what: 'Not a problem. Some strains do this more dramatically than others. Sativa-leaning genetics often droop hard at night. It doesn\'t indicate any deficiency or stress.',
-    treat: [{ step:1, text:'<strong>No action needed.</strong> If plants look healthy during the light period, you\'re good.' }],
-    prevent: 'N/A — this is normal plant behavior.' },
-
-  heat_droop: {
-    result: true, title: 'Heat Stress / Wilting',
-    category: 'Environment', severity: 'med',
-    confirm: 'Upper canopy leaves wilting and cupping upward during the light period. Canopy temp above 85°F. May also see bleaching or bleach-like discoloration at the very tops near the light.',
-    what: 'Plants close stomata above ~85°F and start to wilt as a defense mechanism. Prolonged heat stress reduces yield, increases hermaphrodism risk, and opens the door to PM.',
-    treat: [
-      { step:1, text:'<strong>Lower canopy temp below 82°F.</strong> Increase extraction fan speed, add an AC, or raise the light.' },
-      { step:2, text:'<strong>Raise the light</strong> if you\'re seeing bleaching or the tops look cooked — too close.' },
-      { step:3, text:'<strong>Increase airflow across the canopy</strong> — moving air has significant cooling effect on leaves.' },
-    ],
-    prevent: 'Monitor canopy temp (not room temp — canopy is hotter). Use an infrared thermometer. Lights-off during the hottest hours of day if in a hot climate.' },
-
-  // ── DEFORMITIES ──
-  deform: {
-    q: "What kind of deformity?",
-    choices: [
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>`, label:'Leaves clawing downward (nitrogen claw)', desc:'Leaf tips curling down sharply, like a claw', next:'nitrogen_claw' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>`, label:'Leaves tacoing / cupping upward', desc:'Leaf edges curling up like a taco shell', next:'taco_leaf' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>`, label:'New growth twisted or mutated', desc:'Weird, asymmetric, or contorted new leaves', next:'broad_mite_check' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`, label:'Leaves bubbling / blistering', desc:'Raised blisters or bubbles on leaf surface', next:'broad_mite_check' },
-    ]
-  },
-
-  nitrogen_claw: {
-    result: true, title: 'Nitrogen Toxicity (The Claw)',
-    category: 'Deficiency', severity: 'med',
-    confirm: 'Leaf tips curl sharply downward like a claw. Leaves are very dark green (almost blue-green). Usually affects lower-to-mid leaves first. Plant may look over-healthy at first glance.',
-    what: 'Too much nitrogen — specifically too much ammoniacal nitrogen which the plant absorbs excessively. Common when using nitrogen-heavy veg nutrients into flower, or overusing organic matter that releases a lot of N.',
-    treat: [
-      { step:1, text:'<strong>Reduce or eliminate nitrogen</strong> from your feed. Switch to a bloom formula with lower N:P:K ratios.' },
-      { step:2, text:'<strong>Flush with pH\'d water</strong> (1–2x pot volume) to clear excess N from the medium.' },
-      { step:3, text:'<strong>Recovery takes 5–10 days.</strong> New growth will come in normal. Clawed leaves won\'t un-claw but the plant will be fine.' },
-    ],
-    prevent: 'Switch to bloom nutrients at flip or 1–2 weeks before. Avoid organic top-dressings heavy in manure or blood meal in flower.' },
-
-  taco_leaf: {
-    result: true, title: 'Heat / Light / Wind Stress (Taco Leaf)',
-    category: 'Environment', severity: 'low',
-    confirm: 'Leaf edges curl upward on both sides (like a taco). If only one side curls, check for pests. Usually affects upper canopy leaves most severely. May also see in late flower when plants are transpiring maximally.',
-    what: 'A defensive response to reduce leaf surface area when the plant is losing water faster than it can absorb it. Causes: heat, intense light, low humidity, strong direct fan blast.',
-    treat: [
-      { step:1, text:'<strong>Check the obvious:</strong> Temp at canopy (below 82°F), light distance (check manufacturer spec), fan not blasting directly on leaves.' },
-      { step:2, text:'<strong>Raise light</strong> if upper leaves are most affected — light stress is the most common cause.' },
-      { step:3, text:'<strong>If in late flower</strong> with high transpiration, slight taco-ing is often normal and doesn\'t need intervention.' },
-    ],
-    prevent: 'Oscillating fans rather than fixed-position direct fans. Keep canopy under 82°F. Maintain appropriate light distance.' },
-
-  broad_mite_check: {
-    result: true, title: 'Likely Broad Mites or Russet Mites',
-    category: 'Pest', severity: 'high',
-    confirm: 'Twisted, distorted, or blistered new growth with no other obvious cause. Growth looks sick. Leaves may have a greasy or shiny appearance. New growth curls upward and fails to develop normally.',
-    what: 'Twisted/blistered new growth is the signature symptom of broad mites and russet mites — they inject a chemical while feeding that disrupts cell development. This is almost always mites when there\'s no other explanation.',
-    treat: [
-      { step:1, text:'<strong>Confirm with 60x loupe</strong> — inspect inside new growth and under curled leaf edges. Mites are barely visible but present.' },
-      { step:2, text:'<strong>Treat immediately — see Russet/Broad Mites protocol.</strong>' },
-    ],
-    prevent: 'Quarantine all incoming clones.' },
-
-  // ── ROOTS ──
-  roots: {
-    q: "What are you seeing?",
-    choices: [
-      { icon:'✕', label:'Seedling falling over at soil line', desc:'Young seedling collapses or stem looks pinched/brown', next:'damping_off' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="8" y="6" width="8" height="14" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 17-3-2"/><path d="m5 17 3-2"/></svg>`, label:'Brown slimy roots (hydro/aero)', desc:'Roots in reservoir look brown and smell bad', next:'root_rot' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><rect x="8" y="6" width="8" height="14" rx="4"/><path d="m19 7-3 2"/><path d="m5 7 3 2"/><path d="m19 12-3-1"/><path d="m5 12 3-1"/><path d="m19 17-3-2"/><path d="m5 17 3-2"/><path d="M9 2h6"/></svg>`, label:'Slow growth, yellow lower leaves, wet soil', desc:'Multiple symptoms, soil stays wet too long', next:'fungus_gnats' },
-    ]
-  },
-
-  damping_off: {
-    result: true, title: 'Damping Off',
-    category: 'Fungal', severity: 'high',
-    confirm: 'Seedling stem looks pinched, shrunken, or brown at the soil line. Plant tips over and dies. May affect only some seedlings in a tray. Spreads rapidly to neighboring seedlings.',
-    what: 'Pythium, Fusarium, or Rhizoctonia fungi attack the stem at the soil surface. Triggered by excess moisture, poor airflow at the stem, cold temps, and overwatering. Once visible, the seedling usually cannot be saved.',
-    treat: [
-      { step:1, text:'<strong>Remove affected seedlings immediately</strong> — roots, medium and all. Damping off spreads.' },
-      { step:2, text:'<strong>Reduce moisture</strong> around remaining seedlings. Improve airflow at medium surface.' },
-      { step:3, text:'<strong>Treat remaining seedlings</strong> with dilute hydrogen peroxide drench (3% H₂O₂ at 1:10 with water) to kill fungal spores.' },
-      { step:4, text:'<strong>Increase temps slightly</strong> if below 70°F.' },
-    ],
-    prevent: 'Don\'t oversaturate seedling medium. Use clean, sterile medium and containers. A small fan creating gentle airflow at medium level helps enormously. Avoid propagation domes once sprout breaks surface.' },
-
-  root_rot: {
-    result: true, title: 'Root Rot (Pythium)',
-    category: 'Fungal', severity: 'high',
-    confirm: 'Roots in hydro/aero are brown, slimy, and smell bad (anaerobic smell). Plant shows wilting, yellowing, and slowdowns despite adequate water and nutrients. White healthy roots turn brown from the tips back.',
-    what: 'Pythium thrives in warm (above 70°F), oxygen-depleted reservoir water. Rapidly destroys root mass. Can kill a plant in days if untreated.',
-    treat: [
-      { step:1, text:'<strong>Lower reservoir temp to 65–68°F immediately.</strong> Cold water = hostile environment for Pythium. This alone can stop progression.' },
-      { step:2, text:'<strong>Add Hydroguard</strong> (Bacillus amyloliquefaciens) at 2–5ml/gal — beneficial bacteria that outcompete Pythium. Highly effective.' },
-      { step:3, text:'<strong>Increase dissolved oxygen</strong> — add more/larger air stones. Root rot cannot survive in highly oxygenated water.' },
-      { step:4, text:'<strong>H₂O₂ treatment:</strong> 3% food-grade H₂O₂ at 3ml/gal. Kills Pythium on contact. Note: also kills Hydroguard — don\'t use simultaneously. Use H₂O₂ first, wait 24 hours, then introduce Hydroguard.' },
-      { step:5, text:'<strong>Physically remove dead roots</strong> — trim brown slime from root mass carefully. Improves oxygen penetration.' },
-    ],
-    prevent: 'Keep reservoir below 68°F. Use Hydroguard preventatively from the start. Blackout reservoir from light. Good aeration always.' },
-
-  // ── LIGHT ──
-  light: {
-    q: "What are you seeing?",
-    choices: [
-      { icon:'⬜', label:'Top leaves bleached white or very pale', desc:'Tops look washed out, white, or paper-like', next:'light_bleach' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 3z"/></svg>`, label:'Crispy brown top buds or leaves near light', desc:'Burnt or dried out at the very top', next:'light_burn' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>`, label:'Foxtailing buds — spiky growth at top', desc:'Buds growing extra spiky or elongated pistils', next:'foxtail' },
-    ]
-  },
-
-  light_bleach: {
-    result: true, title: 'Light Bleaching',
-    category: 'Environment', severity: 'med',
-    confirm: 'Upper canopy leaves look washed out, pale white, or cream-colored. Chlorophyll is being destroyed by excess photon intensity. Affected tissue is not recoverable.',
-    what: 'Too much light intensity at the canopy, usually from LED fixtures being too close. LEDs can bleach plants without significant heat — so you may not notice from temps alone. DLI too high.',
-    treat: [
-      { step:1, text:'<strong>Raise the light immediately</strong> — follow manufacturer\'s recommended distance.' },
-      { step:2, text:'<strong>If canopy is too tall</strong> (plants too close to light) — supercrop or LST to bring tops down.' },
-      { step:3, text:'<strong>Bleached leaves won\'t recover</strong> — watch new growth for improvement.' },
-    ],
-    prevent: 'Use a PAR meter or app to measure PPFD at canopy. Target 800–1000 μmol in peak flower. More is not always better with LEDs.' },
-
-  light_burn: {
-    result: true, title: 'Light / Heat Burn',
-    category: 'Environment', severity: 'med',
-    confirm: 'Tops of buds or leaves nearest the light are crispy, brown, or dried out. Heat at the canopy above 85°F.',
-    what: 'Combination of heat and intensity damage at the closest point to the light. More common with HPS/CMH than LED.',
-    treat: [
-      { step:1, text:'<strong>Raise light distance.</strong> Check temp at the canopy directly with a thermometer (not ambient room temp).' },
-      { step:2, text:'<strong>Increase extraction to lower temps.</strong>' },
-      { step:3, text:'<strong>Supercrop tall tops</strong> to bring them away from the light.' },
-    ],
-    prevent: 'Keep canopy temp under 82°F. Monitor distance to tallest colas regularly as plants stretch in flower.' },
-
-  foxtail: {
-    result: true, title: 'Foxtailing',
-    category: 'Environment', severity: 'low',
-    confirm: 'Buds growing new calyxes in elongated, spiky formations instead of stacking dense and round. Can be genetic or stress-induced.',
-    what: 'Two causes: 1) Genetic — some strains (especially sativa-heavy) foxtail naturally. 2) Stress — heat or light intensity causing the plant to stretch in flower rather than stack. Stress foxtails usually happen at the tops near the light.',
-    treat: [
-      { step:1, text:'<strong>If tops only:</strong> Raise light, lower temp — this is stress-induced. Address the environment.' },
-      { step:2, text:'<strong>If whole plant:</strong> May be genetic. Less urgent — let it run, harvest based on trichome development not calyx structure.' },
-    ],
-    prevent: 'Keep temps under 82°F in late flower. Avoid overly intense light at the tops.' },
-
-  // ── FLOWER ──
-  flower: {
-    q: "What flower problem are you seeing?",
-    choices: [
-      { icon:'<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M4 13c3.5-2 8-2 10 2a5.5 5.5 0 0 1 8 5"/><path d="M5.15 17.89c5.52-1.52 8.65-6.89 7-12C11.55 4 11.5 2 13 2c3.22 0 5 4.97 5 7 0 6.5-4.2 12-10.49 12C5.11 21 3 20 3 19c0-.68.32-1.18.68-1.61A3 3 0 0 1 5.15 17.89z"/></svg>', label:'Bananas / nanners on buds', desc:'Yellow banana-shaped structures in buds', next:'nanners' },
-      { icon:'♂️', label:'Male flowers developing', desc:'Ball-shaped pollen sacs forming', next:'herm_balls' },
-      { icon:`<svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>`, label:'Buds not fattening / stalling', desc:'Buds look small or stopped developing', next:'bud_stall' },
-    ]
-  },
-
-  nanners: {
-    result: true, title: 'Nanners (Stress Hermaphroditism)',
-    category: 'Hermaphroditism', severity: 'high',
-    confirm: 'Small yellow banana-shaped stamens emerging from within bud structure. Can self-pollinate within hours. Often appear late flower (week 6+) on otherwise female plants.',
-    what: 'Stress-induced hermaphroditism. Triggers: light leaks during dark period, heat stress, pH swings, nutrient problems, or genetic predisposition. Nanners are fertile and will pollinate your entire garden.',
-    treat: [
-      { step:1, text:'<strong>Remove nanners manually with tweezers ASAP.</strong> Gently — don\'t pop them. Check daily.' },
-      { step:2, text:'<strong>Identify and fix the stress trigger:</strong> light leaks, heat spikes, pH swings. Check your dark period for any light source.' },
-      { step:3, text:'<strong>If nanners are widespread</strong> and late flower — decide: harvest early or manage daily and let finish. Risk of seeded harvest increases rapidly.' },
-      { step:4, text:'<strong>Other plants in the room:</strong> Check all plants for seeds beginning to form (swollen calyxes with no pistils). Act fast.' },
-    ],
-    prevent: 'Fix any light leaks before flower. Keep environment stable. Avoid using seeds/clones from known hermy genetics. Don\'t stress plants in flower.' },
-
-  herm_balls: {
-    result: true, title: 'Male Flowers / Hermaphroditism',
-    category: 'Hermaphroditism', severity: 'high',
-    confirm: 'Grape-cluster or single ball-shaped structures on what was a female plant. Distinct from calyxes — no pistils coming out, smooth round shape. May appear at node sites or in buds.',
-    what: 'Either the plant was always male/hermaphrodite (genetics) or stress caused feminized genetics to express male flowers. Either way, these will produce viable pollen.',
-    treat: [
-      { step:1, text:'<strong>Remove plant from flowering room immediately if male.</strong> Pollen travels far.' },
-      { step:2, text:'<strong>If hermaphrodite:</strong> Remove all visible pollen sacs carefully. Bag the plant\'s removed material.' },
-      { step:3, text:'<strong>Check all other plants</strong> for any pollination signs (swelling calyxes where pistils retract).' },
-      { step:4, text:'<strong>Unless this is a planned breeding run</strong> — this plant is compromised for sinsemilla production.' },
-    ],
-    prevent: 'Source feminized seeds from reputable breeders. Avoid stressing plants with light leaks or environmental swings. Don\'t clone from known hermy plants.' },
-
-  bud_stall: {
-    result: true, title: 'Bud Development Stall',
-    category: 'Environment', severity: 'med',
-    confirm: 'Buds not fattening despite being on schedule. Plants look healthy otherwise. May coincide with nutrient changes or environmental shifts.',
-    what: 'Usually one of: (1) not enough light intensity, (2) temps too high (above 85°F shuts down calyx development), (3) VPD too low (high humidity slows transpiration and nutrient uptake to buds), (4) P/K deficiency in mid-flower.',
-    treat: [
-      { step:1, text:'<strong>Verify light intensity</strong> — measure PPFD at canopy. Flower needs 600–1000+ μmol depending on strain.' },
-      { step:2, text:'<strong>Check VPD</strong> — mid-flower target is 1.2–1.5 kPa. High humidity (above 60% RH) stalls bud development.' },
-      { step:3, text:'<strong>Ensure P/K is adequate</strong> — mid-flower is the peak demand window for phosphorus and potassium.' },
-      { step:4, text:'<strong>Patience</strong> — some strains bulk late. Trichome development is the real indicator, not bud size.' },
-    ],
-    prevent: 'Environmental consistency is most important in flower. Dialed VPD and temps are more impactful than any nutrient adjustment.' },
-};
-
-function sxGo(nodeId, label) {
-  if (label) sxPath.push({ node: sxNode, label });
-  sxNode = nodeId;
-  render();
-  document.getElementById('main').scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function sxBack() {
-  if (!sxPath.length) return;
-  const prev = sxPath.pop();
-  sxNode = prev.node;
-  render();
-}
-
-function sxReset() {
-  sxPath = [];
-  sxNode = 'root';
-  render();
-}
-
-
-
-function symptomChecker() {
-  const node = SX[sxNode];
-  if (!node) return '<div class="sx-card"><div class="sx-question">Unknown node. <button class="btn btn-ghost btn-sm" onclick="sxReset()">Start Over</button></div></div>';
-
-  const disclaimer = `<div style="font-size:10px;color:var(--text-dim);background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin-bottom:14px;line-height:1.6">
-     <strong style="color:var(--text-mid)">Educational tool only.</strong> Diagnoses are based on common patterns and should be treated as a starting point, not a definitive answer. Multiple issues can present similarly. When in doubt, consult experienced growers or extension resources.
-  </div>`;
-
-  // Breadcrumb
-  const crumb = sxPath.length ? `<div class="sx-breadcrumb">
-    <span style="cursor:pointer;color:var(--accent)" onclick="sxReset()">Start</span>
-    ${sxPath.map((p,i) => `<span class="sx-breadcrumb-sep">›</span><span>${esc(p.label)}</span>`).join('')}
-    <span class="sx-breadcrumb-sep">›</span><span style="color:var(--text)">${node.result ? node.title : '…'}</span>
-  </div>` : '';
-
-  // Result node
-  if (node.result) {
-    const sevClass = { low:'sx-sev-low', med:'sx-sev-med', high:'sx-sev-high' }[node.severity] || 'sx-sev-med';
-    const sevLabel = { low:'Low Urgency', med:'Moderate — Act Soon', high:'High — Act Now' }[node.severity] || '';
-    const catColors = { Fungal:'var(--orange)', Deficiency:'var(--warn)', Pest:'var(--danger)', Environment:'var(--blue)', Normal:'var(--accent)', Hermaphroditism:'var(--pink)' };
-    return `${disclaimer}${crumb}
-    <div class="sx-card sx-result">
-      <div class="sx-result-label" style="color:${catColors[node.category]||'var(--accent)'}">${node.category}</div>
-      <div class="sx-result-title">${node.title}</div>
-      <div class="${sevClass} sx-severity">${sevLabel}</div>
-      <div class="sx-section">
-        <div class="sx-section-title">Confirm It</div>
-        <div class="sx-section-body">${node.confirm}</div>
-      </div>
-      <div class="sx-section">
-        <div class="sx-section-title">What's Happening</div>
-        <div class="sx-section-body">${node.what}</div>
-      </div>
-      <div class="sx-section">
-        <div class="sx-section-title">Treatment Protocol</div>
-        <div class="sx-protocol">${node.treat.map(t=>`
-          <div class="sx-step">
-            <div class="sx-step-num">${t.step}</div>
-            <div class="sx-step-text">${t.text}</div>
-          </div>`).join('')}
-        </div>
-      </div>
-      ${node.prevent ? `<div class="sx-section">
-        <div class="sx-section-title">Prevention</div>
-        <div class="sx-section-body">${node.prevent}</div>
-      </div>` : ''}
-      ${node.notes ? `<div class="sx-section">
-        <div class="sx-section-title">Notes</div>
-        <div class="sx-section-body" style="color:var(--text-dim);font-style:italic">${node.notes}</div>
-      </div>` : ''}
-      <div class="sx-nav">
-        ${sxPath.length ? `<button class="btn btn-ghost btn-sm" onclick="sxBack()">← Back</button>` : ''}
-        <button class="btn btn-ghost btn-sm" onclick="sxReset()">Start Over</button>
-        <button class="btn btn-primary btn-sm" onclick="openAdd('journal')">+ Log This Issue</button>
-      </div>
-    </div>`;
-  }
-
-  // Question node
-  return `${crumb}
-  <div class="sx-card">
-    <div class="sx-question">${node.q}</div>
-    ${node.hint ? `<div class="sx-hint">${node.hint}</div>` : ''}
-    <div class="sx-choices">
-      ${node.choices.map(c => `
-        <button class="sx-choice" onclick="sxGo('${c.next}','${esc(c.label)}')">
-          <span class="sx-choice-icon">${c.icon}</span>
-          <div class="sx-choice-text"><strong>${c.label}</strong>${c.desc ? c.desc : ''}</div>
-        </button>`).join('')}
-    </div>
-    <div class="sx-nav">
-      ${sxPath.length ? `<button class="btn btn-ghost btn-sm" onclick="sxBack()">← Back</button>` : ''}
-    </div>
-  </div>`;
-}
-
-function reference() {
-  const clonex = (refGallons * 3.78541 * 5).toFixed(1);
-  const hydroguard = (refGallons * 2).toFixed(0);
-
-  const tabs = `<div class="ref-tabs">
-    <div class="ref-tab ${refTab==='reference'?'active':''}" onclick="nav('reference')">Reference</div>
-    <div class="ref-tab ${refTab==='symptoms'?'active':''}" onclick="nav('symptoms')"><svg width="14" height="14" viewBox="0 0 24 24" class="icon" style="vertical-align:middle;display:inline-block"><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg> Symptom Checker</div>
-  </div>`;
-
-  if (refTab === 'symptoms') return `
-  <div class="page-header"><div class="page-title">Reference</div><div class="page-subtitle">Symptom diagnosis & treatment protocols</div></div>
-  ${tabs}
-  ${symptomChecker()}`;
-
-  return `
-  <div class="page-header"><div class="page-title">Reference</div><div class="page-subtitle">Grow parameters, recipes & protocols</div></div>
-  ${tabs}
-  <div class="ref-grid">
-    <div>
-      <div class="ref-section">
-        <div class="ref-title">VPD Targets</div>
-        <table class="ref-table">
-          <thead><tr><th>Stage</th><th>VPD (kPa)</th><th>Temp (°F)</th><th>RH %</th></tr></thead>
-          <tbody>
-            <tr><td class="stage-cell">Seedling / Clone</td><td>0.4 – 0.8</td><td>75–80</td><td>65–75</td></tr>
-            <tr><td class="stage-cell">Early Veg</td><td>0.8 – 1.0</td><td>72–78</td><td>55–65</td></tr>
-            <tr><td class="stage-cell">Late Veg</td><td>1.0 – 1.2</td><td>70–78</td><td>50–60</td></tr>
-            <tr><td class="stage-cell">Early Flower (wk 1–3)</td><td>1.0 – 1.5</td><td>68–76</td><td>45–55</td></tr>
-            <tr><td class="stage-cell">Mid / Late Flower</td><td>1.2 – 1.8</td><td>65–74</td><td>38–50</td></tr>
-          </tbody>
-        </table>
-        <div class="form-hint" style="margin-top:8px">VPD targets based on leaf-surface VPD research and widely validated commercial cultivation data. Ranges reflect consensus across multiple sources including Hardin et al. (2012) and Pulse Labs cultivation guides. Your environment and genetics may warrant adjustment — treat these as starting points, not absolutes.</div>
-      </div>
-      <div class="ref-section">
-        <div class="ref-title">PPFD Targets</div>
-        <table class="ref-table">
-          <thead><tr><th>Stage</th><th>PPFD (μmol/m²/s)</th><th>DLI (12hr flower / 18hr veg)</th></tr></thead>
-          <tbody>
-            <tr><td class="stage-cell">Seedling Week 1</td><td>50 – 150</td><td>~3–10 (18hr)</td></tr>
-            <tr><td class="stage-cell">Seedling Week 2+</td><td>150 – 300</td><td>~10–19 (18hr)</td></tr>
-            <tr><td class="stage-cell">Veg</td><td>300 – 600</td><td>~20–39</td></tr>
-            <tr><td class="stage-cell">Early Flower</td><td>600 – 800</td><td>~26–35</td></tr>
-            <tr><td class="stage-cell">Peak Flower</td><td>800 – 1100</td><td>~35–48</td></tr>
-          </tbody>
-        </table>
-        <div class="form-hint" style="margin-top:8px">DLI = PPFD × photoperiod (hrs) × 3600 ÷ 1,000,000. More light requires more CO₂, water and nutrients to utilise — don't push PPFD without dialling environment first.</div>
-      </div>
-    </div>
-    <div>
-      <div class="ref-section">
-        <div class="ref-title">Aerocloner Mix Calculator</div>
-        <div class="calc-row">
-          <span class="calc-label">Gallons of water</span>
-          <input type="number" class="form-input" style="width:80px" value="${refGallons}" min="0.5" step="0.5" oninput="refGallons=parseFloat(this.value)||2;render()" />
-        </div>
-        <div class="calc-row"><span class="calc-label">Clonex solution</span><span class="calc-val">${clonex} ml</span></div>
-        <div class="calc-row"><span class="calc-label">Hydroguard (optional)</span><span class="calc-val">${hydroguard} ml</span></div>
-        <div class="form-hint" style="margin-top:8px">Clonex Solution at propagation strength (5ml/L) · 2ml Hydroguard per gallon. Full-strength Clonex feeding rate is 10ml/L — use the lighter rate for aerocloners to avoid burning tender cuttings.</div>
-      </div>
-      <div class="ref-section">
-        <div class="ref-title">Drying & Cure Protocol</div>
-        <table class="ref-table">
-          <thead><tr><th>Phase</th><th>Duration</th><th>Conditions</th></tr></thead>
-          <tbody>
-            <tr><td class="stage-cell">Initial Dry</td><td>10 – 14 days</td><td>60–65°F / 55–60% RH. Slow dry preserves terpenes — avoid rushing with heat or low humidity.</td></tr>
-            <tr><td class="stage-cell">Cure — Week 1</td><td>7 days</td><td>Jar. Burp 2× daily, 15 min. Check for sweat or ammonia smell.</td></tr>
-            <tr><td class="stage-cell">Cure — Week 2–4</td><td>3 weeks</td><td>Burp daily, then every other day. Boveda 62% (smoke soon) or 58% (long storage).</td></tr>
-            <tr><td class="stage-cell">Long Cure</td><td>3+ months</td><td>Dark, cool (60°F), sealed. 58% Boveda. Minimal burping. Check monthly.</td></tr>
-          </tbody>
-        </table>
-        <div class="form-hint" style="margin-top:8px">Stems should snap, not bend, before jarring. If they still bend, keep drying. Ammonia smell in jars = too wet — leave lids off for 24hrs.</div>
-      </div>
-    </div>
-  </div>`;
-}
-
 
 function openView(section, i) {
   const item = (section === 'plants' || section === 'history' || section === 'cures')
@@ -5481,7 +4882,18 @@ function openSettings() {
           <button class="btn btn-danger btn-sm" onclick="removeTypeRow(${i})" title="Remove">✕</button>
         </div>`).join('')}
     </div>
-    <button class="btn btn-ghost btn-sm" onclick="addTypeRow()" style="margin-bottom:20px">+ Add Type</button>
+    <button class="btn btn-ghost btn-sm" onclick="addTypeRow()" style="margin-bottom:24px">+ Add Type</button>
+
+    <div style="font-size:10px;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px">Breeders</div>
+    <div style="font-size:11px;color:var(--text-dim);margin-bottom:14px;line-height:1.6">Manage your breeder autocomplete list. Changes apply to both the Seed Library and Plants forms.</div>
+    <div id="breeders-list" style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px">
+      ${getBreeders().map((b,i) => `
+        <div style="display:flex;align-items:center;gap:8px" id="breeder-row-${i}">
+          <input class="form-input" style="flex:1" value="${esc(b)}" id="breeder-val-${i}" />
+          <button class="btn btn-danger btn-sm" onclick="removeBreederRow(${i})" title="Remove">✕</button>
+        </div>`).join('')}
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="addBreederRow()" style="margin-bottom:20px">+ Add Breeder</button>
 
     <div class="btn-row">
       <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
@@ -5523,6 +4935,23 @@ function removeTypeRow(i) {
   if (el) el.remove();
 }
 
+function addBreederRow() {
+  const list = document.getElementById('breeders-list');
+  if (!list) return;
+  const i = list.children.length;
+  const div = document.createElement('div');
+  div.style.cssText = 'display:flex;align-items:center;gap:8px';
+  div.id = `breeder-row-${i}`;
+  div.innerHTML = `<input class="form-input" style="flex:1" value="" id="breeder-val-${i}" placeholder="New breeder…" /><button class="btn btn-danger btn-sm" onclick="removeBreederRow(${i})" title="Remove">✕</button>`;
+  list.appendChild(div);
+  div.querySelector('input').focus();
+}
+
+function removeBreederRow(i) {
+  const el = document.getElementById(`breeder-row-${i}`);
+  if (el) el.remove();
+}
+
 function saveSettings() {
   const targets = {
     seedling: parseInt(document.getElementById('st-seedling').value) || 21,
@@ -5552,6 +4981,13 @@ function saveSettings() {
   else localStorage.removeItem(SEED_TYPES_KEY);
   SEED_TYPES = ['All', ...getSeedTypes()];
 
+  // Save breeders
+  const breederInputs = document.querySelectorAll('#breeders-list input');
+  const breeders = [...breederInputs].map(el => el.value.trim()).filter(Boolean);
+  if (breeders.length) localStorage.setItem(BREEDERS_KEY, JSON.stringify(breeders));
+  else localStorage.removeItem(BREEDERS_KEY);
+  BREEDERS = getBreeders();
+
   save();
   closeModal();
   render();
@@ -5561,7 +4997,9 @@ function saveSettings() {
 function resetSettings() {
   localStorage.removeItem(STAGE_TARGETS_KEY);
   localStorage.removeItem(SEED_TYPES_KEY);
+  localStorage.removeItem(BREEDERS_KEY);
   SEED_TYPES = ['All', ...getSeedTypes()];
+  BREEDERS = getBreeders();
   closeModal();
   render();
   toast('Settings reset to defaults.');
@@ -5579,7 +5017,7 @@ function openAbout() {
       <div style="margin-bottom:14px">GrowLog is intentionally a <strong>single HTML file</strong> — no build step, no dependencies, no CDN calls, no framework. This is a deliberate choice: it makes the app fully auditable (view source and read everything), permanently offline-capable, and trivial to self-host or run locally. The entire codebase fits in one file you can open in any browser.</div>
 
       <div style="font-size:10px;font-weight:700;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">Grow Data Accuracy</div>
-      <div style="margin-bottom:14px">VPD targets are based on peer-reviewed research and widely validated commercial cultivation data. Stage duration defaults are starting points — every strain and environment is different. The Symptom Checker is an educational tool, not a substitute for experience or professional advice.</div>
+      <div style="margin-bottom:14px">VPD targets are based on peer-reviewed research and widely validated commercial cultivation data. Stage duration defaults are starting points — every strain and environment is different.</div>
 
       <div style="font-size:10px;font-weight:700;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">Open Source</div>
       <div>Built by growers, for growers. Source available at <span style="color:var(--accent)">github.com/xultrax-web/growlog</span></div>
@@ -5620,7 +5058,7 @@ async function confirmClearAll() {
   _undoStack.length = 0;
   [STORAGE_KEY, PLANT_ORDER_KEY, PLANT_COL_KEY, VAULT_COL_KEY,
    THEME_KEY, STAGE_TARGETS_KEY, SEED_TYPES_KEY, CRYPTO_META_KEY,
-   'growlog_last_export', 'growlog'].forEach(k => localStorage.removeItem(k));
+   BREEDERS_KEY, 'growlog_last_export', 'growlog'].forEach(k => localStorage.removeItem(k));
   await photoClearAll();
   closeModal();
   page = 'dashboard';
