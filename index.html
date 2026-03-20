@@ -760,6 +760,93 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; 
 <script>
 const STORAGE_KEY = 'growlog_v2';
 const CRYPTO_META_KEY = 'growlog_crypto_meta';
+
+// ── PHOTO STORE — IndexedDB (no size limit, binary-safe) ──────────────────
+const IDB_NAME    = 'growlog_photos';
+const IDB_STORE   = 'photos';
+const IDB_VERSION = 1;
+
+function _openPhotoDb() {
+  return new Promise((resolve, reject) => {
+    const req = indexedDB.open(IDB_NAME, IDB_VERSION);
+    req.onupgradeneeded = e => e.target.result.createObjectStore(IDB_STORE);
+    req.onsuccess  = e => resolve(e.target.result);
+    req.onerror    = e => reject(e.target.error);
+  });
+}
+
+async function photoSave(photoId, dataUrl) {
+  try {
+    const db = await _openPhotoDb();
+    return new Promise((resolve, reject) => {
+      const tx  = db.transaction(IDB_STORE, 'readwrite');
+      tx.objectStore(IDB_STORE).put(dataUrl, photoId);
+      tx.oncomplete = () => resolve();
+      tx.onerror    = e => reject(e.target.error);
+    });
+  } catch(e) { console.error('GrowLog photo save error:', e); }
+}
+
+async function photoGet(photoId) {
+  try {
+    const db = await _openPhotoDb();
+    return new Promise((resolve, reject) => {
+      const tx  = db.transaction(IDB_STORE, 'readonly');
+      const req = tx.objectStore(IDB_STORE).get(photoId);
+      req.onsuccess = e => resolve(e.target.result || null);
+      req.onerror   = e => reject(e.target.error);
+    });
+  } catch(e) { return null; }
+}
+
+async function photoDelete(photoId) {
+  try {
+    const db = await _openPhotoDb();
+    return new Promise((resolve) => {
+      const tx = db.transaction(IDB_STORE, 'readwrite');
+      tx.objectStore(IDB_STORE).delete(photoId);
+      tx.oncomplete = () => resolve();
+    });
+  } catch(e) { /* non-fatal */ }
+}
+
+async function photoGetAll() {
+  try {
+    const db = await _openPhotoDb();
+    return new Promise((resolve, reject) => {
+      const tx      = db.transaction(IDB_STORE, 'readonly');
+      const store   = tx.objectStore(IDB_STORE);
+      const results = {};
+      const reqKeys = store.getAllKeys();
+      reqKeys.onsuccess = ek => {
+        const keys = ek.target.result;
+        const reqVals = store.getAll();
+        reqVals.onsuccess = ev => {
+          ev.target.result.forEach((v, i) => results[keys[i]] = v);
+          resolve(results);
+        };
+        reqVals.onerror = e => reject(e.target.error);
+      };
+      reqKeys.onerror = e => reject(e.target.error);
+    });
+  } catch(e) { return {}; }
+}
+
+async function photoClearAll() {
+  try {
+    const db = await _openPhotoDb();
+    return new Promise((resolve) => {
+      const tx = db.transaction(IDB_STORE, 'readwrite');
+      tx.objectStore(IDB_STORE).clear();
+      tx.oncomplete = () => resolve();
+    });
+  } catch(e) { /* non-fatal */ }
+}
+
+function _photoUid() {
+  return 'P' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
 const SEED_TYPE_ACCENT = {
   'Landrace, Heirloom & IBL': 'var(--warn)',
   'Regular Hybrid':           'var(--accent)',
@@ -1211,10 +1298,8 @@ function blankData() {
 
 // ── UID GENERATOR ──────────────────────────────────────────────────────────
 function nextUid() {
-  const grows = DB.grows || [];
-  if (!grows.length) return 'G001';
-  const nums = grows.map(g => parseInt((g.uid||'G0').replace(/\D/g,''))||0);
-  return 'G' + String(Math.max(...nums) + 1).padStart(3, '0');
+  // Timestamp + random suffix — unique, sortable, no overflow
+  return 'G' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2,5).toUpperCase();
 }
 
 // ── MIGRATION ──────────────────────────────────────────────────────────────
@@ -1555,6 +1640,23 @@ function render() {
   el.innerHTML = (pages[page] || dashboard)();
   if (page === 'seeds') setTimeout(_applyVaultCols, 0);
   if (page === 'plants') setTimeout(_applyPlantCols, 0);
+  setTimeout(_loadRenderedPhotos, 0);
+}
+
+// Load photos from IndexedDB into rendered img tags after render
+async function _loadRenderedPhotos() {
+  const imgs = document.querySelectorAll('img[id^="jphoto-"]');
+  if (!imgs.length) return;
+  for (const img of imgs) {
+    const jIdx = parseInt(img.id.replace('jphoto-', ''));
+    const j = DB.journal[jIdx];
+    if (!j) continue;
+    if (j.photo) { img.style.display = 'block'; continue; } // legacy inline photo
+    if (j.photoId) {
+      const dataUrl = await photoGet(j.photoId);
+      if (dataUrl) { img.src = dataUrl; img.style.display = 'block'; }
+    }
+  }
 }
 
 function dashboard() {
@@ -1881,7 +1983,7 @@ function boardDrawer(g, i, _jIdx) {
           <div style="display:flex;gap:4px">${j.issues&&j.issues.length?j.issues.map(iss=>`<span class="badge badge-${iss.toLowerCase().replace(/\s+/g,'-')}">${esc(iss)}</span>`).join(''):''}</div>
         </div>
         <div class="journal-text">${esc(j.notes)}</div>
-        ${j.photo ? `<img src="${j.photo}" style="max-width:180px;max-height:140px;border-radius:6px;border:1px solid var(--border);margin-top:8px;display:block" />` : ''}
+        ${(j.photoId || j.photo) ? `<img id="jphoto-${jIdx}" src="${j.photo||''}" style="max-width:180px;max-height:140px;border-radius:6px;border:1px solid var(--border);margin-top:8px;display:${j.photo?'block':'none'}" />` : ''}
         ${hasMetrics?`<div class="journal-metrics">
           ${j.vpd?`<div class="journal-metric"><span class="journal-metric-label">VPD</span><span class="journal-metric-value">${j.vpd} kPa</span></div>`:''}
           ${j.temp?`<div class="journal-metric"><span class="journal-metric-label">Temp</span><span class="journal-metric-value">${j.temp}°F</span></div>`:''}
@@ -2360,7 +2462,7 @@ function previewPhoto(i) {
   reader.readAsDataURL(file);
 }
 
-function saveInlineLog(e, i) {
+async function saveInlineLog(e, i) {
   e.stopPropagation();
   const g = DB.grows[i];
   if (!g) return;
@@ -2369,7 +2471,15 @@ function saveInlineLog(e, i) {
   const issues = [...checks].map(c => c.value);
   const notes = fv(`ilog-notes-${i}`);
   const photoInput = document.getElementById(`ilog-photo-${i}`);
-  const photo = photoInput?.dataset?.compressed || null;
+  const compressedPhoto = photoInput?.dataset?.compressed || null;
+
+  // Store photo in IndexedDB, keep only the ID in the journal entry
+  let photoId = undefined;
+  if (compressedPhoto) {
+    photoId = _photoUid();
+    await photoSave(photoId, compressedPhoto);
+  }
+
   const obj = {
     date: fv(`ilog-date-${i}`) || today(),
     plantId: g.uid,
@@ -2382,10 +2492,10 @@ function saveInlineLog(e, i) {
     ec: gf(`ilog-ec-${i}`),
     lightHeight: gf(`ilog-lh-${i}`),
     issues,
-    photo: photo || undefined
+    photoId  // undefined if no photo — not serialized
   };
   DB.journal.push(obj);
-  save();
+  await save();
   drawerLogForm[i] = false;
   render();
   const drawer = document.getElementById('drawer-' + i);
@@ -5504,13 +5614,14 @@ function clearAllData2() {
     </div>`);
 }
 
-function confirmClearAll() {
+async function confirmClearAll() {
   DB = blankData();
   _cache = null;
   _undoStack.length = 0;
   [STORAGE_KEY, PLANT_ORDER_KEY, PLANT_COL_KEY, VAULT_COL_KEY,
    THEME_KEY, STAGE_TARGETS_KEY, SEED_TYPES_KEY, CRYPTO_META_KEY,
    'growlog_last_export', 'growlog'].forEach(k => localStorage.removeItem(k));
+  await photoClearAll();
   closeModal();
   page = 'dashboard';
   render();
@@ -5518,8 +5629,10 @@ function confirmClearAll() {
 }
 
 
-function _doExport() {
-  const blob = new Blob([JSON.stringify(DB, null, 2)], {type:'application/json'});
+async function _doExport() {
+  const photos = await photoGetAll();
+  const exportData = { ...DB, _photos: photos };
+  const blob = new Blob([JSON.stringify(exportData, null, 2)], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = `growlog-backup-${today()}.json`;
@@ -5589,7 +5702,15 @@ async function _confirmImport() {
 }
 
 async function _doImportData(parsed) {
-  Object.assign(DB, { ...blankData(), ...parsed });
+  // Restore photos to IndexedDB if backup includes them
+  const photos = parsed._photos || {};
+  await photoClearAll();
+  for (const [id, dataUrl] of Object.entries(photos)) {
+    await photoSave(id, dataUrl);
+  }
+  // Strip _photos from DB — it doesn't belong in localStorage
+  const { _photos, ...dbData } = parsed;
+  Object.assign(DB, { ...blankData(), ...dbData });
   await save(); render(); toast('Backup imported successfully.');
 }
 
