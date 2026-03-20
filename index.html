@@ -111,6 +111,7 @@ body { background: var(--bg); color: var(--text); font-family: var(--mono); font
   .nav-item { flex-direction: column; gap: 4px; padding: 12px 14px; font-size: 10px; white-space: nowrap; border-left: none; border-bottom: 3px solid transparent; }
   .nav-item.active { border-left: none; border-bottom-color: var(--accent); }
   .nav-badge { display: none; }
+  .nav-item-more { display: flex; }
   .main { padding: 20px 16px; }
   .stats-bar { grid-template-columns: 1fr 1fr; }
   .dashboard-grid { grid-template-columns: 1fr !important; }
@@ -119,6 +120,13 @@ body { background: var(--bg); color: var(--text); font-family: var(--mono); font
   .cards-grid { grid-template-columns: 1fr !important; }
   .modal { margin: 0; max-height: 100vh; border-radius: 0; }
 }
+.nav-item-more { display: none; }
+.mobile-menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+.mobile-menu-btn { display: flex; align-items: center; gap: 8px; padding: 12px 10px; border-radius: 6px; font-family: var(--mono); font-size: 11px; color: var(--text-dim); background: var(--surface2); border: 1px solid var(--border); cursor: pointer; transition: all 0.15s; text-align: left; }
+.mobile-menu-btn:hover { color: var(--text); border-color: var(--border2); background: var(--surface3); }
+.mobile-menu-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+.mobile-menu-btn.danger { color: var(--danger); border-color: var(--danger-dim); }
+.mobile-menu-btn.warn { color: var(--warn); border-color: var(--warn-dim); }
 
 /* ── SIDEBAR ── */
 .sidebar-header { padding: 24px 20px 18px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
@@ -715,6 +723,10 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; 
       <div class="nav-item" onclick="nav('symptoms')" id="nav-symptoms">
         <svg class="nav-icon" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         <span class="nav-label">Symptom Checker</span>
+      </div>
+      <div class="nav-item nav-item-more" onclick="openMobileMenu()">
+        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+        <span class="nav-label">More</span>
       </div>
     </div>
     <div class="sidebar-footer">
@@ -1371,13 +1383,12 @@ function _gc() {
   return _cache;
 }
 
-function undo() {
+async function undo() {
   if (!_undoStack.length) { toast('Nothing to undo.'); return; }
   const prev = _undoStack.pop();
   _cache = null;
   Object.assign(DB, JSON.parse(prev));
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(DB));
-  refreshBadges();
+  await save();
   render();
   toast('Undone.');
 }
@@ -1414,6 +1425,8 @@ async function _startup() {
       Object.assign(DB, migrate({ ...blankData(), ...parsed }));
     } catch(e) {
       console.error('GrowLog load error:', e);
+      DB = blankData();
+      setTimeout(() => toast('⚠ Your data could not be loaded. It may be corrupted. Export a backup if you have one, then try importing it.', 'error'), 500);
     }
     _cache = null;
     refreshBadges();
@@ -5495,8 +5508,9 @@ function confirmClearAll() {
   DB = blankData();
   _cache = null;
   _undoStack.length = 0;
-  localStorage.removeItem(STORAGE_KEY);
-  localStorage.removeItem(PLANT_ORDER_KEY);
+  [STORAGE_KEY, PLANT_ORDER_KEY, PLANT_COL_KEY, VAULT_COL_KEY,
+   THEME_KEY, STAGE_TARGETS_KEY, SEED_TYPES_KEY, CRYPTO_META_KEY,
+   'growlog_last_export', 'growlog'].forEach(k => localStorage.removeItem(k));
   closeModal();
   page = 'dashboard';
   render();
@@ -5504,7 +5518,7 @@ function confirmClearAll() {
 }
 
 
-function exportData() {
+function _doExport() {
   const blob = new Blob([JSON.stringify(DB, null, 2)], {type:'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -5513,6 +5527,25 @@ function exportData() {
   localStorage.setItem('growlog_last_export', Date.now().toString());
   toast('Backup exported.');
 }
+
+function exportData() {
+  if (_isEncryptionEnabled()) {
+    showModal(`
+      <div class="modal-header"><div class="modal-title">Export Backup</div><button class="modal-close" onclick="closeModal()">✕</button></div>
+      <div style="margin-bottom:16px;padding:12px;background:var(--warn-dim);border:1px solid var(--warn);border-radius:6px;color:var(--warn);font-size:12px;line-height:1.6">
+        <strong>⚠ Plaintext Export</strong><br>
+        Your backup file will <strong>not</strong> be encrypted, even though encryption is enabled in the app. Store this file somewhere safe — anyone who can read it can read your grow data.
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="closeModal();_doExport()">Export Anyway</button>
+      </div>`);
+  } else {
+    _doExport();
+  }
+}
+
+let _pendingImport = null;
 
 function triggerImport() {
   const input = document.createElement('input');
@@ -5524,14 +5557,40 @@ function triggerImport() {
       try {
         const parsed = JSON.parse(ev.target.result);
         if (parsed.grows !== undefined || parsed.plants !== undefined || parsed.seeds !== undefined) {
-          Object.assign(DB, { ...blankData(), ...parsed });
-          await save(); render(); toast('Backup imported successfully.');
+          const hasData = DB.grows.length || DB.seeds.length || DB.breeding.length;
+          if (hasData) {
+            _pendingImport = parsed;
+            showModal(`
+              <div class="modal-header"><div class="modal-title">Import Backup</div><button class="modal-close" onclick="closeModal()">✕</button></div>
+              <div style="margin-bottom:16px;padding:12px;background:var(--danger-dim);border:1px solid var(--danger);border-radius:6px;color:var(--danger);font-size:12px;line-height:1.6">
+                <strong>⚠ This will overwrite your current data.</strong><br>
+                All existing plants, seeds, and grow history will be replaced with the contents of this backup. This cannot be undone.
+              </div>
+              <div class="btn-row">
+                <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-danger" onclick="closeModal();_confirmImport()">Overwrite &amp; Import</button>
+              </div>`);
+          } else {
+            await _doImportData(parsed);
+          }
         } else { toast('Invalid backup file.', 'error'); }
       } catch(e) { toast('Could not read file.','error'); }
     };
     reader.readAsText(f);
   };
   input.click();
+}
+
+async function _confirmImport() {
+  if (!_pendingImport) return;
+  const data = _pendingImport;
+  _pendingImport = null;
+  await _doImportData(data);
+}
+
+async function _doImportData(parsed) {
+  Object.assign(DB, { ...blankData(), ...parsed });
+  await save(); render(); toast('Backup imported successfully.');
 }
 
 function triggerCSV() {
@@ -5684,6 +5743,64 @@ function installPWA() {
     if (btn) btn.style.display = 'none';
   });
 }
+
+function openMobileMenu() {
+  const encEnabled = _isEncryptionEnabled();
+  const pwaBtn = document.getElementById('pwa-install-btn');
+  const showPwa = pwaBtn && pwaBtn.style.display !== 'none';
+  showModal(`
+    <div class="modal-header">
+      <div class="modal-title">Menu</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="mobile-menu-grid">
+      <button class="mobile-menu-btn" onclick="closeModal();toggleLightMode()">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+        Toggle Theme
+      </button>
+      <button class="mobile-menu-btn" onclick="closeModal();openSettings()">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </button>
+      <button class="mobile-menu-btn" onclick="closeModal();exportData()">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export Backup
+      </button>
+      <button class="mobile-menu-btn" onclick="closeModal();triggerImport()">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Import / Restore
+      </button>
+      <button class="mobile-menu-btn" onclick="closeModal();triggerCSV()">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+        Import CSV
+      </button>
+      <button class="mobile-menu-btn" onclick="closeModal();encEnabled?openEncryptionDisable():openEncryptionSetup()">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        ${encEnabled ? 'Disable Encryption' : 'Enable Encryption'}
+      </button>
+      ${encEnabled ? `<button class="mobile-menu-btn warn" onclick="closeModal();lockApp()">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 9.9-1"/></svg>
+        Lock App
+      </button>` : ''}
+      <button class="mobile-menu-btn" onclick="closeModal();undo()">
+        <svg viewBox="0 0 24 24"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>
+        Undo Last
+      </button>
+      <button class="mobile-menu-btn" onclick="closeModal();openAbout()">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        About
+      </button>
+      ${showPwa ? `<button class="mobile-menu-btn" onclick="closeModal();installPWA()">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Install App
+      </button>` : ''}
+      <button class="mobile-menu-btn danger" onclick="closeModal();clearAllData()">
+        <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+        Burn All Data
+      </button>
+    </div>`);
+}
+
 document.addEventListener('keydown', e => {
   if ((e.ctrlKey||e.metaKey) && e.key === 'z' && !e.shiftKey) { e.preventDefault(); undo(); }
   const typing = ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName);
@@ -5712,13 +5829,7 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// ── SERVICE WORKER — offline support & installability ──────────────────────
-// Unregister any previously installed service workers so stale caches don't block updates.
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(regs => {
-    regs.forEach(r => r.unregister());
-  });
-}
+// ── OFFLINE — no service worker; browser HTTP cache provides offline access after first load ──
 </script>
 </body>
 </html>

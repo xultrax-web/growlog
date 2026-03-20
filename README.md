@@ -1,6 +1,6 @@
 # GrowLog
 
-> **v4.0 Beta — in active development. Back up your data before updating.**
+> **v4.1 — Security & reliability fixes. Back up your data before updating.**
 
 **A personal grow tracker built for privacy-first growers.**
 
@@ -34,18 +34,26 @@ It's one HTML file. No minification, no obfuscation, no build step. Open it in a
 **4. Optional encryption is built in.**
 Enable it in the sidebar. It uses **AES-256-GCM** via the browser's built-in Web Crypto API — the same standard used by Signal and your bank. Your passphrase is never stored. Only a salt is saved. If someone pulls your localStorage without your passphrase, they get noise.
 
-**5. It works offline forever.**
-Once opened, it installs a service worker (also readable in the file) that caches itself. No internet required, ever.
+**5. It works offline after your first visit.**
+Your browser automatically caches the file after loading it. No internet required after that first load. If you download the file and open it locally, it works offline immediately — no first visit needed.
 
 ---
 
 ## Changelog
 
+### v4.1 — Security & Reliability Fixes
+- **Encryption hardened** — undo no longer bypasses encryption; all undo operations now write through the encrypted save path
+- **Import confirmation** — importing a backup now requires explicit confirmation before overwriting existing data
+- **Export warning** — exporting while encryption is enabled now warns that the backup file is plaintext
+- **Clear All fixed** — "Burn All Data" now fully wipes all app storage, not just the main data key
+- **Startup error handling** — corrupted data on load now shows a user-facing recovery message instead of a silent blank screen
+- **Mobile menu** — Export, Import, Settings, Encryption, and all sidebar actions are now accessible on mobile via the ⋮ menu in the nav bar
+
 ### v4.0 Beta
 - **VPD auto-calculator** — enter temp and RH in any log entry and VPD fills in automatically using leaf-surface VPD formula
 - **Trend sparklines** — VPD, temp, and RH trends visualized inline in each plant's log tab
 - **Light / dark mode** — toggle in the sidebar, preference persists across sessions
-- **Photo notes** — attach photos to journal entries, compressed and stored locally
+- **Photo notes** — attach photos to journal entries, compressed and stored locally *(note: heavy photo use can approach browser storage limits — export backups regularly)*
 - **Print / PDF export** — clean print layout with sidebar hidden and tiles reformatted for paper
 - **PWA install prompt** — install button appears automatically when the browser supports it
 - **Keyboard shortcuts** — `N` new plant, `J` log entry on open plant, `/` focus search, `ESC` close modal
@@ -152,7 +160,7 @@ Works in any browser with Web Crypto API support (all modern browsers since ~201
 
 ## Architecture
 
-GrowLog is intentionally a single HTML file with no build step, no dependencies, and no CDN calls. This is a deliberate choice — the entire codebase is auditable by anyone in minutes, works permanently offline, and can be self-hosted by dropping one file anywhere.
+GrowLog is intentionally a single HTML file with no build step, no dependencies, and no CDN calls. This is a deliberate choice — the entire codebase is auditable by anyone in minutes, works offline after first load, and can be self-hosted by dropping one file anywhere.
 
 The golden rule: **a paranoid grower should be able to verify what this software does in under 10 minutes.**
 
